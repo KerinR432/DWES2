@@ -63,3 +63,5 @@ nextflix lo usa en sus servidores interno, lo usa Uber en su maching learning
 
 
  ## #️⃣ C# .NET
+
+ __relacionada__ con [[bitacora-dia-cinco]]
