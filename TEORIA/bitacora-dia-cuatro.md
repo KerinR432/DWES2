@@ -93,6 +93,11 @@ def leer_item(item_id: int, q: str | None = None):
  se utiliza para proyectos grande que necesiten seguridad, tiene herramientas ya lista, bases de datos, seguridad. Se utiliza en mucho en redes sociales, contenido y noticias, tienda y empresas. 
  un gester bit, entorno virtual y bases de datos. Se base en en el modelo vista, templeate. 
 
+
+
+ ## #️⃣ C# .NET
+
+ __relacionada__ con [[bitacora-dia-cinco]]
 ejemplo de codigo ⬇️
  ```python
 from django.db import models

@@ -38,3 +38,4 @@ echo "⬇️ Haciendo pull de $rama..."
 git pull origin "$rama"
 
 echo "✅ Rama $rama actualizada correctamente"
+

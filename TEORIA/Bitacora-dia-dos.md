@@ -67,3 +67,5 @@ ver que trae cada cabera y desglozarla.
 Luego hemos visto como en teminal el hace el sh, como funciona los escripts en un servidor apache y hemos encendido un servidor apache para ejecutarlo. 
 
 AL final ha sido un día tranquilo y no mucho mas, asi acaba
+
+__relacionado__ con [[Bitacora-dia-tres]]

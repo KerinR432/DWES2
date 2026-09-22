@@ -64,5 +64,33 @@ necesitas un IDE, visual estudio con su extención, git
 
 
 
+## ｡🇯‌🇸‌ NODE JS
+
+fue creado para desarollar de apliaciones web al lado del servidor, utiliza JS, puede utilizarse para desarrollar aplicaciones Typescript
+es necesario tener instalado node utilizando su dependecias de npm, sus requisitos son 
+
+puede intergrase a servidores cotidianos. Depende muchos IDEs para los proyectos, pequeños, seria VS code, si son empresriaes usan IDEs mas robustos, WEBStroms se rige en 4 pilares
+
+NODE js mantiene un canal abierto que permite comunicación instanteana con otros usuarios. Plataformas de Streaming de Datos, utilizando NODE JS, lee el archivo y divide la información en chuck, permitiendo ver la pelicuas sin que se colapse.
+
+>paginas que lo usan son Paypal, Netflix, Linkdin, Reddit, eBay
+
+
+
+# 🪶 APACHE
+
+los primeros servidores web de aquella espoca NCSA
+Apache -httpd 
+
+
+# MVC
+
+Modelo -> datos -> BBDD
+Vistas -> lital, css Js
+Controlador -> logica
+
+
+
+
 es un lenguaje ejecutable, 
 __Relacionado__ con [[bitacora-dia-cuatro]]
