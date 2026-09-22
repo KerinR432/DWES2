@@ -92,4 +92,5 @@ Controlador -> logica
 
 
 
+es un lenguaje ejecutable, 
 __Relacionado__ con [[bitacora-dia-cuatro]]

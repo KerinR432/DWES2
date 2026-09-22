@@ -49,11 +49,44 @@ en javascript si ve, porque el codigo lo manda al navegador, pero en PHP no, el 
 
 Pycharm y Visual son los IDEs son las utilizados, utiliza liberias dedicadas de FASK. 
 
+ejemplo de codigo ⬇️
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+  return "¡Hola, mundo con Flask!"
+
+
+if __name__ == "__main__":
+  app.run(debug=True)
+```
+
 ### 2. FastAPI
 
 crea aplicaciones y APIs tiene libreria para validar datos, genera todo de manera automatica, tener versión de PYTHON 3.8 superior, instalar FastAPI en el IDE, Depende de Uvicorn. 
 
 nextflix lo usa en sus servidores interno, lo usa Uber en su maching learning
+
+ejemplo de codigo ⬇️
+```python
+from fastapi import FastAPI
+
+app = FastAPI()
+
+
+@app.get("/")
+def leer_raiz():
+  return {"mensaje": "¡Hola, mundo!"}
+
+
+@app.get("/items/{item_id}")
+def leer_item(item_id: int, q: str | None = None):
+  return {"item_id": item_id, "q": q}
+```
 
  ### 3. Django 
 
@@ -65,3 +98,39 @@ nextflix lo usa en sus servidores interno, lo usa Uber en su maching learning
  ## #️⃣ C# .NET
 
  __relacionada__ con [[bitacora-dia-cinco]]
+ejemplo de codigo ⬇️
+ ```python
+from django.db import models
+
+class Articulo(models.Model):
+    titulo = models.CharField(max_length=100)
+    contenido = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.titulo
+ ```
+
+
+---
+ ## #️⃣ C# y .NET
+
+C# es el principal, tipado fuerte y objetos, seguridad y el framework ASP.NET core, sus requisitos son .NET SDK, el sistemas operativo y Herramientas CLI
+
+servidor y usuario, se ejecuta ASP.NET core, paginas y servidores Kestrel, Nginx o Apahce
+Usuario
+Chrome, edge, firefox y conectarse al servidor
+
+IDEs -> visual studio, entonorno de microsoft, utilizada para progamar en C# y es mucho mas en gran escala que VS code. 
+ejemplo de codigo ⬇️
+
+```c#
+var builder = webCreateBuilder(args)
+
+var app = builder
+```
+
+Stack Overflow 
+Microsoft.com
+MarketWatch
+GoDaddy
