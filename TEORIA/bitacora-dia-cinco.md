@@ -54,5 +54,15 @@ Todos los ides que usan son IntellJ, Eclipse
 
  HTTP es un servicio sin estodo, se olvida de todo. Staleless, hay mecanismo de mantener estado.
 
+---
 
+## 🌐 LENGUAJE GO
+
+es un lenguaje de codigo abierto en google, publicado en 2009, es lenguaje copilado y tipado. Recolector de basura, concurrencias integrada.
+Necesitas descargar go, tener windows 10 linux kernel 3.2
+necesitas un IDE, visual estudio con su extención, git 
+
+
+
+es un lenguaje ejecutable, 
 __Relacionado__ con [[bitacora-dia-cuatro]]
