@@ -31,27 +31,11 @@ case $opcion in
         ;;
 esac
 
-echo
-read -p "📝 Mensaje del commit: " mensaje
-
-if [ -z "$mensaje" ]; then
-    echo "❌ El mensaje del commit no puede estar vacío"
-    exit 1
-fi
-
-echo
-echo "🔄 Cambiando a $rama..."
+echo "🔄 Cambiando a la rama $rama..."
 git checkout "$rama"
 
-echo "📦 Añadiendo cambios..."
-git add .
+echo "⬇️ Haciendo pull de $rama..."
+git pull origin "$rama"
 
-echo "💾 Creando commit..."
-git commit -m "$mensaje"
-
-echo "⬆️ Haciendo push..."
-git push origin "$rama"
-
-echo
-echo "✅ Commit y push realizados correctamente"
+echo "✅ Rama $rama actualizada correctamente"
 
