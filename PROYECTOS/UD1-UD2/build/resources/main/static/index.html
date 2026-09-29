@@ -1,0 +1,324 @@
+<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Terminal Industrial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Special+Elite&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                    radial-gradient(circle at center, #3a3025 0%, #171512 55%, #090909 100%);
+
+            color: #d6c5a5;
+            font-family: 'Roboto Condensed', sans-serif;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ruido / textura industrial */
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+            pointer-events: none;
+
+            background-image:
+                    repeating-linear-gradient(
+                            0deg,
+                            transparent,
+                            transparent 3px,
+                            #000 4px
+                    );
+        }
+
+        /* Viñeta */
+        body::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+
+            box-shadow:
+                    inset 0 0 150px #000,
+                    inset 0 0 40px #000;
+        }
+
+        .terminal {
+            width: min(90%, 500px);
+            position: relative;
+            z-index: 2;
+
+            background:
+                    linear-gradient(
+                            145deg,
+                            #35302a,
+                            #181614 45%,
+                            #29241f
+                    );
+
+            border: 2px solid #69563e;
+            border-radius: 6px;
+
+            padding: 42px;
+
+            box-shadow:
+                    0 20px 50px #000,
+                    inset 0 0 25px #000,
+                    0 0 0 5px #171513,
+                    0 0 0 7px #4b3d2e;
+        }
+
+        /* Remaches */
+        .rivet {
+            position: absolute;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+
+            background: radial-gradient(
+                    circle at 35% 30%,
+                    #c5a875,
+                    #574631 45%,
+                    #17130f 75%
+            );
+
+            box-shadow:
+                    1px 1px 3px #000,
+                    inset 1px 1px 2px #d8c098;
+        }
+
+        .rivet.top-left {
+            top: 10px;
+            left: 10px;
+        }
+
+        .rivet.top-right {
+            top: 10px;
+            right: 10px;
+        }
+
+        .rivet.bottom-left {
+            bottom: 10px;
+            left: 10px;
+        }
+
+        .rivet.bottom-right {
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid #66513a;
+            padding-bottom: 25px;
+        }
+
+        .warning {
+            color: #c47b27;
+            font-size: 12px;
+            letter-spacing: 4px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-family: 'Special Elite', monospace;
+            color: #d4b477;
+            font-size: clamp(28px, 7vw, 42px);
+            letter-spacing: 3px;
+
+            text-shadow:
+                    2px 2px 0 #16120e,
+                    0 0 10px #9b641e;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: #82745f;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            color: #b99b6b;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+
+            background: #0d0c0a;
+            border: 2px solid #514432;
+            border-radius: 3px;
+
+            color: #e0c99d;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 17px;
+
+            outline: none;
+
+            box-shadow:
+                    inset 0 3px 8px #000,
+                    0 1px 0 #746044;
+        }
+
+        input::placeholder {
+            color: #514a40;
+            text-transform: uppercase;
+        }
+
+        input:focus {
+            border-color: #b07832;
+
+            box-shadow:
+                    inset 0 3px 8px #000,
+                    0 0 12px #8d5c22;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 16px;
+
+            border: 2px solid #785b35;
+            border-radius: 3px;
+
+            background:
+                    linear-gradient(
+                            to bottom,
+                            #9b672d,
+                            #5e3c1d
+                    );
+
+            color: #f0d7a3;
+
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+
+            cursor: pointer;
+
+            box-shadow:
+                    inset 0 1px 0 #d5a15a,
+                    0 4px 0 #21170f,
+                    0 8px 15px #000;
+
+            transition: 0.15s ease;
+        }
+
+        button:hover {
+            background:
+                    linear-gradient(
+                            to bottom,
+                            #b87932,
+                            #754a22
+                    );
+
+            color: #fff0c9;
+            box-shadow:
+                    0 0 18px #a86727,
+                    inset 0 1px 0 #e2b56e,
+                    0 4px 0 #21170f;
+        }
+
+        button:active {
+            transform: translateY(4px);
+            box-shadow:
+                    inset 0 2px 5px #24170c,
+                    0 1px 0 #21170f;
+        }
+
+        .status {
+            margin-top: 28px;
+            padding-top: 18px;
+
+            border-top: 1px dashed #594832;
+
+            display: flex;
+            justify-content: space-between;
+
+            color: #716552;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status span:first-child::before {
+            content: "●";
+            color: #b77a2c;
+            margin-right: 7px;
+            text-shadow: 0 0 6px #d38b32;
+        }
+    </style>
+
+</head> <body>
+<main class="terminal">
+
+    <span class="rivet top-left"></span>
+    <span class="rivet top-right"></span>
+    <span class="rivet bottom-left"></span>
+    <span class="rivet bottom-right"></span>
+
+    <header class="header">
+        <div class="warning">⚠ SISTEMA INDUSTRIAL ⚠</div>
+
+        <h1>TERMINAL</h1>
+
+        <p class="subtitle">
+            Registro de personal autorizado
+        </p>
+    </header>
+
+    <form action="/mostrar" method="post">
+
+        <label for="nombre">
+            Identificación
+        </label>
+
+        <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Introduzca su nombre..."
+                autocomplete="name"
+                required
+        >
+
+        <button type="submit">
+            ⚙ ENVIAR DATOS
+        </button>
+
+    </form>
+
+    <div class="status">
+        <span>Sistema operativo</span>
+        <span>Unidad 07</span>
+    </div>
+
+</main>
+
+</body>
+</html>
