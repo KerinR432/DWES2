@@ -1,0 +1,410 @@
+/* ============================================================
+   FANTASIA CREPUSCULAR // MARKDOWN -> PDF
+   Original moonlit forest-adventure field journal
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;500;600;700&display=swap');
+
+:root {
+    --paper: #e9ebe3;
+    --paper-light: #f7f6ec;
+    --paper-shadow: #d8ddd2;
+    --ink: #263129;
+    --ink-soft: #4d5a50;
+    --forest: #354b3a;
+    --moss: #64764e;
+    --moon: #aebfc0;
+    --moon-light: #dce6e1;
+    --bronze: #a27b43;
+    --ember: #985d4a;
+    --code-bg: #26372f;
+    --code-ink: #eef0e6;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+html,
+body {
+    background-color: var(--paper) !important;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+body {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 18mm 20mm !important;
+    font-family: "Literata", Georgia, serif;
+    font-size: 10.5pt;
+    line-height: 1.68;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+strong {
+    color: var(--forest);
+    font-weight: 700;
+}
+
+em {
+    color: var(--ember);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    color: var(--ink);
+    font-family: "Cinzel", Georgia, serif;
+    font-weight: 600;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+h1 {
+    margin: 34px 0 24px;
+    padding: 14px 0 16px 17px;
+    border-top: 2px solid var(--bronze);
+    border-bottom: 4px double var(--forest);
+    border-left: 6px solid var(--moss);
+    background: linear-gradient(90deg, rgba(174, 191, 192, 0.28), transparent 82%);
+    font-size: 27pt;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+h1::before {
+    content: "✦";
+    margin-right: 10px;
+    color: var(--bronze);
+    font-family: "Literata", Georgia, serif;
+    font-size: 0.7em;
+}
+
+h2 {
+    margin: 36px 0 16px;
+    padding: 8px 12px;
+    border-left: 5px solid var(--bronze);
+    border-bottom: 1px solid rgba(53, 75, 58, 0.45);
+    background: linear-gradient(90deg, rgba(100, 118, 78, 0.14), transparent 88%);
+    font-size: 17pt;
+}
+
+h2::before {
+    content: "◆";
+    margin-right: 9px;
+    color: var(--moss);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62em;
+    vertical-align: 0.12em;
+}
+
+h3 {
+    margin: 26px 0 10px;
+    color: var(--forest);
+    font-size: 13pt;
+}
+
+h4 {
+    margin-top: 22px;
+    padding-left: 9px;
+    border-left: 3px solid var(--moon);
+    color: var(--ink-soft);
+    font-family: "Literata", Georgia, serif;
+    font-size: 10.5pt;
+    font-weight: 700;
+}
+
+a {
+    color: var(--forest);
+    font-weight: 600;
+    text-decoration-color: var(--bronze);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+}
+
+hr {
+    height: 4px;
+    margin: 30px 0;
+    border: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--forest) 0 18px,
+        transparent 18px 24px,
+        var(--bronze) 24px 28px,
+        transparent 28px 35px
+    );
+}
+
+blockquote {
+    margin: 22px 0;
+    padding: 16px 20px;
+    border-left: 6px solid var(--moss);
+    background: rgba(174, 191, 192, 0.26);
+    color: var(--ink-soft);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+blockquote::before {
+    content: "CRONICA DEL BOSQUE //";
+    display: block;
+    margin-bottom: 7px;
+    color: var(--forest);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+ul,
+ol {
+    margin: 10px 0 20px;
+    padding-left: 1.5em;
+}
+
+li {
+    margin-bottom: 5px;
+    padding-left: 2px;
+}
+
+li::marker {
+    color: var(--moss);
+    font-weight: 700;
+}
+
+:not(pre) > code {
+    padding: 2px 5px;
+    border: 1px solid rgba(53, 75, 58, 0.25);
+    background: rgba(174, 191, 192, 0.24);
+    color: var(--forest);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.88em;
+}
+
+pre {
+    max-width: 100%;
+    margin: 22px 0;
+    padding: 17px 19px;
+    overflow-x: auto;
+    border: 2px solid var(--forest);
+    border-left: 7px solid var(--bronze);
+    background: var(--code-bg) !important;
+    color: var(--code-ink);
+    box-shadow: 4px 4px 0 rgba(38, 49, 41, 0.14);
+    white-space: pre;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+pre code {
+    display: block;
+    background: transparent;
+    color: var(--code-ink);
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+    font-size: 8.2pt;
+    line-height: 1.3;
+}
+
+table {
+    width: 100%;
+    margin: 22px 0;
+    border: 1px solid var(--forest);
+    border-collapse: collapse;
+    background: rgba(247, 246, 236, 0.82);
+    font-size: 9pt;
+    page-break-inside: auto;
+    break-inside: auto;
+}
+
+thead {
+    display: table-header-group;
+    background: var(--forest);
+    color: var(--paper-light);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    text-transform: uppercase;
+}
+
+th,
+td {
+    padding: 8px 10px;
+    border: 1px solid rgba(53, 75, 58, 0.32);
+    text-align: left;
+}
+
+th {
+    border-bottom: 3px solid var(--bronze);
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(216, 221, 210, 0.64);
+}
+
+tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 22px auto;
+    border: 2px solid var(--forest);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+mark {
+    padding: 1px 4px;
+    background: #e8d58e;
+    color: var(--ink);
+}
+
+.note,
+.warning,
+.danger,
+.spec,
+.machine {
+    margin: 22px 0;
+    padding: 15px 18px;
+    border: 1px solid var(--forest);
+    border-left: 6px solid var(--moss);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.note {
+    background: rgba(174, 191, 192, 0.26);
+}
+
+.warning {
+    border-left-color: var(--bronze);
+    background: rgba(232, 213, 142, 0.24);
+}
+
+.danger {
+    border-left-color: var(--ember);
+    background: rgba(152, 93, 74, 0.1);
+}
+
+.spec {
+    border-left-color: var(--forest);
+    background: rgba(100, 118, 78, 0.09);
+}
+
+.machine {
+    border-color: var(--forest);
+    border-left-color: var(--moon);
+    background: var(--code-bg);
+    color: var(--paper-light);
+}
+
+.note::before,
+.warning::before,
+.danger::before,
+.spec::before,
+.machine::before {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--forest);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.note::before { content: "NOTA DEL CAMINANTE"; }
+.warning::before { content: "PRESAGIO"; }
+.danger::before { content: "PELIGRO EN EL SENDERO"; }
+.spec::before { content: "REGISTRO DE RELIQUIA"; }
+.machine::before { content: "ARTEFACTO ANTIGUO"; color: var(--moon-light); }
+
+.cover {
+    box-sizing: border-box;
+    display: flex;
+    min-height: 240mm;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border: 3px double var(--forest);
+    outline: 2px solid var(--bronze);
+    outline-offset: -12px;
+    text-align: center;
+    page-break-after: always;
+    break-after: page;
+}
+
+.cover h1 {
+    border: 0;
+    font-size: 36pt;
+}
+
+.cover h1::before {
+    content: "";
+}
+
+.cover .serial {
+    margin-top: 20px;
+    color: var(--forest);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9pt;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+h1,
+h2 {
+    page-break-before: auto;
+    break-before: auto;
+}
+
+h1:not(:first-of-type) {
+    page-break-before: always;
+    break-before: page;
+}
+
+h1:first-of-type {
+    page-break-before: avoid;
+    break-before: avoid;
+}
+
+@media screen {
+    body {
+        max-width: 900px !important;
+        margin: 40px auto !important;
+        padding: 60px !important;
+        box-shadow: 0 0 32px rgba(38, 49, 41, 0.17);
+    }
+}
+
+@media print {
+    html,
+    body {
+        background-color: var(--paper) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        box-shadow: none;
+    }
+
+    a {
+        color: var(--forest);
+        text-decoration: none;
+    }
+}

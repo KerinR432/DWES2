@@ -1,0 +1,20 @@
+{
+    "files.autoSave": "afterDelay",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "markdown-pdf.highlightStyle": "cybertopia-cherry.css",
+    "markdown-pdf.stylesRelativePathFile": false,
+    "markdown-pdf.styles": [
+        "./css/guia-galactica.css"
+    ],
+    "workbench.settings.applyToAllProfiles": [
+        "markdown-pdf.styles"
+    ],
+    "markdown-pdf.highlight": false,
+    "markdown.extension.toc.omittedFromToc": {
+        
+
+
+    }
+}
