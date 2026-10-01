@@ -4,16 +4,6 @@
     <content url="file://$MODULE_DIR$/../../demo" dumb="true">
       <excludeFolder url="file://$MODULE_DIR$/../../demo/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../demo/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../demo/build" />
     </content>
   </component>
 </module>
