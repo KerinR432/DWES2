@@ -8,3 +8,18 @@ El concepto de *sanize inpust* en el jar con administrador si puedes ejecutar ed
 ## UD2 EJERCICIOS
 
 ## TEORIA
+
+Spring MVC 
+```text
+M -> pojo
+
+V -> plantillas [
+    html
+    css
+    js
+]
+
+C -> Bussines Logic
+
+```
+
