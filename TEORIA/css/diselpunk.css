@@ -1,0 +1,657 @@
+/* ============================================================
+   DIESELPUNK // MARKDOWN → PDF
+   Theme for VS Code Markdown PDF (CORREGIDO)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   01 // FUENTES
+   ------------------------------------------------------------ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700;800&display=swap');
+
+
+/* ------------------------------------------------------------
+   02 // VARIABLES
+   ------------------------------------------------------------ */
+
+:root {
+    /* Papel */
+    --paper: #e9e1d0;
+    --paper-light: #f1eadb;
+    --paper-dark: #d7cdb9;
+
+    /* Tinta */
+    --ink: #25221d;
+    --ink-light: #514b42;
+    --ink-faded: #756e63;
+
+    /* Metal */
+    --steel: #565854;
+    --steel-dark: #343532;
+    --steel-light: #777973;
+
+    /* Óxido */
+    --rust: #8b3f24;
+    --rust-dark: #632b1a;
+    --rust-light: #b05a36;
+
+    /* Latón */
+    --brass: #a27b32;
+    --brass-dark: #76591f;
+    --brass-light: #c4a35a;
+
+    /* Verde máquina */
+    --machine-green: #53604b;
+    --machine-green-dark: #374133;
+
+    /* Petróleo */
+    --oil: #29332f;
+    --oil-light: #46544c;
+
+    /* Código */
+    --code-bg: #1e201e;
+    --code-text: #d8d2c3;
+
+    /* Sombras */
+    --shadow: rgba(37, 34, 29, 0.18);
+}
+
+
+/* ------------------------------------------------------------
+   03 // PAGINACIÓN & CONFIGURACIÓN GLOBAL PDF
+   ------------------------------------------------------------ */
+
+@page {
+    size: A4;
+    margin: 0; /* Elimina los márgenes blancos predeterminados del PDF */
+}
+
+html {
+    background-color: var(--paper) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+body {
+    font-family: "IBM Plex Sans", Arial, sans-serif;
+    color: var(--ink);
+    background-color: var(--paper) !important;
+
+    font-size: 11pt;
+    line-height: 1.65;
+
+    /* Ocupa el ancho completo de la hoja A4 */
+    max-width: 100% !important;
+    width: 100% !important;
+
+    margin: 0 auto !important;
+    padding: 18mm 20mm !important; /* El margen real de impresión se gestiona desde el padding */
+    box-sizing: border-box;
+
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+
+/* ------------------------------------------------------------
+   04 // TEXTO
+   ------------------------------------------------------------ */
+
+p {
+    margin: 0 0 1em 0;
+}
+
+strong {
+    font-weight: 700;
+}
+
+em {
+    color: var(--rust-dark);
+}
+
+
+/* ------------------------------------------------------------
+   05 // TÍTULOS
+   ------------------------------------------------------------ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Roboto Slab", Georgia, serif;
+    color: var(--ink);
+    font-weight: 700;
+    page-break-after: avoid;
+    break-after: avoid;
+    position: relative;
+}
+
+
+/* ---------- H1 ---------- */
+
+h1 {
+    font-size: 30pt;
+    text-transform: uppercase;
+    letter-spacing: 0.055em;
+    margin-top: 35px;
+    margin-bottom: 28px;
+    padding-top: 10px;
+    padding-bottom: 14px;
+    border-top: 2px solid var(--brass);
+    border-bottom: 5px solid var(--ink);
+    line-height: 1.15;
+}
+
+/* Marca lateral de engranaje */
+h1::before {
+    content: "⚙";
+    color: var(--rust);
+    margin-right: 12px;
+    font-size: 0.75em;
+    vertical-align: middle;
+}
+
+
+/* ---------- H2 ---------- */
+
+h2 {
+    font-size: 20pt;
+    margin-top: 42px;
+    margin-bottom: 18px;
+    padding: 7px 12px 9px;
+    border-left: 6px solid var(--rust);
+    border-bottom: 1px solid var(--brass);
+    background: linear-gradient(90deg, rgba(41, 51, 47, 0.11), transparent 82%);
+    text-transform: uppercase;
+    letter-spacing: 0.035em;
+}
+
+
+/* ---------- H3 ---------- */
+
+h3 {
+    font-size: 14pt;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    color: var(--rust-dark);
+    border-bottom: 1px solid rgba(162, 123, 50, 0.45);
+    padding-bottom: 5px;
+}
+
+
+/* ---------- H4 ---------- */
+
+h4 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 11pt;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--steel-dark);
+    margin-top: 25px;
+    border-left: 3px solid var(--brass);
+    padding-left: 9px;
+}
+
+
+/* ------------------------------------------------------------
+   06 // LINKS
+   ------------------------------------------------------------ */
+
+a {
+    color: var(--rust-dark);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--brass);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    color: var(--rust);
+}
+
+
+/* ------------------------------------------------------------
+   07 // SEPARADORES
+   ------------------------------------------------------------ */
+
+hr {
+    border: 0;
+    height: 5px;
+    margin: 35px 0;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--ink) 0,
+        var(--ink) 22px,
+        transparent 22px,
+        transparent 30px
+    );
+}
+
+
+/* ------------------------------------------------------------
+   08 // BLOCKQUOTES
+   ------------------------------------------------------------ */
+
+blockquote {
+    margin: 25px 0;
+    padding: 18px 24px;
+    background: linear-gradient(
+        90deg,
+        rgba(139, 63, 36, 0.10),
+        rgba(139, 63, 36, 0.025)
+    );
+    border-left: 6px solid var(--rust);
+    color: var(--ink-light);
+    font-family: "Roboto Slab", Georgia, serif;
+    position: relative;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+blockquote::before {
+    content: "⚙  NOTA DE TALLER";
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--rust-dark);
+    margin-bottom: 8px;
+}
+
+
+/* ------------------------------------------------------------
+   09 // LISTAS
+   ------------------------------------------------------------ */
+
+ul,
+ol {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 6px;
+}
+
+li::marker {
+    color: var(--rust);
+    font-weight: 700;
+}
+
+
+/* ------------------------------------------------------------
+   10 // CÓDIGO INLINE
+   ------------------------------------------------------------ */
+
+:not(pre) > code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.9em;
+    color: var(--rust-dark);
+    background: rgba(37, 34, 29, 0.08);
+    border: 1px solid rgba(37, 34, 29, 0.18);
+    border-radius: 3px;
+    padding: 2px 6px;
+}
+
+
+/* ------------------------------------------------------------
+   11 // BLOQUES DE CÓDIGO & DIAGRAMAS ASCII (CORREGIDO)
+   ------------------------------------------------------------ */
+
+pre {
+    background: var(--code-bg) !important;
+    color: var(--code-text);
+    border: 3px solid var(--steel-dark);
+    border-left: 7px solid var(--rust);
+    border-radius: 2px;
+    padding: 18px 22px;
+    margin: 24px 0;
+
+    /* Mantiene intacto el arte y diagramas ASCII */
+    white-space: pre !important; 
+    overflow-x: hidden;
+
+    box-shadow: 5px 5px 0 rgba(37, 34, 29, 0.16);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+pre code {
+    font-family: "IBM Plex Mono", "Courier New", monospace !important;
+    font-size: 8.5pt;
+    line-height: 1.15; /* Interlineado estrecho para no deformar gráficos de caja */
+    letter-spacing: 0px;
+    color: var(--code-text);
+    background: transparent;
+    display: block;
+}
+
+
+/* ------------------------------------------------------------
+   12 // TABLAS
+   ------------------------------------------------------------ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 2px solid var(--steel-dark);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+thead {
+    background: var(--steel-dark);
+    color: var(--paper-light);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8.5pt;
+    display: table-header-group;
+}
+
+tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+th {
+    padding: 11px 12px;
+    text-align: left;
+    border: 1px solid var(--steel);
+}
+
+td {
+    padding: 10px 12px;
+    border: 1px solid rgba(86, 88, 84, 0.5);
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(162, 123, 50, 0.07);
+}
+
+tbody tr:hover {
+    background: rgba(139, 63, 36, 0.10);
+}
+
+
+/* ------------------------------------------------------------
+   13 // IMÁGENES
+   ------------------------------------------------------------ */
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 25px auto;
+    border: 4px solid var(--steel-dark);
+    box-shadow: 6px 6px 0 rgba(37, 34, 29, 0.18);
+}
+
+
+/* ------------------------------------------------------------
+   14 // ÉNFASIS
+   ------------------------------------------------------------ */
+
+mark {
+    background: var(--brass-light);
+    color: var(--ink);
+    padding: 2px 5px;
+}
+
+
+/* ------------------------------------------------------------
+   15 // CHECKBOXES
+   ------------------------------------------------------------ */
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border: 2px solid var(--steel-dark);
+    vertical-align: -2px;
+    margin-right: 6px;
+}
+
+input[type="checkbox"]:checked {
+    background: var(--rust);
+    border-color: var(--rust);
+}
+
+
+/* ------------------------------------------------------------
+   16 // SELECCIÓN
+   ------------------------------------------------------------ */
+
+::selection {
+    background: var(--rust);
+    color: var(--paper-light);
+}
+
+
+/* ------------------------------------------------------------
+   17 // REGLAS DE SALTO DE PÁGINA
+   ------------------------------------------------------------ */
+
+h1, h2 {
+    page-break-before: auto;
+    break-before: auto;
+}
+
+h1 {
+    page-break-before: always;
+    break-before: page;
+}
+
+h1:first-of-type {
+    page-break-before: avoid;
+    break-before: avoid;
+}
+
+h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+pre, table, blockquote {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+
+/* ------------------------------------------------------------
+   18 // PRIMERA PÁGINA
+   ------------------------------------------------------------ */
+
+body > h1:first-of-type {
+    margin-top: 24mm;
+    font-size: 36pt;
+    padding: 18px 0 24px;
+    border-top: 10px solid var(--rust);
+    border-bottom: 5px solid var(--ink);
+}
+
+
+/* ------------------------------------------------------------
+   19 // SMALL CAPS / METADATOS
+   ------------------------------------------------------------ */
+
+.metadata,
+.meta,
+.subtitle {
+    font-family: "IBM Plex Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 8pt;
+    color: var(--steel);
+    border-left: 4px solid var(--brass);
+    padding-left: 12px;
+    margin: 15px 0;
+}
+
+
+/* ------------------------------------------------------------
+   20 // ELEMENTOS HTML PERSONALIZADOS
+   ------------------------------------------------------------ */
+
+.note,
+.warning,
+.danger,
+.spec,
+.machine {
+    margin: 25px 0;
+    padding: 18px 20px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 2px solid var(--steel-dark);
+    box-shadow: 4px 4px 0 rgba(37, 34, 29, 0.15);
+}
+
+.note {
+    background: rgba(162, 123, 50, 0.12);
+    border-left: 7px solid var(--brass);
+}
+
+.note::before {
+    content: "⚙ NOTE";
+}
+
+.warning {
+    background: rgba(176, 90, 54, 0.12);
+    border-left: 7px solid var(--rust);
+}
+
+.warning::before {
+    content: "⚠ AVISO";
+}
+
+.danger {
+    background: rgba(99, 43, 26, 0.13);
+    border-left: 7px solid var(--rust-dark);
+}
+
+.danger::before {
+    content: "☠ PELIGRO";
+}
+
+.spec {
+    background: rgba(86, 88, 84, 0.08);
+    border-left: 7px solid var(--steel);
+}
+
+.spec::before {
+    content: "⚒ FICHA TÉCNICA";
+}
+
+.machine {
+    background: linear-gradient(135deg, var(--oil) 0%, var(--machine-green) 70%, var(--machine-green-dark) 100%);
+    color: var(--paper-light);
+    border: 3px solid var(--oil-light);
+}
+
+.machine::before {
+    content: "⚙ ESTADO DE MÁQUINA";
+}
+
+.note::before,
+.warning::before,
+.danger::before,
+.spec::before,
+.machine::before {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+}
+
+
+/* ------------------------------------------------------------
+   21 // PORTADA
+   ------------------------------------------------------------ */
+
+.cover {
+    min-height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    page-break-after: always;
+    break-after: page;
+    border: 8px solid var(--ink);
+    outline: 3px solid var(--rust);
+    outline-offset: -18px;
+    padding: 35px;
+}
+
+.cover h1 {
+    border: 0;
+    font-size: 42pt;
+    margin: 0;
+    text-align: center;
+}
+
+.cover h1::before {
+    content: "";
+}
+
+.cover .serial {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--rust);
+    letter-spacing: 0.18em;
+    font-size: 9pt;
+    margin-top: 25px;
+}
+
+
+/* ------------------------------------------------------------
+   22 // RESPONSIVE / PANTALLA
+   ------------------------------------------------------------ */
+
+@media screen {
+    body {
+        max-width: 900px !important;
+        margin: 40px auto !important;
+        padding: 60px !important;
+        box-shadow: 0 0 35px rgba(0,0,0,0.20);
+    }
+}
+
+
+/* ------------------------------------------------------------
+   23 // IMPRESIÓN / EXPORTACIÓN PDF
+   ------------------------------------------------------------ */
+
+@media print {
+    html, body {
+        background-color: var(--paper) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        box-shadow: none;
+        width: 100% !important;
+    }
+
+    a {
+        color: var(--rust-dark);
+        text-decoration: none;
+    }
+
+    a[href]::after {
+        content: "";
+    }
+}
+
+/* ------------------------------------------------------------
+   END OF FILE
+   DIESELPUNK ENGINEERING SYSTEM
+   ------------------------------------------------------------ */

@@ -7,10 +7,4 @@
       <module name="demo.test" options="-parameters" />
     </option>
   </component>
-  <component name="CompilerConfiguration">
-    <bytecodeTargetLevel>
-      <module name="demo.main" target="21" />
-      <module name="demo.test" target="21" />
-    </bytecodeTargetLevel>
-  </component>
 </project>
