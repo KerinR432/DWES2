@@ -25,4 +25,8 @@ C -> Bussines Logic
 
 
 
+**TODO LO VISTO CONVERGE AHÍ:** [[D1 -UD2]]
+
+---
+
 **Relacionado: SPRINGBOOT** [[bitacora-dia-siete]]

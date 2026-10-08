@@ -99,3 +99,5 @@ public String procesarDatos(@RequestParam("nombre") String nombre) {
 ```
 
 Así queda conectado el recorrido: el navegador envía `nombre`, Spring lo asocia con el parámetro del método y el endpoint responde con el resultado.
+
+**TODO LO VISTO CONVERGE AHÍ:** [[D1 -UD2]]

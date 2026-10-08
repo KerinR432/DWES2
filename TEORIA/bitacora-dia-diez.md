@@ -145,3 +145,4 @@ Algunas de las etiquestas importantes es
 
 `th:each` loop
 
+**TODO LO VISTO CONVERGE AHÍ:** [[D1 -UD2]]
