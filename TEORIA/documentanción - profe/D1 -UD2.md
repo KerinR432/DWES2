@@ -554,3 +554,4 @@ y el resutlado es
 # Conclusión
 
 Muchos conceptos nuevos, validaciones simpre se me ha complicado, pero el tema de objeto y modelos me gusta mucho, lo malo son las etiquetas en html que van cambiando segun lo uses.
+**TODO LO VISTO CONVERGE AHÍ:** [[UD1-UD2]]

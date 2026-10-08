@@ -10,16 +10,18 @@
 
 ## Índice
 
-- [Primer intento: proyecto sin dependencias](#primer-intento)
-- [Segundo intento: una aplicación web](#segundo-intento)
-    - [Configuración de Gradle](#gradle)
-    - [Rutas y parámetros](#rutas)
-    - [Página estática y formularios](#formularios)
-    - [Spring Initializr y empaquetado](#empaquetado)
-    - [Configuración del puerto](#puerto)
-    - [Objetos y respuestas JSON](#json)
-    - [Lectura del cuerpo de una petición](#request-body)
-- [Conclusión](#conclusion)
+- [UD1 · UD2SPRING BOOT](#ud1--ud2spring-boot)
+  - [Índice](#índice)
+  - [1. Primer intento: proyecto sin dependencias](#1-primer-intento-proyecto-sin-dependencias)
+  - [2. Segundo intento: una aplicación web](#2-segundo-intento-una-aplicación-web)
+    - [Configuración de Gradle](#configuración-de-gradle)
+    - [Rutas y parámetros](#rutas-y-parámetros)
+    - [Página estática y formularios](#página-estática-y-formularios)
+    - [Spring Initializr y empaquetado](#spring-initializr-y-empaquetado)
+    - [Configuración del puerto](#configuración-del-puerto)
+    - [Objetos y respuestas JSON](#objetos-y-respuestas-json)
+    - [Lectura del cuerpo de una petición](#lectura-del-cuerpo-de-una-petición)
+  - [3. Conclusión](#3-conclusión)
 
 <a id="primer-intento"></a>
 
@@ -325,3 +327,5 @@ En Bruno, se envía un cuerpo JSON que Spring convierte en un objeto `Contacto`:
 Volver a trabajar estos conceptos me permitió avanzar con más rapidez: ya entendía mejor por qué se necesitan ciertas dependencias y cómo se conectan las rutas con las respuestas. Todavía me sentía algo oxidado con los POJOs, pero pude completar las pruebas con más soltura que la primera vez.
 
 La idea principal que me llevo es que Spring Boot facilita el arranque, pero las dependencias y las anotaciones elegidas determinan cómo se comporta la aplicación: si mantiene un servidor web activo, cómo recibe datos y cómo construye cada respuesta.
+
+
