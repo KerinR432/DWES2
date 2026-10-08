@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ultramarines</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: 'Rajdhani', sans-serif;
+            color: #dcecff;
+
+            background:
+                    radial-gradient(circle at center, rgba(30, 91, 160, 0.35), transparent 45%),
+                    linear-gradient(135deg, #020711, #071a32 50%, #02050a);
+
+            overflow: hidden;
+        }
+
+        /* Marco exterior */
+        .terminal {
+            position: relative;
+            width: min(850px, 90%);
+            padding: 4px;
+
+            background: linear-gradient(
+                    135deg,
+                    #b88a2a,
+                    #f0d477,
+                    #6f4d12,
+                    #c9a640
+            );
+
+            clip-path: polygon(
+                    0 20px,
+                    20px 0,
+                    calc(100% - 20px) 0,
+                    100% 20px,
+                    100% calc(100% - 20px),
+                    calc(100% - 20px) 100%,
+                    20px 100%,
+                    0 calc(100% - 20px)
+            );
+
+            box-shadow:
+                    0 0 30px rgba(0, 102, 255, 0.35),
+                    0 0 80px rgba(0, 40, 100, 0.5);
+        }
+
+        .panel {
+            position: relative;
+            padding: 60px 50px;
+
+            background:
+                    linear-gradient(
+                            rgba(5, 25, 52, 0.94),
+                            rgba(2, 10, 23, 0.97)
+                    );
+
+            border: 2px solid #1d5da3;
+
+            text-align: center;
+
+            clip-path: polygon(
+                    0 16px,
+                    16px 0,
+                    calc(100% - 16px) 0,
+                    100% 16px,
+                    100% calc(100% - 16px),
+                    calc(100% - 16px) 100%,
+                    16px 100%,
+                    0 calc(100% - 16px)
+            );
+        }
+
+        /* Líneas decorativas */
+        .panel::before,
+        .panel::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            background: #c7a84b;
+            opacity: 0.8;
+        }
+
+        .panel::before {
+            top: 25px;
+            left: 50px;
+            right: 50px;
+        }
+
+        .panel::after {
+            bottom: 25px;
+            left: 50px;
+            right: 50px;
+        }
+
+        .aquila {
+            font-size: 4rem;
+            color: #d6b75a;
+            text-shadow:
+                    0 0 10px rgba(214, 183, 90, 0.5),
+                    0 0 25px rgba(0, 90, 255, 0.5);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+
+            color: #e6c65c;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+
+            text-shadow:
+                    0 0 8px rgba(0, 102, 255, 0.9),
+                    2px 2px 0 #061a35;
+        }
+
+        .subtitle {
+            margin-top: 12px;
+
+            color: #6ea8e8;
+            font-size: 1rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
+
+        .designation {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 8px 24px;
+
+            border: 1px solid #b8943c;
+            background: rgba(0, 63, 135, 0.3);
+
+            color: #d8c477;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* Esquinas */
+        .corner {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-color: #3c7fc5;
+            border-style: solid;
+        }
+
+        .top-left {
+            top: 12px;
+            left: 12px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .top-right {
+            top: 12px;
+            right: 12px;
+            border-width: 2px 2px 0 0;
+        }
+
+        .bottom-left {
+            bottom: 12px;
+            left: 12px;
+            border-width: 0 0 2px 2px;
+        }
+
+        .bottom-right {
+            bottom: 12px;
+            right: 12px;
+            border-width: 0 2px 2px 0;
+        }
+
+        /* Efecto de escaneo */
+        .scanline {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+
+            background: repeating-linear-gradient(
+                    to bottom,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(255,255,255,0.015) 4px
+            );
+        }
+
+        .status {
+            margin-top: 25px;
+            color: #55aaff;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+        }
+
+        .status::before {
+            content: "● ";
+            color: #32d26b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="terminal">
+    <div class="panel">
+
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="scanline"></div>
+
+        <div class="aquila">⚔</div>
+
+        <h1 th:text="|Hola ${mensaje}|"></h1>
+
+        <div class="subtitle">
+            Ultramarines // Adeptus Astartes
+        </div>
+
+        <div class="designation">
+            ▣ Sistema de comunicación // Macragge
+        </div>
+
+        <div class="status">
+            SISTEMA OPERATIVO · IMPERIUM
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

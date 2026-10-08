@@ -4,10 +4,58 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/HolaMundoConPlantilla" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/HolaMundoConPlantilla" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/PracticandoFormulario" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/PracticandoFormulario" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ValidacionFormulario" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/ValidacionFormulario" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/contadorVisita" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/contadorVisita" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/demo" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/demo" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/demoFormulario" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/demoFormulario" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fuerzaDelImperio" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/fuerzaDelImperio" />
           </set>
         </option>
       </GradleProjectSettings>

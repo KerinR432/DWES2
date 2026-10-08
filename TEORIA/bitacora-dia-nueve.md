@@ -23,3 +23,6 @@ C -> Bussines Logic
 
 ```
 
+
+
+**Relacionado: SPRINGBOOT** [[bitacora-dia-siete]]

@@ -582,6 +582,9 @@ CLIENTE
 
 ---
 
+**Relacionado: SPRINGBOOT** [[bitacora-dia-siete]]
+
+
  # `12` // 🧠 IoC & DI
 
  Spring se apoya en conceptos fundamentales como:
