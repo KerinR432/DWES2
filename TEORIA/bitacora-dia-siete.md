@@ -1,22 +1,20 @@
-# SPRINGBOOT
+<div class="cover">
+<h1>Bitácora de desarrollo</h1>
+<p>SPRING BOOT · PRIMEROS ENDPOINTS Y FORMULARIOS</p>
+<p class="serial">DÍA 7 // GUÍA DE CAMPO · DESARROLLO WEB</p>
+</div>
 
-Existe varias maneras de programar en springboot lo hare en IntellJ pero puedes hacerlo en programacación.
+## Objetivo de la sesión
 
-podemos utilizar en tipo Gradle - Groovy.
+> En esta sesión hice una primera prueba con Spring Boot, creé un endpoint `GET` para saludar y trabajé el envío de un formulario mediante `POST`.
 
-Yo suelo utilizar Marven
+El proyecto se puede crear con Gradle o Maven. En esta práctica utilicé Maven y añadí, por el momento, la dependencia **Spring Web**. También es posible seguir los mismos pasos desde IntelliJ IDEA o desde otro entorno de programación.
 
-## Las dependecias
+## Primer arranque
 
-de momento solo spring web
+Al ejecutar la aplicación, Spring Boot inicia el servidor integrado. Con el proyecto en marcha, añadí un endpoint para responder a las peticiones `GET` en `/hello`:
 
-## Primer run 
-
-Hemos corrido el proyecto y ha funcionado, devuelve un fallo que dira que si funciona
-
-vale, para empezar a tope vamos a añadir el primero Hola mundo, aqui prendemos lo que es `get` que sera el que nos va acompañar a lo largo de clases.
-
-```java
+```JAVA
 package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
@@ -33,95 +31,71 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    // EL PRIMERO GET DE TODO EL MUNDO DE SPRINGBOOT
-
     @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name",defaultValue = "World") String name) {
-        return String.format("Hello %s",name);
+    public String hello(
+            @RequestParam(value = "name", defaultValue = "World") String name) {
+        return String.format("Hello %s", name);
     }
 }
-
 ```
 
-y al ejecutar la url de `/hello` tendremos nuestro primer contacto con backend
+Al visitar `/hello`, el parámetro `name` no está presente, así que se utiliza el valor predeterminado `World`.
 
-lo que tienes en la URL es:
+**Petición a `/hello`:**
+
 ![URL de /hello](imagenes/springboot1.png)
 
-Y el resultado tiene que se el siguiente:
+**Respuesta:**
 
+![Respuesta Hello World](imagenes/springboot2.png)
 
-![Hello Word](imagenes/springboot2.png)
+Si añado `?name=ruvik` a la URL, Spring recibe ese valor y lo incluye en el saludo.
 
----
+**Petición a `/hello?name=ruvik`:**
 
-al ejectuar ahora la URL de `/hello?name=ruvik` esto ahora con la logica de sprinboot debde saludar al **ruvik**
+![URL de /hello con el parámetro name](imagenes/springboot3.png)
 
-lo que tienes en la URL es:
-![URL de /hello](imagenes/springboot3.png)
+**Respuesta:**
 
-Y el resultado tiene que se el siguiente:
+![Respuesta Hello ruvik](imagenes/springboot4.png)
 
+## GET y POST con un formulario
 
-![Hello ruvik](imagenes/springboot4.png)
+Al principio confundí las funciones de `GET` y `POST`. Se suelen usar en el mismo flujo, pero cumplen tareas distintas: `GET` solicita o muestra el formulario y `POST` envía sus datos para que el servidor los procese.
 
-## Fallos
+El primer intento falló porque la ruta de `action` del formulario no coincidía con la ruta de `@PostMapping`. El navegador envía la petición a la dirección indicada en `action`, por lo que ambas rutas deben coincidir.
 
-Como no me acordaba como funcionaba, confundía que `get` y `post` iba de la mano, pero estaba equivocada, primero es un get, donde uno va poder mostrar el formulario.
+> La ruta de `action` debe coincidir con la ruta de `@PostMapping`. Además, el atributo `name` de cada campo debe coincidir con el nombre que se espera en `@RequestParam`.
 
-de momento esto falla debo averiguar porque falla.
+## Formulario y procesamiento
 
-Realmente tuve que investigar, porque tire todo de memoria, me confundi por ejemplo del `<form method="POST" action="/formulario" enctype="multipart/form-data">`
-porque se me olvido que action va directamente buscando /formulari y yo en `@PostMapping(/mostrar)` tenia puesto otra URL
+Para servir un HTML estático con Spring Web, guarda el archivo en `src/main/resources/static/formulario.html` y ábrelo en `/formulario.html`. No hace falta crear un `@GetMapping` que devuelva la ruta del archivo: con `@RestController`, una cadena devuelta por un método se envía como texto en la respuesta, no se interpreta como una página HTML.
 
-
-> [!IMPORTANT]
-> 
-> **IMPORTANTE:** recuerda siempre lo que este en `<form method="POST" action="/formulario" enctype="multipart/form-data">` siempre el post que lo precesa debe tener el mismo nombre. 
-> 
-> Y RECUERDA QUE EL `NAME` SIEMPRE VA IR DE LA MANO CON EL `@REQUESTPARAM` CON EL MISMO NOMBRE
-
-## Solución
-
-```java
-   @GetMapping(value = "/")
-    public String mostrarFormulario(){
-        return "/formulario.hmtl" ;
-    }
-```
-
-
-en la URL `/formulario.html` pedimos el fichero html
-
-en el `post` si procesa y en ese mismo procesamiento podemos motrar los datos directamnete, pero primero debos hacer un html:
+El formulario envía el campo `nombre` mediante `POST` a `/formulario`:
 
 ```html
-<html>
-    <body>
-    <form method="POST" action="/formulario" enctype="multipart/form-data">
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <form method="POST" action="/formulario">
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre">
-
         <button type="submit">Enviar</button>
     </form>
-    </body>
+</body>
 </html>
 ```
 
-Y el `post` mostramos lo siguiente:
+El controlador recibe el valor de `name="nombre"` con `@RequestParam` y devuelve un saludo:
 
 ```java
-    @PostMapping("/formulario")
-    public String procesarDatos(@RequestParam(value = "nombre") String nombre){
-        System.out.println("Procesando proceso de datos");
-
-        if (!nombre.isEmpty()){
-            return String.format("Hola %s", nombre) ;
-        }
-        return String.format("Hola mundo") ;
+@PostMapping("/formulario")
+public String procesarDatos(@RequestParam("nombre") String nombre) {
+    if (!nombre.isBlank()) {
+        return String.format("Hola %s", nombre);
     }
+    return "Hola mundo";
+}
 ```
 
-Recogemos lo que es el valor de `type` del `ìnput` por medio del `@RequestParam` y luego lo mostramor directamente en el `@PostMapping`.
-
-
+Así queda conectado el recorrido: el navegador envía `nombre`, Spring lo asocia con el parámetro del método y el endpoint responde con el resultado.

@@ -1,49 +1,39 @@
-# UD1 - UD2 
+<div class="cover">
+<p class="serial">CUADERNO DE PRÁCTICAS // DESARROLLO WEB</p>
 
+# UD1 · UD2<br>SPRING BOOT
 
+<p><strong>De un proyecto vacío a una API REST</strong></p>
+<p>Kerin Aguilera</p>
+<p class="serial">JAVA 21 · SPRING BOOT · OCTUBRE 2026</p>
+</div>
 
-## KERIN AGUILERA
+## Índice
 
+- [Primer intento: proyecto sin dependencias](#primer-intento)
+- [Segundo intento: una aplicación web](#segundo-intento)
+    - [Configuración de Gradle](#gradle)
+    - [Rutas y parámetros](#rutas)
+    - [Página estática y formularios](#formularios)
+    - [Spring Initializr y empaquetado](#empaquetado)
+    - [Configuración del puerto](#puerto)
+    - [Objetos y respuestas JSON](#json)
+    - [Lectura del cuerpo de una petición](#request-body)
+- [Conclusión](#conclusion)
 
-### INDICE
-----
+<a id="primer-intento"></a>
 
-- [UD1 - UD2](#ud1---ud2)
-  - [KERIN AGUILERA](#kerin-aguilera)
-    - [INDICE](#indice)
-    - [PRIMERO INTENTO EL FALLIDO](#primero-intento-el-fallido)
-    - [SEGUNDO INTENTO, EL BUENO](#segundo-intento-el-bueno)
-      - [PAGINA ESTATICA](#pagina-estatica)
-        - [Sring Initializr](#sring-initializr)
-  - [Conclusión](#conclusión)
-- [FINAL](#final)
+## 1. Primer intento: proyecto sin dependencias
 
+La práctica comienza creando un proyecto Spring Boot sin dependencias adicionales. En Spring Initializr, el único cambio respecto a la configuración inicial es seleccionar Java 21.
 
-----
+![Selección de Java 21 en Spring Initializr](img%20-%20documents/D1-UD2.1.png)
 
+En el siguiente paso dejamos vacía la lista de dependencias.
 
+![Selector de dependencias de Spring Boot](img%20-%20documents/UD1%20-%20UD2.2.png)
 
-
-### PRIMERO INTENTO EL FALLIDO
-
-Siguiente el hilo de la practica, pide que intentemos crear un proyecto **springboot** de manera vanila, sin modificaciones e sin incluir nada.
-
-![La primera desición](img%20-%20documents/D1-UD2.1.png)
-
-Aqui solo haremos un cambio que es elegir Java 21.
- 
----
-
-Luego, le damos next y pasamos a la parte de la dependecias, igual no incluimos nada en ellas.
-
-![Zona de dependecia de Springboot](img%20-%20documents/UD1%20-%20UD2.2.png)
-
-
----
-
-Ahora la cuestión es ¿Funciona esto? Pues de momentos nos da todo lo que puede tener una apps springboot.
-
-tenemos la clase inical
+El proyecto generado incluye una clase de entrada sencilla:
 
 ```java
 package ruvik.proyectoud1ud2;
@@ -57,80 +47,70 @@ public class ProyectoUd1Ud2Application {
     public static void main(String[] args) {
         SpringApplication.run(ProyectoUd1Ud2Application.class, args);
     }
-
 }
 ```
-Con su estructura.
 
-![Estructuras de carpetass](img%20-%20documents/UD1-UD2.3.png)
+La estructura inicial queda así:
 
+![Estructura del proyecto generado](img%20-%20documents/UD1-UD2.3.png)
 
-Es curioso al intentar ejecutar lo que es el programa sin tener nada adentro, no se queda ejecutando, solo devuelve algo por terminal y finaliza.
+Al ejecutar esta aplicación, el proceso termina poco después de iniciarse. Sin una dependencia web, Spring Boot no levanta un servidor HTTP que mantenga la aplicación escuchando peticiones.
 
-![vision de la terminal](img%20-%20documents/UD1-UD2.4.png)
+![Salida de la ejecución en la terminal](img%20-%20documents/UD1-UD2.4.png)
 
----
+Por eso, al intentar utilizar anotaciones web del [inicio rápido de Spring](https://spring.io/quickstart), faltan las clases necesarias para compilar. La aplicación base arranca, pero todavía no puede atender peticiones web.
 
-Como era de esperar y es logico cuando intenamos incluir las anocaciones de [Spring | Quickstart](spring.io/quickstart) fallan, salta por los aires y es que **no hemos puestos las dependecias necesarias** que sorportan el tema de la web.
+![Errores al intentar usar las anotaciones web](img%20-%20documents/UD1-UD2.5.png)
 
-![imagen de los fallos](img%20-%20documents/UD1-UD2.5.png)
+> La primera prueba deja clara la diferencia entre crear una aplicación Spring Boot y añadirle las capacidades necesarias para convertirla en una aplicación web.
 
-**CONCLUSIÓN TODO ESTO FALLA**
+<a id="segundo-intento"></a>
 
----
+## 2. Segundo intento: una aplicación web
 
-### SEGUNDO INTENTO, EL BUENO
+Creamos otro proyecto con la misma configuración y añadimos la dependencia **Spring Web**. Esta incorpora lo necesario para crear controladores y atender peticiones HTTP.
 
-Ahora volvemos a inicializar un proyecto como antes, pero ahora la peculiaridad es añadir una dependencia que lo cambia todo. `Spring web`
+![Creación del proyecto con Spring Web](img%20-%20documents/D1-UD2.6.png)
 
-![prueba de la incluición de nuevas dependecias](img%20-%20documents/UD1-UD2.6.png)
+Ahora la aplicación permanece en ejecución. En los registros se observa que Spring Boot inicia Tomcat en el puerto 8080:
 
-ahora con esto ya podemos comprar lo que sucedido en la anterior y sacar conclusiones. 
-Y es que ahora si permite poner las anotaciones y los imports, quitando los imports sugiere lo mismo, porque aun no tenemos dependecias como JPA o mas que si tiene 2 imports distinos y al ejeuctar el proyecto funciona, no se detiene sino que se mantiene en ejecución, asi como ahora si nos dice que podemos ver lo que muestra en localhost.
+```text
+:: Spring Boot :: (v4.1.1)
 
-```bash
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
-
- :: Spring Boot ::                (v4.1.1)
-
-2026-09-29T09:05:24.499+02:00  INFO 21074 --- [UD1-UD2] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
-2026-09-29T09:05:24.512+02:00  INFO 21074 --- [UD1-UD2] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-
-
+Tomcat initialized with port 8080 (http)
+Starting service [Tomcat]
 ```
 
-Y ya no solo eso, sino que ahora si vamos a nuestros navegador y y ponemos `localhost:8080` ya nos responde algo
+Al visitar `http://localhost:8080/` aparece un error porque todavía no hemos definido una ruta para la raíz.
 
-![fallo del servidor](img%20-%20documents/D1-UD2.78.png)
+![Respuesta al visitar la ruta raíz sin un controlador asignado](img%20-%20documents/D1-UD2.78.png)
 
-**¿Pero que ocurre?** Pues el fallos es claramente logico y normal, en nuestro proyecto tenemos la siguiente lineas
+El controlador de ejemplo responde en `/hello`:
 
 ```java
-    @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello, %s!", name);
-    }
+@GetMapping("/hello")
+public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+    return String.format("Hello, %s!", name);
+}
 ```
 
-que nos dice que para visualizar *Hello World* debemos ir a la ruta `/hello` asi que en el buscador deberias de poner `localhost:8080/hello` y ahora si esto debria devolvernos lo siguiente:
+La ruta `http://localhost:8080/hello` devuelve el saludo por defecto.
 
-![el primer Hello World](img%20-%20documents/D1-UD2.8.png)
+![Respuesta de la ruta hello](img%20-%20documents/D1-UD2.8.png)
 
+El parámetro `name` permite personalizarlo: `http://localhost:8080/hello?name=ruvik`.
 
-Y es que ahora con la pequeña logica que hay dentro, si nosotros en la url introducimos un valor en la variable name, debe saludarnos `http://localhost:8080/hello?name=ruvik`
+![Respuesta de hello con el nombre Ruvik](img%20-%20documents/D1-UD2.9.png)
 
-![saludando a Ruvik](img%20-%20documents/D1-UD2.9.png)
+<a id="gradle"></a>
 
-Ya tengo la depedencias DevTools pero viendo dentro de gradle tenemos lo siguiente
+### Configuración de Gradle
 
-![configuración de gradle](img%20-%20documents/D1-UD2.10.png)
+El archivo de Gradle declara los plugins, la versión de Java y las dependencias del proyecto.
 
-en ella tenemos lo siguiente 
+![Configuración de Gradle](img%20-%20documents/D1-UD2.10.png)
+
+Los plugins identifican Java, Spring Boot y la gestión de dependencias:
 
 ```gradle
 plugins {
@@ -140,7 +120,7 @@ plugins {
 }
 ```
 
-Esto en donde determinamos versión del framework asi como el propio gradle que gestionas sus paquetes.
+La configuración del proyecto especifica Java 21 y Maven Central como repositorio:
 
 ```gradle
 group = 'Ruvik'
@@ -157,8 +137,8 @@ repositories {
     mavenCentral()
 }
 ```
-aqui esta todo lo que dejamos por default, viendo tambien que esta el la versión 21 de Java que elegimos
 
+Las dependencias principales son Spring MVC, DevTools y las herramientas de prueba:
 
 ```gradle
 dependencies {
@@ -167,24 +147,26 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-
 ```
-aqui esta donde nos moveremos mas, las dependecias del proyecto, donde a manos podemos añadir nuevas dependecias, o buscar dependencias saviendo si funcionan o no.
 
-> ANOTANCIÓN: todo lo que he dicho antes es segundo entiendo lo que veo. Puede existir fallos.
+`implementation` incorpora dependencias necesarias en la aplicación; `developmentOnly` se reserva para el desarrollo, y `testImplementation` para las pruebas.
 
-Al modificar tanto nombre pasar al español a ingles y sigue funcionando
+> Esta es mi interpretación de la configuración que estoy viendo. La finalidad de cada dependencia puede variar según el proyecto.
+
+<a id="rutas"></a>
+
+### Rutas y parámetros
+
+También podemos traducir la ruta y el parámetro al español. Con `@RestController`, el valor devuelto por el método se escribe directamente en la respuesta HTTP.
 
 ```java
 package ruvik.ud1ud2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @SpringBootApplication
 @RestController
@@ -198,241 +180,148 @@ public class Ud1Ud2Application {
     public String hello(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
         return String.format("Hola, %s!", name);
     }
-
 }
-
 ```
-Vemos el cambio de ingles a español 
 
-Y aqui abajos las repuesta de la petención `localhost:8080/hola` y `localhost:8080/hola?nombre=ruvik`
+`http://localhost:8080/hola` utiliza el valor predeterminado; `http://localhost:8080/hola?nombre=ruvik` utiliza el que enviamos en la URL.
 
-![al pedir en URL hola](img%20-%20documents/D1-UD2.11.png)   ![url nombre = ruvik](img%20-%20documents/D1-UD2.12.png)
+![Respuesta de hola sin parámetro](img%20-%20documents/D1-UD2.11.png)
 
+![Respuesta de hola con el parámetro nombre](img%20-%20documents/D1-UD2.12.png)
 
----
-
-Si funciona si pones atonaciones HTML dentro de la repuesta
+Durante la prueba también se incluyó HTML en la cadena de respuesta:
 
 ```java
-return String.format("Hola, <b> %s!</b>",name);
+return String.format("Hola, <b>%s!</b>", name);
 ```
 
-Si refrescamos la pagina web asi es como lo devuelve
-![letra en negrita](img%20-%20documents/D1-UD2.13.png)
+El navegador muestra el saludo en negrita. El formato concreto de la respuesta depende del controlador y del tipo de contenido enviado.
 
-Y si vemos la repuesta de la cabecera esto es lo que tenemos 
+![Saludo con texto en negrita](img%20-%20documents/D1-UD2.13.png)
 
-![repuestas](img%20-%20documents/D1-UD2.14.png)
+![Cabeceras de la respuesta](img%20-%20documents/D1-UD2.14.png)
 
+<a id="formularios"></a>
 
----
+### Página estática y formularios
 
-
-#### PAGINA ESTATICA
-
-he puesto una pagina web estatica llamada `index.html` como aprendimos ayer esto muestra la `/`  directamente 
-este es nuestro html
+Una página llamada `index.html`, ubicada en los recursos estáticos de la aplicación, se puede servir en `/`. Este formulario envía el nombre al servidor mediante una petición POST:
 
 ```html
 <html>
     <body>
         <form action="/mostrar" method="post">
             <label for="nombre">Nombre:</label>
-            <input type="text"  name="nombre">
+            <input id="nombre" type="text" name="nombre">
             <button type="submit">Enviar</button>
         </form>
     </body>
+</html>
 ```
 
-y este es el `@Postmapping` donde procesamos y mostramos el el mensajes:
+El controlador recibe el parámetro y construye la respuesta:
 
 ```java
-package ruvik.ud1ud2;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-
-@SpringBootApplication
-@RestController
-public class Ud1Ud2Application {
-
-    public static void main(String[] args) {
-        SpringApplication.run(Ud1Ud2Application.class, args);
-    }
-
-    @GetMapping("/hola")
-    public String hello(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
-        return String.format("Hola, <b> %s!</b>",name);
-    }
-
-    @PostMapping("/mostrar")
-    public String mostrar(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
-        return String.format("Hola, <b> %s!</b>",name);
-    }
-
+@PostMapping("/mostrar")
+public String mostrar(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
+    return String.format("Hola, <b>%s!</b>", name);
 }
-
 ```
 
-Y aqui las capturas de como se muestra un formulario en `/` y el resultado
+![Formulario de la pagina estatica](img%20-%20documents/D1-UD2.15.png)
 
-![formulario](img%20-%20documents/D1-UD2.15.png) ![resultado](img%20-%20documents/D1-UD2.16.png)
+![Respuesta enviada por el formulario](img%20-%20documents/D1-UD2.16.png)
 
-
-
-Primero si quitamos el Rest de RestController y lo dejamos como un Controller a secas. Lo que pasas es que a parte de que la importanción cambia, aunque te siga sirviendo el html en la pagina principal, cuando quieres procesar algun tipo de dato falla. Por el hecho de que solo es un controller.
-
-Pero no me acuerdo como era el año pasado, pero si he averiguado por que me sonaba entre `@RequestBody` y `@ResponseBody` pregunte en internet sus diferncias y el `@ResponseBody` es lo que devuelve el servidor, si pones la anotación arriba de lo que quieres mostrar termina funcionando.
+La diferencia entre `@Controller` y `@RestController` importa al devolver una cadena. En un `@Controller`, Spring interpreta normalmente la cadena como el nombre de una vista. `@ResponseBody` indica que debe escribirse en el cuerpo de la respuesta; `@RestController` aplica ese comportamiento a todos los métodos del controlador.
 
 ```java
-    @PostMapping("/mostrar")
-    @ResponseBody
-    public String mostrar(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
-        return String.format("Hola, <b> %s!</b>",name);
-    }
+@PostMapping("/mostrar")
+@ResponseBody
+public String mostrar(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
+    return String.format("Hola, <b>%s!</b>", name);
+}
 ```
 
+<a id="empaquetado"></a>
 
----
+### Spring Initializr y empaquetado
 
+Spring Initializr simplifica la creación del proyecto: permite seleccionar lenguaje, versión y dependencias, y genera una estructura inicial lista para desarrollar.
 
-##### Sring Initializr
+En IntelliJ, la tarea `BootJar` genera el archivo ejecutable:
 
-Lo que aporta es quitarle complijidad al crear una aplicación web que recibe peteciones, porque al utilizar el Spring Core, debemos tener muchas dependecias y ver si clases esta cableadas lo mejor posible, sino nada funciona. 
+![Ubicacion de la tarea BootJar en IntelliJ](img%20-%20documents/D1-UD2.17.png)
 
-Spring Initializr soluciona eso, dando una interfaz mas amable, que nos deja elegir todo y crear todo apps sin nosotros tener que preocuparnos que funciona o no, solo programar.
-
-En intellJ para poder exportar el .jar es de los siguiente forma
-
-![donde se hace el .jar](img%20-%20documents/D1-UD2.17.png)
-
-```text
-vas al proyecto
-            UD1-UD2
-                Tasks
-                    build
-                    BootJar
-
-```
-le damos doble click y ejecuta, en la carpeta e tu proyecto esta en build y lib
-
-para ejecutarlo debemos ir ahí por terminal
-
-y ejecutar
+En el panel de Gradle, la ruta es `Tasks > build > BootJar`. El archivo generado queda en `build/libs`. Se puede ejecutar desde una terminal así:
 
 ```bash
-
-java -jar [NOMBRE DE LA CARPETA]
+java -jar build/libs/nombre-del-proyecto.jar
 ```
-resultado
-![comando](img%20-%20documents/D1-UD2.18.png)
 
----
+![Ejecucion del archivo JAR](img%20-%20documents/D1-UD2.18.png)
 
-He buscado por internet y dice que el puerto se limita en `application.properties` he intento incluir el puerto:80
+<a id="puerto"></a>
 
-![el puerto 80](img%20-%20documents/D1-UD2.19.png)
+### Configuración del puerto
 
+El puerto del servidor se puede cambiar en `application.properties`, por ejemplo con `server.port=80`.
 
-pero parece ser que todo salta por los aires.
+![Configuracion del puerto 80](img%20-%20documents/D1-UD2.19.png)
 
-![fallo puerto 80](img%20-%20documents/D1-UD2.20.png)
+En Linux y otros sistemas tipo Unix, los puertos inferiores a 1024 suelen requerir permisos especiales. Por eso, una aplicación ejecutada como usuario normal puede no tener permiso para enlazarse al puerto 80. Para desarrollo local conviene usar un puerto no privilegiado, como el 8080.
 
----
+![Error al intentar usar el puerto 80](img%20-%20documents/D1-UD2.20.png)
 
-Vale con el POJO introducido, devuelvo directamente el Objeto, porque habia pensado en devolver un tipo String, pero al devolver el Objeto, lo que hace Springboot es lo siguiente
+<a id="json"></a>
+
+### Objetos y respuestas JSON
+
+Al devolver un objeto Java desde un controlador REST, Spring lo serializa como JSON si hay un conversor compatible disponible en el proyecto. En este ejemplo, se crea un `Contacto` a partir de dos parámetros:
 
 ```java
-package ruvik.ud1ud2;
+@GetMapping("/contacto")
+public Contacto contacto(
+        @RequestParam(value = "nombre", defaultValue = "Benjamin") String nombre,
+        @RequestParam(value = "apellido", defaultValue = "Carmine") String apellido) {
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
-import ruvik.ud1ud2.Entity.Contacto;
-
-
-@SpringBootApplication
-@RestController
-public class Ud1Ud2Application {
-
-    public static void main(String[] args) {
-        SpringApplication.run(Ud1Ud2Application.class, args);
-    }
-
-    @GetMapping("/hola")
-    public String hello(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
-        return String.format("Hola, <b> %s!</b>",name);
-    }
-
-    @PostMapping("/mostrar")
-    public String mostrar(@RequestParam(value = "nombre", defaultValue = "Mundo") String name) {
-        return String.format("Hola, <b> %s!</b>",name);
-    }
-
-    @GetMapping("/contacto")
-    public Contacto contacto(@RequestParam(value = "nombre",defaultValue = "Benjamin") String nombre,
-                             @RequestParam(value = "apellido",defaultValue = "Carmine") String apellido
-    ){
-
-        Contacto contacto = new Contacto();
-        contacto.setNombre(nombre);
-        contacto.setApellido(apellido);
-        return contacto;
-    }
-
+    Contacto contacto = new Contacto();
+    contacto.setNombre(nombre);
+    contacto.setApellido(apellido);
+    return contacto;
 }
 ```
 
-Y lo que interpreta Springboot es devolver un JSON
+La respuesta se representa como JSON en el navegador:
 
-![el Json de springboot](img%20-%20documents/D1-UD2.21.png)
+![Objeto Contacto devuelto como JSON](img%20-%20documents/D1-UD2.21.png)
 
+![Tipo de contenido de la respuesta JSON](img%20-%20documents/D1-UD2.22.png)
 
-Y el Type al inspeccionar es el siguiente:
+<a id="request-body"></a>
 
-![JSON](img%20-%20documents/D1-UD2.22.png)
+### Lectura del cuerpo de una petición
 
-
----
-
-para utilizar bruno e ingresar datos por dentro del cuerpo, yo hice el `@PostMapping` lo siguiente:
+Para recibir un objeto enviado en el cuerpo de una petición POST, se puede usar `@RequestBody`. El ejemplo devuelve el objeto recibido:
 
 ```java
-
-
-    @PostMapping("/formulario")
-    public Contacto formulario(@RequestBody(required = false) Contacto contacto) {
-        Contacto contacto1 = contacto;
-        System.out.println("Si funciono, creo...");
-        System.out.println(contacto1);
-        return contacto1;
-    }
-
+@PostMapping("/formulario")
+public Contacto formulario(@RequestBody Contacto contacto) {
+    return contacto;
+}
 ```
 
-Y en bruno hace lo siguiente:
-![BRUNO HACE](img%20-%20documents/D1-UD2.23.png)
+En Bruno, se envía un cuerpo JSON que Spring convierte en un objeto `Contacto`:
 
+![Peticion POST enviada desde Bruno](img%20-%20documents/D1-UD2.23.png)
 
-Y la cabecera que devuelve es la siguiente:
+![Cabeceras devueltas por la peticion](img%20-%20documents/D1-UD2.24.png)
 
-![cabecera](img%20-%20documents/D1-UD2.24.png)
+`@RestController` y `@ResponseBody` permiten escribir directamente el resultado en la respuesta. Si se necesita controlar también el estado HTTP o las cabeceras, `ResponseEntity` ofrece esas opciones.
 
-----
+<a id="conclusion"></a>
 
-Buscando información por internet, dice que se Gesntiona cuando utilizamos  `@RestController` o  `@ResponseBody` o cuando estemos mucho mas avanzados y utilicemos 
+## 3. Conclusión
 
- `ResponseEntity` podemos de alguna manera configurar y gestionar el typeContent.
+Volver a trabajar estos conceptos me permitió avanzar con más rapidez: ya entendía mejor por qué se necesitan ciertas dependencias y cómo se conectan las rutas con las respuestas. Todavía me sentía algo oxidado con los POJOs, pero pude completar las pruebas con más soltura que la primera vez.
 
-
-## Conclusión
-
-realmente el hecho de volver a reever esto, me hizo ir mas rapido, ya entendia el porque de algunas cosas, como funciona, es verdad que me senti oxidado mas con el tema de POJOS pero en general me he sentido mas suelto y capaz de hacerlo mejor, cuando lo intente por primera vez.
-
- # FINAL
+La idea principal que me llevo es que Spring Boot facilita el arranque, pero las dependencias y las anotaciones elegidas determinan cómo se comporta la aplicación: si mantiene un servidor web activo, cómo recibe datos y cómo construye cada respuesta.
