@@ -1,36 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>BIENVENIDO AL PODEROSO IMPERIO DE LA HUMANIDAD</h1>
-    <p>Tu servicio sera en pos del honor, de la gloria. dar tu vida por el emperador</p>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h1>BIENVENIDO AL PODEROSO IMPERIO DE LA HUMANIDAD</h1>
+        <p>Tu servicio sera en pos del honor, de la gloria. dar tu vida por el emperador</p>
 
-    <h2>Tus datos</h2>
+        <h2>Tus datos</h2>
 
-    <p th:text="|Te Llamas: ${imperial.nombre}|"></p>
-    <p th:text="|Tu edad es: ${imperial.edad}|"></p>
-    <p th:each=" aficion : ${imperial.aficiones}" th:text="|aficiones son: ${aficion}|"></p>
-    <p th:text="|Peteneces la gloria: ${imperial.ramaMilitar}|"></p>
-    <p th:text="|Tu Rango es: ${imperial.rango}|"></p>
+        <p th:text="|Te Llamas: ${imperial.nombre}|"></p>
+        <p th:text="|Tu edad es: ${imperial.edad}|"></p>
+        <p th:each=" aficion : ${imperial.aficiones}" th:text="|aficiones son: ${aficion}|"></p>
+        <p th:text="|Peteneces la gloria: ${imperial.ramaMilitar}|"></p>
+        <p th:text="|Tu Rango es: ${imperial.rango}|"></p>
 
-    <div th:if="${esMayor}">
-        <p>Eres un tio que entiende que esto va ser un paseo. Aunque servir al emperador es glorioso. Claramente esto va traer destraste y seguramente mueras en menos de unos minutos
-        pero genial, tu vida aunque no sea recordarda seguro seras recordado por algo o por alguien, ¡ANIMO!
-        </p>
-    </div>
+        <div th:if="${esMayor}">
+            <p>Eres un tio que entiende que esto va ser un paseo. Aunque servir al emperador es glorioso. Claramente esto va traer destraste y seguramente mueras en menos de unos minutos
+            pero genial, tu vida aunque no sea recordarda seguro seras recordado por algo o por alguien, ¡ANIMO!
+            </p>
+        </div>
 
-    <div th:if="${esAltoRango}">
-        <p>
-            Comisario, Capitan del capitulo, Astarte.
-            Hay muchos planetas bajo ataque, actualemente estamos luchando varios frente. Tu regmiento debe ir aun sitio
-        </p>
+        <div th:if="${esAltoRango}">
+            <p>
+                Comisario, Capitan del capitulo, Astarte.
+                Hay muchos planetas bajo ataque, actualemente estamos luchando varios frente. Tu regmiento debe ir aun sitio
+            </p>
 
-        <h1>Planetas</h1>
-        <h2>Terra</h2>
-        <h2>Arcadia</h2>
-    </div>
-</body>
-</html>
+            <h1>Planetas</h1>
+            <h2>Terra</h2>
+            <h2>Arcadia</h2>
+        </div>
+    </body>
+    </html>
