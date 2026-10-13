@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FORMULARIO DOS</title>
+</head>
+<body>
+<form method="post" th:action="@{/procesar}" th:object="${datos}" action="/procesar">
+    <input type="checkbox" th:field="*{Aficciones}" name="futbol" value="futbol"> Futbol
+    <input type="checkbox" th:field="*{Aficciones}" name="balocentos" value="balocentos"> Balocentos
+    <input type="checkbox" th:field="*{Aficciones}" name="volevoy" value="volevoy"> Volevoy
+    <input type="checkbox" th:field="*{Aficciones}" name="balmiton" value="balmiton"> Balmiton
+    <button type="submit" name="contador" th:value="${contador + 1}" >Enviar</button>
+
+
+    <input type="hidden" th:field="*{nombre}" />
+    <input type="hidden" th:field="${contador}" />
+
+</form>
+</body>
+</html>
