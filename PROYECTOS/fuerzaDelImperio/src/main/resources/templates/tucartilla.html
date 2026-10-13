@@ -12,20 +12,20 @@
 
         <p th:text="|Te Llamas: ${imperial.nombre}|"></p>
         <p th:text="|Tu edad es: ${imperial.edad}|"></p>
-        <p th:each=" aficion : ${imperial.aficiones}" th:text="|aficiones son: ${aficion}|"></p>
-        <p th:text="|Peteneces la gloria: ${imperial.ramaMilitar}|"></p>
+        <p th:each=" afición : ${imperial.aficiones}" th:text="|aficiones son: ${afición}|"></p>
+        <p th:text="|Perteneces la gloria: ${imperial.ramaMilitar}|"></p>
         <p th:text="|Tu Rango es: ${imperial.rango}|"></p>
 
         <div th:if="${esMayor}">
-            <p>Eres un tio que entiende que esto va ser un paseo. Aunque servir al emperador es glorioso. Claramente esto va traer destraste y seguramente mueras en menos de unos minutos
-            pero genial, tu vida aunque no sea recordarda seguro seras recordado por algo o por alguien, ¡ANIMO!
+            <p>Eres un tio que entiende que esto va a ser un paseo. Aunque servir al emperador es glorioso. Claramente, esto va a traer destraste y seguramente mueras en menos de unos minutos,
+            pero genial, tu vida aunque no sea recordarda seguro serás recordado por algo o por alguien, ¡ÁNIMO!
             </p>
         </div>
 
         <div th:if="${esAltoRango}">
             <p>
-                Comisario, Capitan del capitulo, Astarte.
-                Hay muchos planetas bajo ataque, actualemente estamos luchando varios frente. Tu regmiento debe ir aun sitio
+                Comisario, Capitan del capítulo, Astarte.
+                Hay muchos planetas bajo ataque, actualmente estamos luchando varios frentes. Tu regmiento debe ir aún sitio
             </p>
 
             <h1>Planetas</h1>

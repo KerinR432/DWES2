@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MOSTRAR DATOS</title>
+</head>
+<body>
+    <h1 th:text="| Te llamas: ${datos.nombre} |"></h1>
+
+    <ol th:each="aficcion: ${datos.Aficciones}">
+        <ul  th:text="|aficiones son: ${aficcion}|" ></ul>
+    </ol>
+
+<p th:text="| Tu lugar de nacimiento: ${datos.lugar} |"></p>
+</body>
+</html>

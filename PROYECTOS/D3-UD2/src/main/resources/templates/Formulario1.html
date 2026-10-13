@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FORMULARIO UNO</title>
+</head>
+<body>
+    <form method="post" action="/procesar" th:action="@{/procesar}" th:object="${tusDatos}">
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" name="nombre">
+
+        <button type="submit" name="contador" value="1" >Enviar</button>
+    </form>
+</body>
+</html>

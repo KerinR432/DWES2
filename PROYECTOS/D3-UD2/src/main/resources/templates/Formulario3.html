@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/procesar}" th:object="${datos}" action="/procesar">
+    <select name="lugar" th:field="*{lugar}">
+        <option value="" disabled selected >-- Selecciona una opción --</option>
+        <option value="Madrid">Madrid</option>
+        <option value="Sevilla">Sevilla</option>
+        <option value="Malaga" >Malaga</option>
+    </select>
+
+    <button type="submit" name="contador" th:value="${contador + 1}" >Enviar</button>
+
+    <input type="hidden" th:field="*{nombre}" />
+    <input type="hidden" th:field="*{Aficciones}"/>
+    <input type="hidden" th:field="${contador}" />
+</form>
+</body>
+</html>
