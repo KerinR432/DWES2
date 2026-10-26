@@ -6,7 +6,7 @@
     "markdown-pdf.highlightStyle": "cybertopia-cherry.css",
     "markdown-pdf.stylesRelativePathFile": false,
     "markdown-pdf.styles": [
-        "./css/guia-galactica.css"
+        "./css/diselpunk.css"
     ],
     "workbench.settings.applyToAllProfiles": [
         "markdown-pdf.styles"

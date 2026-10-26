@@ -21,19 +21,131 @@
     --sky: #b9ded4;
     --code-bg: #18343a;
     --code-ink: #f3efd9;
+   GALACTIC FIELD GUIDE
+   Markdown → PDF / VS Code / Chromium Print Engine
+   ------------------------------------------------------------
+   Visual language:
+   Retro-futurist field manual / galactic bureaucracy /
+   technical archive / absurd survival documentation.
+
+   Designed for:
+   - A4 PDF
+   - Chromium-based Markdown → PDF extensions
+   - VS Code
+   - Long documents
+   - Tables / code / images / callouts
+   - Predictable page breaks
+   ============================================================ */
+
+
+/* ============================================================
+   01. DESIGN TOKENS
+   ============================================================ */
+
+:root {
+    /* --- PAPER --- */
+    --paper: #f4efe2;
+    --paper-light: #faf7f0;
+    --paper-dark: #e8dfca;
+
+    /* --- INK --- */
+    --ink: #111d21;
+    --ink-soft: #384d54;
+    --ink-faded: #65777b;
+
+    /* --- GALACTIC SIGNAL COLORS --- */
+    --teal: #147372;
+    --teal-dark: #0a3d3c;
+    --teal-light: #b3dacd;
+
+    --coral: #d14935;
+    --yellow: #e5b32a;
+
+    /* --- TERMINAL --- */
+    --code-bg: #0d1b1e;
+    --code-ink: #70f3d4;
+    --code-muted: #83a9a5;
+
+    /* --- GRID --- */
+    --grid-line: rgba(20, 115, 114, 0.075);
+
+    /* --- DIMENSIONS --- */
+    --content-width: 180mm;
+
+    /* --- SHADOW --- */
+    --shadow: 3px 3px 0 var(--ink);
 }
+
+
+/* ============================================================
+   02. FONT IMPORTS
+   ------------------------------------------------------------
+   If your VS Code PDF extension blocks external fonts,
+   the fallback stack keeps the document readable.
+   ============================================================ */
+
+@import url(
+    "https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+);
+
+
+/* ============================================================
+   03. GLOBAL BOX MODEL
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+/* ============================================================
+   04. PRINT PAGE
+   ------------------------------------------------------------
+   Keep @page deliberately conservative.
+   Chromium support for advanced margin boxes varies between
+   PDF extensions.
+   ============================================================ */
 
 @page {
     size: A4;
-    margin: 0;
+    margin: 18mm 15mm 20mm 15mm;
+}
+
+
+/* ============================================================
+   05. DOCUMENT BASE
+   ============================================================ */
+
+html {
+    font-size: 10pt;
+    background: var(--paper);
 }
 
 html, body {
     background-color: var(--paper) !important;
+body {
+    width: auto;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+
     color: var(--ink);
+    background-color: var(--paper);
+
+    font-family:
+        "Space Grotesk",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 10pt;
+    line-height: 1.55;
+
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-}
 
 body {
     box-sizing: border-box;
@@ -63,7 +175,100 @@ h1, h2, h3, h4, h5, h6 {
     break-after: avoid;
     /* 2026 Tech: Equilibra automáticamente el texto */
     text-wrap: balance; 
+    /*
+     * Technical-paper grid.
+     * Kept deliberately subtle so it does not dominate
+     * printed text.
+     */
+    background-image:
+        linear-gradient(
+            var(--grid-line) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            var(--grid-line) 1px,
+            transparent 1px
+        );
+
+    background-size: 20px 20px;
 }
+
+
+/* ============================================================
+   06. TEXT
+   ============================================================ */
+
+p {
+    margin: 0 0 0.85em;
+
+    text-align: justify;
+
+    /*
+     * Chromium supports this reasonably well and it prevents
+     * ugly word overflow in justified paragraphs.
+     */
+    overflow-wrap: break-word;
+}
+
+strong {
+    color: var(--teal-dark);
+    font-weight: 700;
+}
+
+em {
+    color: var(--coral);
+    font-style: italic;
+}
+
+a {
+    color: var(--teal-dark);
+    font-weight: 600;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+
+/* ============================================================
+   07. HEADINGS
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--ink);
+
+    font-family:
+        "Syne",
+        "Space Grotesk",
+        Arial,
+        sans-serif;
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+    /*
+     * Critical for PDF pagination.
+     */
+    break-after: avoid;
+    page-break-after: avoid;
+
+    /*
+     * Prevent a heading from being stranded at the
+     * bottom of a page.
+     */
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/* ------------------------------------------------------------
+   H1 — MAJOR SECTION
+   ------------------------------------------------------------ */
 
 h1 {
     margin: 34px 0 24px;
@@ -85,7 +290,49 @@ h1::before {
     font-size: 0.4em;
     vertical-align: middle;
     letter-spacing: 0.1em;
+    position: relative;
+
+    margin: 28px 0 18px;
+    padding: 11px 14px 12px;
+
+    background: var(--ink);
+    color: var(--paper-light);
+
+    border-left: 8px solid var(--yellow);
+    border-bottom: 3px solid var(--coral);
+
+    font-size: 24pt;
+    letter-spacing: -0.02em;
+
+    text-transform: uppercase;
+
+    /*
+     * Avoid clip-path:
+     * some PDF engines render it inconsistently.
+     */
+    box-shadow: 4px 4px 0 var(--teal-dark);
 }
+
+h1::before {
+    content: "SEC::";
+
+    margin-right: 9px;
+
+    color: var(--coral);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 12pt;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+}
+
+
+/* ------------------------------------------------------------
+   H2 — SUBSECTION
+   ------------------------------------------------------------ */
 
 h2 {
     margin: 36px 0 16px;
@@ -113,11 +360,89 @@ a {
     text-decoration-style: dashed;
     text-underline-offset: 4px;
     text-decoration-thickness: 2px;
+    margin: 24px 0 12px;
+    padding: 7px 10px;
+
+    border-left: 5px solid var(--coral);
+    border-bottom: 2px solid var(--teal);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(179, 218, 205, 0.65),
+            rgba(179, 218, 205, 0)
+        );
+
+    font-size: 15pt;
+
+    text-transform: uppercase;
 }
 
+h2::before {
+    content: "// ";
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+}
+
+
+/* ------------------------------------------------------------
+   H3 — FIELD ENTRY
+   ------------------------------------------------------------ */
+
+h3 {
+    margin: 18px 0 8px;
+
+    color: var(--teal-dark);
+
+    font-size: 12pt;
+
+    text-transform: uppercase;
+}
+
+h3::before {
+    content: "► ";
+
+    color: var(--yellow);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 9pt;
+}
+
+
+/* ------------------------------------------------------------
+   H4–H6
+   ------------------------------------------------------------ */
+
+h4 {
+    margin: 15px 0 6px;
+    color: var(--teal-dark);
+    font-size: 10.5pt;
+}
+
+h5,
+h6 {
+    margin: 12px 0 5px;
+    color: var(--ink-soft);
+    font-size: 10pt;
+}
+
+
+/* ============================================================
+   08. SECTION BREAKS
+   ============================================================ */
+
 hr {
-    height: 4px;
-    margin: 30px 0;
+    height: 6px;
+
+    margin: 24px 0;
+
     border: 0;
     /* Patrón de cinta de advertencia */
     background: repeating-linear-gradient(
@@ -189,6 +514,126 @@ tbody tr:nth-child(even) {
 pre {
     margin: 22px 0;
     padding: 20px;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            var(--teal) 0,
+            var(--teal) 10px,
+            var(--yellow) 10px,
+            var(--yellow) 20px,
+            var(--coral) 20px,
+            var(--coral) 30px
+        );
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/* ============================================================
+   09. BLOCKQUOTES
+   ============================================================ */
+
+blockquote {
+    margin: 18px 0;
+    padding: 12px 16px;
+
+    border: 1px solid var(--teal);
+    border-left: 6px solid var(--teal);
+
+    background: rgba(179, 218, 205, 0.25);
+
+    color: var(--ink-soft);
+
+    font-size: 9.5pt;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+blockquote::before {
+    content: "■ REGISTRO GUÍA GALÁCTICA";
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+}
+
+
+/* ============================================================
+   10. LISTS
+   ============================================================ */
+
+ul,
+ol {
+    margin: 8px 0 16px;
+    padding-left: 1.5em;
+}
+
+li {
+    margin-bottom: 4px;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+li::marker {
+    color: var(--coral);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   11. INLINE CODE
+   ============================================================ */
+
+:not(pre) > code {
+    padding: 1px 5px;
+
+    border: 1px solid var(--teal);
+
+    background: rgba(179, 218, 205, 0.4);
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 8.5pt;
+
+    overflow-wrap: break-word;
+}
+
+
+/* ============================================================
+   12. CODE BLOCKS
+   ============================================================ */
+
+pre {
+    margin: 18px 0;
+    padding: 14px 16px;
+
+    border: 1px solid var(--teal-dark);
+    border-left: 6px solid var(--yellow);
+
     background: var(--code-bg) !important;
     border-left: 8px solid var(--coral);
     border-right: 8px solid var(--coral);
@@ -270,9 +715,410 @@ pre code {
    PORTADA
    ============================================================ */
 
+    font-family:
+        "Share Tech Mono",
+        "Courier New",
+        monospace;
+
+    font-size: 8pt;
+    line-height: 1.45;
+
+    /*
+     * Prevent code from becoming horizontally enormous.
+     */
+    white-space: pre-wrap;
+
+    /*
+     * Better than break-all because it preserves normal
+     * technical tokens when possible.
+     */
+    overflow-wrap: anywhere;
+
+    /*
+     * A code block should normally stay together.
+     */
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+}
+
+pre code {
+    padding: 0;
+
+    background: transparent !important;
+    color: inherit;
+
+    border: 0;
+
+    font-family: inherit;
+    font-size: inherit;
+}
+
+
+/* ============================================================
+   13. TABLES
+   ============================================================ */
+
+table {
+    width: 100%;
+
+    margin: 18px 0;
+
+    border-collapse: collapse;
+
+    background: var(--paper-light);
+
+    font-size: 8.5pt;
+
+    /*
+     * Allows long tables to continue onto subsequent pages.
+     */
+    break-inside: auto;
+    page-break-inside: auto;
+}
+
+thead {
+    display: table-header-group;
+
+    background: var(--ink);
+    color: var(--paper-light);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    text-transform: uppercase;
+}
+
+tfoot {
+    display: table-footer-group;
+}
+
+th,
+td {
+    padding: 7px 9px;
+
+    border: 1px solid var(--teal);
+
+    text-align: left;
+
+    vertical-align: top;
+
+    overflow-wrap: break-word;
+}
+
+th {
+    border-bottom: 3px solid var(--coral);
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(179, 218, 205, 0.2);
+}
+
+/*
+ * Avoid splitting ordinary rows.
+ * Very tall rows may still be split by Chromium if required.
+ */
+tbody tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/* ============================================================
+   14. IMAGES
+   ============================================================ */
+
+img {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 16px auto;
+
+    border: 2px solid var(--ink);
+
+    box-shadow: 4px 4px 0 var(--teal);
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/*
+ * Images inside links should not receive weird browser
+ * decoration.
+ */
+a img {
+    border: 2px solid var(--ink);
+}
+
+
+/* ============================================================
+   15. FIGURES
+   ============================================================ */
+
+figure {
+    margin: 20px 0;
+
+    text-align: center;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+figcaption {
+    margin-top: 7px;
+
+    color: var(--ink-soft);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* ============================================================
+   16. SPECIAL FIELD BOXES
+   ------------------------------------------------------------
+   Supported Markdown HTML classes:
+
+   .note
+   .warning
+   .danger
+   .dont-panic
+   .machine
+   .spec
+   ============================================================ */
+
+.note,
+.warning,
+.danger,
+.dont-panic,
+.machine,
+.spec {
+    margin: 18px 0;
+    padding: 12px 15px;
+
+    border: 1px solid var(--ink);
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+
+    box-shadow: var(--shadow);
+}
+
+
+/* ------------------------------------------------------------
+   NOTE
+   ------------------------------------------------------------ */
+
+.note {
+    border-left: 6px solid var(--teal);
+
+    background: rgba(179, 218, 205, 0.3);
+}
+
+.note::before {
+    content: "[NOTA DE CAMPO]";
+
+    display: block;
+    margin-bottom: 5px;
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------------------------------------
+   WARNING
+   ------------------------------------------------------------ */
+
+.warning {
+    border-left: 6px solid var(--yellow);
+
+    background: rgba(229, 179, 42, 0.15);
+}
+
+.warning::before {
+    content: "[PRECAUCIÓN DE TRÁNSITO]";
+
+    display: block;
+    margin-bottom: 5px;
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------------------------------------
+   DANGER
+   ------------------------------------------------------------ */
+
+.danger {
+    border-left: 6px solid var(--coral);
+
+    background: rgba(209, 73, 53, 0.15);
+}
+
+.danger::before {
+    content: "[ALERTA AMBIENTAL]";
+
+    display: block;
+    margin-bottom: 5px;
+
+    color: var(--coral);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------------------------------------
+   SPECIFICATION
+   ------------------------------------------------------------ */
+
+.spec {
+    border-left: 6px solid var(--teal-dark);
+
+    background: rgba(20, 115, 114, 0.08);
+}
+
+.spec::before {
+    content: "[FICHA ESTELAR]";
+
+    display: block;
+    margin-bottom: 5px;
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------------------------------------
+   MACHINE / SYSTEM
+   ------------------------------------------------------------ */
+
+.machine {
+    border-left: 6px solid var(--teal);
+
+    background: var(--code-bg);
+
+    color: var(--code-ink);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+}
+
+.machine::before {
+    content: "[DIAGNÓSTICO DE A BORDO]";
+
+    display: block;
+    margin-bottom: 5px;
+
+    color: var(--yellow);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------------------------------------
+   DON'T PANIC
+   ------------------------------------------------------------ */
+
+.dont-panic {
+    border: 2px solid var(--coral);
+
+    background: #2a0803;
+
+    color: #ff5533;
+
+    text-align: center;
+}
+
+.dont-panic::before {
+    content: "¡QUE NO CUNDA EL PÁNICO! // DON'T PANIC";
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #ffaa00;
+
+    font-family:
+        "Syne",
+        sans-serif;
+
+    font-size: 14pt;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   17. COVER / PORTADA
+   ============================================================ */
+
+/*
+   IMPORTANT:
+   The cover is designed around the printable A4 area rather
+   than the full physical A4 page.
+
+   With approximately 18–20 mm page margins, 255–260 mm
+   is a safer vertical target than 230+ mm plus padding.
+ */
+
 .cover {
     display: flex;
-    min-height: 240mm;
+
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -395,3 +1241,344 @@ pre code {
     
     a { text-decoration: underline; color: var(--teal-dark); }
 }
+    justify-content: space-between;
+
+    min-height: 250mm;
+
+    margin: 0;
+    padding: 20mm 14mm;
+
+    border: 4px double var(--ink);
+
+    background:
+        linear-gradient(
+            rgba(20, 115, 114, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(20, 115, 114, 0.035) 1px,
+            transparent 1px
+        ),
+        var(--paper-light);
+
+    background-size: 16px 16px;
+
+    text-align: center;
+
+    break-after: page;
+    page-break-after: always;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/* ------------------------------------------------------------
+   COVER TITLE
+   ------------------------------------------------------------ */
+
+.cover-title {
+    margin-top: 30mm;
+}
+
+.cover h1 {
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+
+    color: var(--ink);
+
+    border: 0;
+    box-shadow: none;
+
+    font-size: 32pt;
+    line-height: 1.05;
+
+    letter-spacing: -0.025em;
+
+    text-transform: uppercase;
+}
+
+.cover h1::before {
+    content: "";
+    margin: 0;
+}
+
+.cover .sub-title {
+    margin-top: 10px;
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 11pt;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
+}
+
+
+/* ------------------------------------------------------------
+   COVER TERMINAL LABEL
+   ------------------------------------------------------------ */
+
+.cover::before {
+    content:
+        "GALACTIC ARCHIVE // HUMAN EDITION // DOCUMENT CLASS: FIELD GUIDE";
+
+    display: block;
+
+    padding: 7px 10px;
+
+    border: 1px solid var(--teal);
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7pt;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ------------------------------------------------------------
+   COVER FOOTER
+   ------------------------------------------------------------ */
+
+.cover::after {
+    content:
+        "SUB-ETHA SENS-O-MATIC // REV. 42.0 // DO NOT PANIC";
+
+    display: block;
+
+    padding-top: 12px;
+
+    border-top: 2px solid var(--ink);
+
+    color: var(--ink-soft);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7pt;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   18. PAGE / SECTION BREAK STRATEGY
+   ============================================================ */
+
+/*
+   Only major H1 sections start new pages.
+
+   If your Markdown contains many H1 headings and you do NOT
+   want every one to start a new page, remove this rule.
+ */
+
+h1:not(:first-of-type) {
+    break-before: page;
+    page-break-before: always;
+}
+
+
+/*
+   Keep heading + following content together.
+ */
+
+h1 + p,
+h1 + blockquote,
+h1 + ul,
+h1 + ol,
+h1 + table,
+h1 + pre,
+h1 + .note,
+h1 + .warning,
+h1 + .danger,
+h1 + .spec,
+h1 + .machine,
+h2 + p,
+h2 + ul,
+h2 + ol,
+h2 + table,
+h2 + pre,
+h3 + p {
+    break-before: avoid;
+    page-break-before: avoid;
+}
+
+
+/* ============================================================
+   19. WIDOW / ORPHAN CONTROL
+   ------------------------------------------------------------
+   Chromium's support is imperfect, but these are harmless
+   fallbacks and improve engines that honor them.
+   ============================================================ */
+
+p {
+    orphans: 3;
+    widows: 3;
+}
+
+
+/* ============================================================
+   20. HORIZONTAL OVERFLOW PROTECTION
+   ============================================================ */
+
+table,
+pre,
+img,
+figure,
+blockquote,
+.note,
+.warning,
+.danger,
+.dont-panic,
+.machine,
+.spec {
+    max-width: 100%;
+}
+
+
+/* ============================================================
+   21. PRINT-SPECIFIC CLEANUP
+   ============================================================ */
+
+@media print {
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+
+        background-color: var(--paper);
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /*
+     * Prevent accidental URL decoration or browser artifacts.
+     */
+    a {
+        color: inherit;
+    }
+
+    /*
+     * Avoid interactive UI elements appearing in the PDF.
+     */
+    button,
+    input,
+    textarea,
+    select {
+        display: none !important;
+    }
+
+    /*
+     * Decorative shadows are kept intentionally because they
+     * are part of the graphic language.
+     */
+}
+
+
+/* ============================================================
+   22. SCREEN PREVIEW
+   ------------------------------------------------------------
+   Only affects the VS Code/browser preview.
+   It does NOT alter the actual A4 PDF dimensions.
+   ============================================================ */
+
+@media screen {
+
+    body {
+        max-width: 850px;
+
+        margin: 30px auto;
+        padding: 40px;
+
+        box-shadow:
+            0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .cover {
+        min-height: 1000px;
+    }
+}
+
+
+/* ============================================================
+   23. OPTIONAL UTILITY CLASSES
+   ============================================================ */
+
+/*
+   Use these manually in HTML when needed.
+
+   <div class="galactic-label">...</div>
+ */
+
+.galactic-label {
+    display: inline-block;
+
+    padding: 3px 7px;
+
+    border: 1px solid var(--teal);
+
+    color: var(--teal-dark);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+
+/*
+   Technical metadata line.
+ */
+
+.metadata {
+    margin: 8px 0;
+
+    color: var(--ink-faded);
+
+    font-family:
+        "Share Tech Mono",
+        monospace;
+
+    font-size: 7.5pt;
+
+    text-transform: uppercase;
+}
+
+
+/*
+   Small technical divider.
+ */
+
+.data-line {
+    height: 2px;
+
+    margin: 10px 0;
+
+    background: var(--teal);
+}
+
+
+/* ============================================================
+   24. END OF FIELD GUIDE STYLESHEET
+   ============================================================ */

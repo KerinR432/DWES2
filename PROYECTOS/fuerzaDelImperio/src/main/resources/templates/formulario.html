@@ -1,37 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Administratum - Reclutamiento Imperial</title>
+    <style>
+        /* Fondo oscuro y tipografía gótica/clásica */
+        body {
+            background-color: #0a0a0a;
+            background-image: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+            color: #d4c4a8; /* Tono pergamino viejo */
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* El contenedor principal simulando un panel imperial */
+        .container {
+            background-color: #121212;
+            border: 3px solid #8b6508; /* Dorado oscuro/bronce */
+            box-shadow: 0 0 30px rgba(138, 3, 3, 0.1), inset 0 0 20px rgba(207, 181, 59, 0.05);
+            padding: 40px;
+            max-width: 650px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Detalles de las esquinas */
+        .container::before, .container::after {
+            content: "✦";
+            color: #cfb53b;
+            position: absolute;
+            font-size: 24px;
+        }
+        .container::before { top: 5px; left: 10px; }
+        .container::after { top: 5px; right: 10px; }
+
+        h1 {
+            color: #cfb53b; /* Oro imperial */
+            font-size: 1.8em;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #8a0303; /* Rojo Inquisición */
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #8a0303;
+            font-size: 0.85em;
+            letter-spacing: 4px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Estilos de las etiquetas del formulario */
+        p.label-text {
+            margin: 20px 0 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            color: #9a8a70;
+        }
+
+        /* Estilo terminal para los inputs simulando un Cogitador */
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            background-color: #050505;
+            border: 1px solid #4a3810;
+            color: #cfb53b;
+            font-family: "Courier New", Courier, monospace;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #cfb53b;
+            box-shadow: 0 0 10px rgba(207, 181, 59, 0.3);
+            background-color: #0a0a0a;
+        }
+
+        /* Estilos para aficiones */
+        .checkbox-group {
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            padding: 15px;
+            font-family: "Courier New", Courier, monospace;
+            color: #a0a0a0;
+        }
+
+        .checkbox-item {
+            margin-right: 15px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #8a0303;
+            cursor: ew-resize;
+        }
+
+        /* Botón de envío dramático */
+        button {
+            background: linear-gradient(to bottom, #6b0000, #3a0000);
+            color: #cfb53b;
+            border: 2px solid #8b6508;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-family: "Palatino Linotype", serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 35px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to bottom, #8a0303, #4a0000);
+            box-shadow: 0 0 15px rgba(138, 3, 3, 0.8);
+            border-color: #cfb53b;
+            text-shadow: 0 0 5px #cfb53b;
+        }
+
+        .thought-of-the-day {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.75em;
+            color: #555;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
 </head>
 <body>
-    <h1>FORMULARIO PARA SERVIR AL EMPERADOR</h1>
+<div class="container">
+    <h1>Formulario de Reclutamiento</h1>
+    <div class="subtitle">Para Servir al Dios Emperador</div>
+
     <form action="#" th:action="@{/}" th:object="${imperial}" method="post">
-        <p>
-            Nombre:
-            <input type="text" th:field="*{nombre}" />
 
-        </p>
+        <p class="label-text">Identificación del Sujeto (Nombre):</p>
+        <input type="text" th:field="*{nombre}" placeholder="Ej. Titus, Yarrick..." required />
 
-        <p>Edad: <input type="number" th:field="*{edad}" /> </p>
-        <p>Aficiones
-        </p>
-        <input type="checkbox" th:field="*{aficiones}" value="Deporte" /> Deporte
-        <input type="checkbox" th:field="*{aficiones}" value="Arte" /> Arte
-        <input type="checkbox" th:field="*{aficiones}" value="Fotografia" /> Fotografia
-        <select name="ramaMilitar" th:field="*{ramaMilitar}">
-            <option value="" disabled selected >-- Selecciona una opción --</option>
-            <option value="Astra Militarun">Astra Militarun</option>
-            <option value="Ultramarines">Ultramarines</option>
-            <option value="Salamandras" >Salamandras</option>
+        <p class="label-text">Ciclos Solares (Edad):</p>
+        <input type="number" th:field="*{edad}" min="1" required />
+
+        <p class="label-text">Habilidades Adicionales (Aficiones):</p>
+        <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" th:field="*{aficiones}" value="Deporte" /> Combate Cuerpo a Cuerpo</label>
+            <label class="checkbox-item"><input type="checkbox" th:field="*{aficiones}" value="Arte" /> Culto Imperial</label>
+            <label class="checkbox-item"><input type="checkbox" th:field="*{aficiones}" value="Fotografia" /> Auspex / Reconocimiento</label>
+        </div>
+
+        <p class="label-text">Asignación de Destino (Rama Militar):</p>
+        <select name="ramaMilitar" th:field="*{ramaMilitar}" required>
+            <option value="" disabled selected >-- A la espera de órdenes del Administratum --</option>
+            <option value="Astra Militarun">Astra Militarum (El Martillo del Emperador)</option>
+            <option value="Ultramarines">Adeptus Astartes (Ultramarines)</option>
+            <option value="Salamandras">Adeptus Astartes (Salamandras)</option>
         </select>
-        <p>Rango: <input type="range" th:field="*{rango}" min="1"
-                         max="10"
-                         step="1"
-        /> </p>
 
-        <p><button type="submit">Enviar</button></p>
+        <p class="label-text">Aptitud de Liderazgo (Rango):</p>
+        <input type="range" th:field="*{rango}" min="1" max="10" step="1" />
+
+        <button type="submit">Sellar Juramento</button>
 
     </form>
+
+    <div class="thought-of-the-day">
+        Pensamiento del día: "Una mente abierta es como una fortaleza con las puertas abiertas y sin vigilancia."
+    </div>
+</div>
 </body>
 </html>
