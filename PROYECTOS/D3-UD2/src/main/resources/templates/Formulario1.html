@@ -5,7 +5,7 @@
     <title>FORMULARIO UNO</title>
 </head>
 <body>
-    <form method="post" action="/procesar" th:action="@{/procesar}" th:object="${tusDatos}">
+    <form method="post" action="/procesar" th:action="@{/procesar}" th:object="${datos}">
         <label>Nombre:</label>
         <input type="text" th:field="*{nombre}" name="nombre">
 

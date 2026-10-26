@@ -12,5 +12,19 @@
     </ol>
 
 <p th:text="| Tu lugar de nacimiento: ${datos.lugar} |"></p>
+
+    <h1 th:text="| Genero: ${datos.sexo} |"></h1>
+
+    <form method="post" th:action="@{/procesar}" th:object="${datos}">
+        <button type="submit" name="contador" th:value="${contador - 1}">Atras</button>
+        <button type="submit" name="contador" value="0">VOLVER AL INICIO</button>
+
+        <input type="hidden" th:field="*{nombre}" />
+        <input type="hidden" th:field="*{Aficciones}" />
+        <input type="hidden" th:field="*{lugar}" />
+        <input type="hidden" th:field="*{sexo}" />
+        <input type="hidden" th:field="${contador}" />
+
+    </form>
 </body>
 </html>

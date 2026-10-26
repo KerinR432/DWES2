@@ -1,4 +1,26 @@
 /* ============================================================
+   GUÍA DEL AUTOESTOPISTA GALÁCTICO // MARKDOWN -> PDF
+   Edición Mark XI - Colores Originales Restaurados
+   Diseño de vanguardia 2026 adaptado para impresión estática
+   ============================================================ */
+
+/* 1. TIPOGRAFÍA AVANZADA 2026 */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@800;900&display=swap');
+
+:root {
+    /* Tu paleta de colores original intacta */
+    --paper: #f3efd9;
+    --paper-light: #fcf9e9;
+    --paper-shadow: #e4dfc7;
+    --ink: #192b30;
+    --ink-soft: #40545a;
+    --teal: #167b7a;
+    --teal-dark: #10595d;
+    --coral: #d45e49;
+    --yellow: #e9bd42;
+    --sky: #b9ded4;
+    --code-bg: #18343a;
+    --code-ink: #f3efd9;
    GALACTIC FIELD GUIDE
    Markdown → PDF / VS Code / Chromium Print Engine
    ------------------------------------------------------------
@@ -101,6 +123,8 @@ html {
     background: var(--paper);
 }
 
+html, body {
+    background-color: var(--paper) !important;
 body {
     width: auto;
     max-width: none;
@@ -123,6 +147,34 @@ body {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
 
+body {
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 18mm 20mm !important;
+    font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.62;
+    /* 2026 Tech: Evita viudas y huérfanas de forma nativa */
+    text-wrap: pretty; 
+}
+
+/* ============================================================
+   TIPOGRAFÍA Y ENCABEZADOS
+   ============================================================ */
+
+strong { color: var(--teal-dark); font-weight: 700; }
+em { color: var(--coral); }
+
+h1, h2, h3, h4, h5, h6 {
+    position: relative;
+    color: var(--ink);
+    font-family: "Outfit", "Space Grotesk", sans-serif;
+    page-break-after: avoid;
+    break-after: avoid;
+    /* 2026 Tech: Equilibra automáticamente el texto */
+    text-wrap: balance; 
     /*
      * Technical-paper grid.
      * Kept deliberately subtle so it does not dominate
@@ -219,6 +271,25 @@ h6 {
    ------------------------------------------------------------ */
 
 h1 {
+    margin: 34px 0 24px;
+    padding: 16px 20px;
+    background: var(--ink);
+    color: var(--paper-light);
+    font-size: 26pt;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    /* Corte biselado sci-fi usando clip-path */
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    border-left: 8px solid var(--teal);
+}
+
+h1::before {
+    content: "ENTRADA SEC. // ";
+    color: var(--yellow);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.4em;
+    vertical-align: middle;
+    letter-spacing: 0.1em;
     position: relative;
 
     margin: 28px 0 18px;
@@ -264,6 +335,31 @@ h1::before {
    ------------------------------------------------------------ */
 
 h2 {
+    margin: 36px 0 16px;
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--ink);
+    font-size: 18pt;
+    display: inline-block;
+    padding-right: 40px;
+}
+
+h2::before {
+    content: "►";
+    margin-right: 10px;
+    color: var(--coral);
+    font-size: 0.8em;
+}
+
+h3 { margin: 26px 0 10px; color: var(--teal-dark); font-size: 14pt; }
+h4 { margin-top: 22px; color: var(--ink-soft); font-size: 11pt; text-transform: uppercase; }
+
+a {
+    color: var(--teal-dark);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
     margin: 24px 0 12px;
     padding: 7px 10px;
 
@@ -348,6 +444,76 @@ hr {
     margin: 24px 0;
 
     border: 0;
+    /* Patrón de cinta de advertencia */
+    background: repeating-linear-gradient(
+        45deg,
+        var(--ink) 0,
+        var(--ink) 10px,
+        var(--yellow) 10px,
+        var(--yellow) 20px
+    );
+}
+
+/* ============================================================
+   BLOQUES Y DATOS
+   ============================================================ */
+
+blockquote {
+    margin: 22px 0;
+    padding: 20px;
+    border: 2px solid var(--teal-dark);
+    border-radius: 0 15px 0 15px; /* Bordes opuestos redondeados */
+    /* 2026 Tech: color-mix para mezclar HEX con transparencia sin fallos en PDF */
+    background: color-mix(in srgb, var(--sky) 40%, transparent);
+    color: var(--ink-soft);
+    font-style: italic;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: 6px 6px 0 rgba(25, 43, 48, 0.12);
+}
+
+blockquote::before {
+    content: "LA GUÍA DICE //";
+    display: block;
+    margin-bottom: 10px;
+    color: var(--teal-dark);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9pt;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.1em;
+}
+
+table {
+    width: 100%;
+    margin: 22px 0;
+    border-collapse: collapse;
+    background: var(--paper-light);
+    font-size: 9.5pt;
+    font-family: "IBM Plex Mono", monospace;
+    border: 2px solid var(--teal-dark);
+}
+
+thead {
+    background: var(--teal-dark);
+    color: var(--paper-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+th, td {
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--teal-dark) 20%, transparent);
+}
+
+tbody tr:nth-child(even) { 
+    background: color-mix(in srgb, var(--sky) 20%, transparent); 
+}
+
+/* Código */
+pre {
+    margin: 22px 0;
+    padding: 20px;
 
     background:
         repeating-linear-gradient(
@@ -469,7 +635,85 @@ pre {
     border-left: 6px solid var(--yellow);
 
     background: var(--code-bg) !important;
+    border-left: 8px solid var(--coral);
+    border-right: 8px solid var(--coral);
     color: var(--code-ink);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    box-shadow: 4px 4px 0 rgba(25, 43, 48, 0.14);
+    /* 2026 Tech: clona los bordes si el código se parte en dos páginas */
+    box-decoration-break: clone; 
+}
+
+pre code {
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+    font-size: 9pt;
+}
+
+:not(pre) > code {
+    padding: 2px 6px;
+    background: color-mix(in srgb, var(--sky) 50%, transparent);
+    color: var(--teal-dark);
+    border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.9em;
+}
+
+/* ============================================================
+   ALERTAS INTERGALÁCTICAS (Clases especiales)
+   ============================================================ */
+
+.note, .warning, .danger, .spec, .machine {
+    margin: 24px 0;
+    padding: 16px 20px;
+    border: 2px solid var(--teal-dark);
+    page-break-inside: avoid;
+    break-inside: avoid;
+    position: relative;
+}
+
+.note {
+    background: color-mix(in srgb, var(--sky) 30%, transparent);
+    /* Forma de panel cortado */
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+}
+.warning {
+    background: color-mix(in srgb, var(--yellow) 20%, transparent);
+    border-style: dashed;
+    border-color: var(--yellow);
+}
+.danger {
+    background: color-mix(in srgb, var(--coral) 12%, transparent);
+    border: 3px solid var(--coral);
+    color: var(--coral);
+    font-weight: 600;
+}
+.machine {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-left: 10px solid var(--yellow);
+}
+
+.note::before, .warning::before, .danger::before, .spec::before, .machine::before {
+    display: inline-block;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+    background: var(--teal-dark);
+    color: var(--paper-light);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 700;
+}
+
+.note::before { content: "NOTA DEL NAVEGANTE"; background: var(--teal); }
+.warning::before { content: "AVISO DE TRÁNSITO"; background: var(--yellow); color: var(--ink); }
+.danger::before { content: "¡QUE NO CUNDA EL PÁNICO!"; font-size: 14pt; background: var(--coral); color: white; display: block; text-align: center; }
+.machine::before { content: "SISTEMA DE A BORDO"; background: var(--teal-dark); color: var(--yellow); }
+
+/* ============================================================
+   PORTADA
+   ============================================================ */
 
     font-family:
         "Share Tech Mono",
@@ -876,6 +1120,127 @@ figcaption {
     display: flex;
 
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    background: var(--paper-light);
+    color: var(--ink);
+    page-break-after: always;
+    break-after: page;
+    /* Marcos concéntricos */
+    border: 4px solid var(--ink);
+    outline: 2px solid var(--coral);
+    outline-offset: -12px;
+    box-shadow: inset 0 0 0 20px var(--paper);
+}
+
+.cover h1 {
+    font-family: "Outfit", sans-serif;
+    font-weight: 900;
+    font-size: 45pt;
+    line-height: 1.1;
+    color: var(--coral);
+    background: transparent;
+    clip-path: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cover h1::before { content: ""; }
+
+.cover .subtitle {
+    margin: 20px 0;
+    color: var(--teal-dark);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 16pt;
+    text-transform: uppercase;
+}
+
+.cover .serial {
+    margin-top: auto;
+    color: var(--ink-soft);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10pt;
+    letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   MAGIA 2026: EXPERIENCIA EN PANTALLA VS CODE (Se omite en PDF)
+   ============================================================ */
+
+@media screen {
+    body {
+        max-width: 950px !important;
+        margin: 40px auto !important;
+        padding: 60px !important;
+        /* Apariencia de manual físico */
+        background-color: var(--paper) !important;
+        border-radius: 8px;
+        box-shadow: 
+            0 20px 50px rgba(25, 43, 48, 0.3),
+            inset 0 0 100px color-mix(in srgb, var(--paper-shadow) 50%, transparent);
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    /* Efecto CRT Scanline superpuesto (Solo visible en editor) */
+    body::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(rgba(25, 43, 48, 0) 50%, rgba(25, 43, 48, 0.03) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 999;
+    }
+
+    /* Animación holográfica para los enlaces */
+    a {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration-color: transparent;
+    }
+    
+    a:hover {
+        background: var(--coral);
+        color: var(--paper-light);
+        text-decoration-color: var(--paper-light);
+        border-radius: 4px;
+        padding: 0 4px;
+        box-shadow: 0 0 10px color-mix(in srgb, var(--coral) 50%, transparent);
+    }
+
+    /* Cursor parpadeante retro en los H1 */
+    h1::after {
+        content: "█";
+        color: var(--teal);
+        animation: blink 1s step-end infinite;
+        margin-left: 10px;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+}
+
+/* ============================================================
+   LIMPIEZA PARA IMPRESIÓN (PDF Seguro)
+   ============================================================ */
+@media print {
+    body {
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    /* Asegurar que no se partan elementos importantes */
+    tr, img, .note, .warning, .danger, .machine, .cover {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    a { text-decoration: underline; color: var(--teal-dark); }
+}
     justify-content: space-between;
 
     min-height: 250mm;

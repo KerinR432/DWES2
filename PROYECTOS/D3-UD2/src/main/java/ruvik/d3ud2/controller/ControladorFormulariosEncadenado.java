@@ -14,15 +14,15 @@ public class ControladorFormulariosEncadenado {
 
 
     @GetMapping("/formulario1")
-    public String formulario1(@ModelAttribute TusDatos tusDatos, Model model) {
-        model.addAttribute("tusDatos", tusDatos);
+    public String formulario1(@ModelAttribute("datos") TusDatos datos, Model model) {
+        model.addAttribute("datos", datos);
         return "Formulario1";
     }
 
 
     @GetMapping("/formulario2")
-    public String formulario2(@ModelAttribute TusDatos tusDatos, Model model) {
-        model.addAttribute("tusDatos", tusDatos);
+    public String formulario2(@ModelAttribute("datos") TusDatos datos, Model model) {
+        model.addAttribute("datos", datos);
         return "Formulario2";
     }
 
@@ -34,21 +34,33 @@ public class ControladorFormulariosEncadenado {
         System.out.println(datos);
         System.out.println(siguiente);
 
+        if (contador == 0) {
+            return "redirect:/formulario1";
+        }
+
         if (siguiente == 1) {
 
             modelo.addAttribute("datos", datos);
             modelo.addAttribute("contador", contador);
-            return "/Formulario2";
+            return "Formulario2";
         }
 
         if (siguiente == 2) {
             modelo.addAttribute("datos", datos);
             modelo.addAttribute("contador", contador);
-            return "/Formulario3";
+            return "Formulario3";
+        }
+
+        if (siguiente == 3) {
+            modelo.addAttribute("datos", datos);
+            modelo.addAttribute("contador", contador);
+            return "Formulario4";
         }
 
 
+
         modelo.addAttribute("datos", datos);
+        modelo.addAttribute("contador", contador);
         return "/Resultado";
     }
 }

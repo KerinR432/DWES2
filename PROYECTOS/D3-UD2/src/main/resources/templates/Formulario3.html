@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>FORMULARIO TRES</title>
 </head>
 <body>
 <form method="post" th:action="@{/procesar}" th:object="${datos}" action="/procesar">
@@ -14,6 +14,7 @@
     </select>
 
     <button type="submit" name="contador" th:value="${contador + 1}" >Enviar</button>
+    <button type="submit" name="contador" th:value="${contador - 1}" >Volver atras</button>
 
     <input type="hidden" th:field="*{nombre}" />
     <input type="hidden" th:field="*{Aficciones}"/>

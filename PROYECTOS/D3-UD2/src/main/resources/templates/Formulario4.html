@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>FORMULARIO CUATRO</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/procesar}" th:object="${datos}">
+  <label>SEXO:</label>
+  <input type="radio" th:field="*{sexo}" value="M"> M
+  <input type="radio" th:field="*{sexo}" value="F"> F
+
+  <button type="submit" name="contador" th:value="${contador + 1}">Enviar</button>
+  <button type="submit" name="contador" th:value="${contador - 1}" >Volver atras</button>
+
+
+  <input type="hidden" th:field="*{nombre}" />
+  <input type="hidden" th:field="*{Aficciones}" />
+  <input type="hidden" th:field="*{lugar}" />
+
+  <input type="hidden" name="contador" th:value="${contador}" />
+
+
+</form>
+
+</body>
+</html>
