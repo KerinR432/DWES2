@@ -1,11 +1,14 @@
 /* ============================================================
-   GALACTIC FIELD GUIDE // MARKDOWN -> PDF
-   Retro-futurist travel manual, tuned for print
+   GUÍA DEL AUTOESTOPISTA GALÁCTICO // MARKDOWN -> PDF
+   Edición Mark XI - Colores Originales Restaurados
+   Diseño de vanguardia 2026 adaptado para impresión estática
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* 1. TIPOGRAFÍA AVANZADA 2026 */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@800;900&display=swap');
 
 :root {
+    /* Tu paleta de colores original intacta */
     --paper: #f3efd9;
     --paper-light: #fcf9e9;
     --paper-shadow: #e4dfc7;
@@ -25,8 +28,7 @@
     margin: 0;
 }
 
-html,
-body {
+html, body {
     background-color: var(--paper) !important;
     color: var(--ink);
     -webkit-print-color-adjust: exact !important;
@@ -42,363 +44,354 @@ body {
     font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
     font-size: 10.5pt;
     line-height: 1.62;
+    /* 2026 Tech: Evita viudas y huérfanas de forma nativa */
+    text-wrap: pretty; 
 }
 
-p {
-    margin: 0 0 1em;
-}
+/* ============================================================
+   TIPOGRAFÍA Y ENCABEZADOS
+   ============================================================ */
 
-strong {
-    color: var(--teal-dark);
-    font-weight: 700;
-}
+strong { color: var(--teal-dark); font-weight: 700; }
+em { color: var(--coral); }
 
-em {
-    color: var(--coral);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     position: relative;
     color: var(--ink);
-    font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
-    font-weight: 700;
+    font-family: "Outfit", "Space Grotesk", sans-serif;
     page-break-after: avoid;
     break-after: avoid;
+    /* 2026 Tech: Equilibra automáticamente el texto */
+    text-wrap: balance; 
 }
 
 h1 {
     margin: 34px 0 24px;
-    padding: 12px 0 14px;
-    border-top: 3px solid var(--yellow);
-    border-bottom: 5px solid var(--ink);
-    font-size: 29pt;
-    line-height: 1.12;
+    padding: 16px 20px;
+    background: var(--ink);
+    color: var(--paper-light);
+    font-size: 26pt;
     text-transform: uppercase;
+    letter-spacing: -0.02em;
+    /* Corte biselado sci-fi usando clip-path */
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    border-left: 8px solid var(--teal);
 }
 
 h1::before {
-    content: "✦";
-    margin-right: 10px;
-    color: var(--coral);
-    font-size: 0.72em;
+    content: "ENTRADA SEC. // ";
+    color: var(--yellow);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.4em;
+    vertical-align: middle;
+    letter-spacing: 0.1em;
 }
 
 h2 {
     margin: 36px 0 16px;
     padding: 8px 12px;
-    border-left: 6px solid var(--coral);
-    border-bottom: 1px solid var(--teal);
-    background: linear-gradient(90deg, rgba(185, 222, 212, 0.72), transparent 88%);
+    border-bottom: 2px solid var(--ink);
     font-size: 18pt;
+    display: inline-block;
+    padding-right: 40px;
 }
 
 h2::before {
-    content: "//";
-    margin-right: 9px;
-    color: var(--teal);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.72em;
+    content: "►";
+    margin-right: 10px;
+    color: var(--coral);
+    font-size: 0.8em;
 }
 
-h3 {
-    margin: 26px 0 10px;
-    color: var(--teal-dark);
-    font-size: 13pt;
-}
-
-h4 {
-    margin-top: 22px;
-    padding-left: 9px;
-    border-left: 3px solid var(--yellow);
-    color: var(--ink-soft);
-    font-size: 10.5pt;
-    text-transform: uppercase;
-}
+h3 { margin: 26px 0 10px; color: var(--teal-dark); font-size: 14pt; }
+h4 { margin-top: 22px; color: var(--ink-soft); font-size: 11pt; text-transform: uppercase; }
 
 a {
     color: var(--teal-dark);
-    font-weight: 600;
-    text-decoration-color: var(--coral);
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
 }
 
 hr {
     height: 4px;
     margin: 30px 0;
     border: 0;
+    /* Patrón de cinta de advertencia */
     background: repeating-linear-gradient(
-        90deg,
-        var(--teal) 0 18px,
-        transparent 18px 24px,
-        var(--coral) 24px 29px,
-        transparent 29px 35px
+        45deg,
+        var(--ink) 0,
+        var(--ink) 10px,
+        var(--yellow) 10px,
+        var(--yellow) 20px
     );
 }
 
+/* ============================================================
+   BLOQUES Y DATOS
+   ============================================================ */
+
 blockquote {
     margin: 22px 0;
-    padding: 16px 20px;
-    border-left: 6px solid var(--teal);
-    background: rgba(185, 222, 212, 0.48);
+    padding: 20px;
+    border: 2px solid var(--teal-dark);
+    border-radius: 0 15px 0 15px; /* Bordes opuestos redondeados */
+    /* 2026 Tech: color-mix para mezclar HEX con transparencia sin fallos en PDF */
+    background: color-mix(in srgb, var(--sky) 40%, transparent);
     color: var(--ink-soft);
+    font-style: italic;
     page-break-inside: avoid;
     break-inside: avoid;
+    box-shadow: 6px 6px 0 rgba(25, 43, 48, 0.12);
 }
 
 blockquote::before {
-    content: "AVISO DE RUTA //";
+    content: "LA GUÍA DICE //";
     display: block;
-    margin-bottom: 7px;
-    color: var(--coral);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 8pt;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-}
-
-ul,
-ol {
-    margin: 10px 0 20px;
-    padding-left: 1.5em;
-}
-
-li {
-    margin-bottom: 5px;
-    padding-left: 2px;
-}
-
-li::marker {
-    color: var(--coral);
-    font-weight: 700;
-}
-
-:not(pre) > code {
-    padding: 2px 5px;
-    border: 1px solid rgba(22, 123, 122, 0.3);
-    background: rgba(185, 222, 212, 0.42);
+    margin-bottom: 10px;
     color: var(--teal-dark);
     font-family: "IBM Plex Mono", monospace;
-    font-size: 0.88em;
-}
-
-pre {
-    max-width: 100%;
-    margin: 22px 0;
-    padding: 17px 19px;
-    overflow-x: auto;
-    border: 2px solid var(--teal-dark);
-    border-left: 7px solid var(--coral);
-    background: var(--code-bg) !important;
-    color: var(--code-ink);
-    box-shadow: 4px 4px 0 rgba(25, 43, 48, 0.14);
-    white-space: pre;
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-pre code {
-    display: block;
-    background: transparent;
-    color: var(--code-ink);
-    font-family: "IBM Plex Mono", "Courier New", monospace;
-    font-size: 8.2pt;
-    line-height: 1.3;
+    font-size: 9pt;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.1em;
 }
 
 table {
     width: 100%;
     margin: 22px 0;
-    border: 1px solid var(--teal-dark);
     border-collapse: collapse;
-    background: rgba(252, 249, 233, 0.72);
-    font-size: 9pt;
-    page-break-inside: auto;
-    break-inside: auto;
+    background: var(--paper-light);
+    font-size: 9.5pt;
+    font-family: "IBM Plex Mono", monospace;
+    border: 2px solid var(--teal-dark);
 }
 
 thead {
-    display: table-header-group;
+    background: var(--teal-dark);
+    color: var(--paper-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+th, td {
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--teal-dark) 20%, transparent);
+}
+
+tbody tr:nth-child(even) { 
+    background: color-mix(in srgb, var(--sky) 20%, transparent); 
+}
+
+/* Código */
+pre {
+    margin: 22px 0;
+    padding: 20px;
+    background: var(--code-bg) !important;
+    border-left: 8px solid var(--coral);
+    border-right: 8px solid var(--coral);
+    color: var(--code-ink);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    box-shadow: 4px 4px 0 rgba(25, 43, 48, 0.14);
+    /* 2026 Tech: clona los bordes si el código se parte en dos páginas */
+    box-decoration-break: clone; 
+}
+
+pre code {
+    font-family: "IBM Plex Mono", "Courier New", monospace;
+    font-size: 9pt;
+}
+
+:not(pre) > code {
+    padding: 2px 6px;
+    background: color-mix(in srgb, var(--sky) 50%, transparent);
+    color: var(--teal-dark);
+    border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.9em;
+}
+
+/* ============================================================
+   ALERTAS INTERGALÁCTICAS (Clases especiales)
+   ============================================================ */
+
+.note, .warning, .danger, .spec, .machine {
+    margin: 24px 0;
+    padding: 16px 20px;
+    border: 2px solid var(--teal-dark);
+    page-break-inside: avoid;
+    break-inside: avoid;
+    position: relative;
+}
+
+.note {
+    background: color-mix(in srgb, var(--sky) 30%, transparent);
+    /* Forma de panel cortado */
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+}
+.warning {
+    background: color-mix(in srgb, var(--yellow) 20%, transparent);
+    border-style: dashed;
+    border-color: var(--yellow);
+}
+.danger {
+    background: color-mix(in srgb, var(--coral) 12%, transparent);
+    border: 3px solid var(--coral);
+    color: var(--coral);
+    font-weight: 600;
+}
+.machine {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-left: 10px solid var(--yellow);
+}
+
+.note::before, .warning::before, .danger::before, .spec::before, .machine::before {
+    display: inline-block;
+    padding: 2px 8px;
+    margin-bottom: 12px;
     background: var(--teal-dark);
     color: var(--paper-light);
     font-family: "IBM Plex Mono", monospace;
     font-size: 8pt;
-    text-transform: uppercase;
-}
-
-th,
-td {
-    padding: 8px 10px;
-    border: 1px solid rgba(22, 89, 93, 0.35);
-    text-align: left;
-}
-
-th {
-    border-bottom: 3px solid var(--yellow);
-}
-
-tbody tr:nth-child(even) {
-    background: rgba(185, 222, 212, 0.3);
-}
-
-tr {
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 22px auto;
-    border: 2px solid var(--teal-dark);
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-mark {
-    padding: 1px 4px;
-    background: var(--yellow);
-    color: var(--ink);
-}
-
-.note,
-.warning,
-.danger,
-.spec,
-.machine {
-    margin: 22px 0;
-    padding: 15px 18px;
-    border: 1px solid var(--teal-dark);
-    border-left: 6px solid var(--teal);
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-.note {
-    background: rgba(185, 222, 212, 0.48);
-}
-
-.warning {
-    border-left-color: var(--yellow);
-    background: rgba(233, 189, 66, 0.2);
-}
-
-.danger {
-    border-left-color: var(--coral);
-    background: rgba(212, 94, 73, 0.12);
-}
-
-.spec {
-    border-left-color: var(--teal-dark);
-    background: rgba(22, 123, 122, 0.08);
-}
-
-.machine {
-    border-color: var(--teal-dark);
-    border-left-color: var(--yellow);
-    background: var(--code-bg);
-    color: var(--paper-light);
-}
-
-.note::before,
-.warning::before,
-.danger::before,
-.spec::before,
-.machine::before {
-    display: block;
-    margin-bottom: 7px;
-    color: var(--coral);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 8pt;
     font-weight: 700;
-    letter-spacing: 0.06em;
 }
 
-.note::before { content: "NOTA DEL NAVEGANTE"; }
-.warning::before { content: "AVISO DE TRÁNSITO"; }
-.danger::before { content: "ZONA DE RIESGO"; }
-.spec::before { content: "FICHA ESTELAR"; }
-.machine::before { content: "SISTEMA DE A BORDO"; color: var(--yellow); }
+.note::before { content: "NOTA DEL NAVEGANTE"; background: var(--teal); }
+.warning::before { content: "AVISO DE TRÁNSITO"; background: var(--yellow); color: var(--ink); }
+.danger::before { content: "¡QUE NO CUNDA EL PÁNICO!"; font-size: 14pt; background: var(--coral); color: white; display: block; text-align: center; }
+.machine::before { content: "SISTEMA DE A BORDO"; background: var(--teal-dark); color: var(--yellow); }
+
+/* ============================================================
+   PORTADA
+   ============================================================ */
 
 .cover {
-    box-sizing: border-box;
     display: flex;
     min-height: 240mm;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px;
-    border: 3px solid var(--ink);
-    outline: 2px solid var(--coral);
-    outline-offset: -12px;
+    padding: 40px;
     text-align: center;
+    background: var(--paper-light);
+    color: var(--ink);
     page-break-after: always;
     break-after: page;
+    /* Marcos concéntricos */
+    border: 4px solid var(--ink);
+    outline: 2px solid var(--coral);
+    outline-offset: -12px;
+    box-shadow: inset 0 0 0 20px var(--paper);
 }
 
 .cover h1 {
-    border: 0;
-    font-size: 38pt;
+    font-family: "Outfit", sans-serif;
+    font-weight: 900;
+    font-size: 45pt;
+    line-height: 1.1;
+    color: var(--coral);
+    background: transparent;
+    clip-path: none;
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 
-.cover h1::before {
-    content: "";
-}
+.cover h1::before { content: ""; }
 
-.cover .serial {
-    margin-top: 20px;
+.cover .subtitle {
+    margin: 20px 0;
     color: var(--teal-dark);
     font-family: "IBM Plex Mono", monospace;
-    font-size: 9pt;
-    letter-spacing: 0.12em;
+    font-size: 16pt;
     text-transform: uppercase;
 }
 
-h1,
-h2 {
-    page-break-before: auto;
-    break-before: auto;
+.cover .serial {
+    margin-top: auto;
+    color: var(--ink-soft);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10pt;
+    letter-spacing: 0.1em;
 }
 
-h1:not(:first-of-type) {
-    page-break-before: always;
-    break-before: page;
-}
-
-h1:first-of-type {
-    page-break-before: avoid;
-    break-before: avoid;
-}
+/* ============================================================
+   MAGIA 2026: EXPERIENCIA EN PANTALLA VS CODE (Se omite en PDF)
+   ============================================================ */
 
 @media screen {
     body {
-        max-width: 900px !important;
+        max-width: 950px !important;
         margin: 40px auto !important;
         padding: 60px !important;
-        box-shadow: 0 0 32px rgba(25, 43, 48, 0.18);
+        /* Apariencia de manual físico */
+        background-color: var(--paper) !important;
+        border-radius: 8px;
+        box-shadow: 
+            0 20px 50px rgba(25, 43, 48, 0.3),
+            inset 0 0 100px color-mix(in srgb, var(--paper-shadow) 50%, transparent);
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    /* Efecto CRT Scanline superpuesto (Solo visible en editor) */
+    body::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(rgba(25, 43, 48, 0) 50%, rgba(25, 43, 48, 0.03) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 999;
+    }
+
+    /* Animación holográfica para los enlaces */
+    a {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration-color: transparent;
+    }
+    
+    a:hover {
+        background: var(--coral);
+        color: var(--paper-light);
+        text-decoration-color: var(--paper-light);
+        border-radius: 4px;
+        padding: 0 4px;
+        box-shadow: 0 0 10px color-mix(in srgb, var(--coral) 50%, transparent);
+    }
+
+    /* Cursor parpadeante retro en los H1 */
+    h1::after {
+        content: "█";
+        color: var(--teal);
+        animation: blink 1s step-end infinite;
+        margin-left: 10px;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
     }
 }
 
+/* ============================================================
+   LIMPIEZA PARA IMPRESIÓN (PDF Seguro)
+   ============================================================ */
 @media print {
-    html,
-    body {
-        background-color: var(--paper) !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
     body {
         box-shadow: none;
+        border-radius: 0;
     }
-
-    a {
-        color: var(--teal-dark);
-        text-decoration: none;
+    
+    /* Asegurar que no se partan elementos importantes */
+    tr, img, .note, .warning, .danger, .machine, .cover {
+        page-break-inside: avoid;
+        break-inside: avoid;
     }
+    
+    a { text-decoration: underline; color: var(--teal-dark); }
 }
