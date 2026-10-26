@@ -1,7 +1,7 @@
 <div class="cover">
 <p class="serial">CUADERNO DE PRÁCTICAS // DESARROLLO WEB</p>
 
-# UD1 · UD2<br>SPRING BOOT
+# D3 · UD2<br>SPRING BOOT
 
 <p><strong>D3-UD2</strong></p>
 <p>Kerin Aguilera</p>
