@@ -8,7 +8,7 @@ public class TusDatos {
     private String nombre;
     private ArrayList<String> Aficciones = new ArrayList<>();
     private String lugar;
-    private ArrayList<String> datosFinales = new ArrayList<>();
+    private String sexo;
 
 
     public TusDatos() {
