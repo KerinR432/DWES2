@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{app.titulo}">Título</title>
+</head>
+<body>
+<div class="card">
+
+  <h1 th:text="#{app.titulo}">Título</h1>
+  <p th:text="#{app.saludo}">Saludo</p>
+  <p th:text="#{app.instrucciones}">Instrucciones</p>
+  <p><strong><span th:text="#{app.idioma.actual}">Idioma</span></strong></p>
+
+  <div class="info">
+    <p>El idioma de esta página se detecta automáticamente analizando la cabecera HTTP <code>Accept-Language</code> enviada por tu navegador o cliente HTTP (Bruno / Postman).</p>
+  </div>
+</div>
+
+<br>
+<a th:href="@{/codificacion/formulario}">← Volver al Ejercicio 1</a>
+</body>
+</html>
