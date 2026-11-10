@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ffa98c90-af37-403c-9336-92294217da55" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/HolaMundoConPlantilla/src/main/java/ruvik/holamundoconplantilla/ControllerPlantilla.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/HolaMundoConPlantilla/src/main/resources/templates/hola.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/PracticandoFormulario/src/main/java/ruvik/practicandoformulario/ControllerFormulario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/PracticandoFormulario/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/java/ruvik/validacionformulario/ControladorWeb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/java/ruvik/validacionformulario/FormularioPersona.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/resources/templates/resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/contadorVisita/src/main/java/ruvik/contadorvisita/ControllerContadorVisitas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/java/ruvik/demoformulario/ControllerDemoFormulario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/java/ruvik/demoformulario/Saludo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/resources/templates/resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/resources/templates/saludos.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/java/ruvik/fuerzadelimperio/ControllerDelImperio.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/java/ruvik/fuerzadelimperio/FormularioImperial.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/tucartilla.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "KerinR432"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/KerinR432/DWES2.git",
+    "accountId": "df454b27-e570-4665-8ad2-cd558173daa7"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3Kd1AOKyeKdl8KWKjZnH5yr6ufb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "TEORIA",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/alumno/Escritorio/CARPETA DE CLASES/DWS/PROYECTOS",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10968.63" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10968.63" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ffa98c90-af37-403c-9336-92294217da55" name="Changes" comment="" />
+      <created>1791872486717</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791872486717</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>FORMULARIO PARA SERVIR AL EMPERADOR</h1>
+    <form action="#" th:action="@{/}" th:object="${imperial}" method="post">
+        <p>
+            Nombre:
+            <input type="text" th:field="*{nombre}" />
+
+        </p>
+
+        <p>Edad: <input type="number" th:field="*{edad}" /> </p>
+        <p>Aficiones
+        </p>
+        <input type="checkbox" th:field="*{aficiones}" value="Deporte" /> Deporte
+        <input type="checkbox" th:field="*{aficiones}" value="Arte" /> Arte
+        <input type="checkbox" th:field="*{aficiones}" value="Fotografia" /> Fotografia
+        <select name="ramaMilitar" th:field="*{ramaMilitar}">
+            <option value="" disabled selected >-- Selecciona una opción --</option>
+            <option value="Astra Militarun">Astra Militarun</option>
+            <option value="Ultramarines">Ultramarines</option>
+            <option value="Salamandras" >Salamandras</option>
+        </select>
+        <p>Rango: <input type="range" th:field="*{rango}" min="1"
+                         max="10"
+                         step="1"
+        /> </p>
+
+        <p><button type="submit">Enviar</button></p>
+
+    </form>
+</body>
+</html>
