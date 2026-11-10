@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>FORMULARIO UNO</title>
+    <title>Formulario 1 · Nombre</title>
 </head>
 <body>
-    <form method="post" action="/procesar" th:action="@{/procesar}" th:object="${datos}">
-        <label>Nombre:</label>
-        <input type="text" th:field="*{nombre}" name="nombre">
+<h1>Paso 1 · Tu nombre</h1>
 
-        <button type="submit" name="contador" value="1" >Enviar</button>
-    </form>
+<form method="post" th:action="@{/procesar}" th:object="${datos}">
+    <p>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" type="text" th:field="*{nombre}" autocomplete="name" required>
+    </p>
+
+    <button type="submit" name="contador" value="1">Enviar</button>
+</form>
 </body>
 </html>

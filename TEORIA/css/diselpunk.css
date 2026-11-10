@@ -63,7 +63,8 @@
 
 @page {
     size: A4;
-    margin: 0; /* Elimina los márgenes blancos predeterminados del PDF */
+    /* El margen se aplica a todas las páginas, no solo a la primera. */
+    margin: 18mm 20mm 20mm;
 }
 
 html {
@@ -85,7 +86,7 @@ body {
     width: 100% !important;
 
     margin: 0 auto !important;
-    padding: 18mm 20mm !important; /* El margen real de impresión se gestiona desde el padding */
+    padding: 0 !important; /* El margen de impresión se define en @page */
     box-sizing: border-box;
 
     -webkit-print-color-adjust: exact !important;
@@ -577,7 +578,8 @@ body > h1:first-of-type {
    ------------------------------------------------------------ */
 
 .cover {
-    min-height: 240mm;
+    box-sizing: border-box;
+    min-height: 235mm;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -612,6 +614,54 @@ body > h1:first-of-type {
 
 
 /* ------------------------------------------------------------
+   21b // ÍNDICE Y MARCA FINAL
+   ------------------------------------------------------------ */
+
+.toc {
+    margin: 20px 0 32px;
+    padding: 18px 22px;
+    border: 2px solid var(--steel-dark);
+    border-left: 7px solid var(--rust);
+    background: rgba(255, 255, 255, 0.20);
+    box-shadow: 4px 4px 0 rgba(37, 34, 29, 0.12);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.toc-title {
+    margin: 0 0 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--brass);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rust-dark);
+}
+
+.toc ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.endmark {
+    margin-top: 40px;
+    padding-top: 14px;
+    border-top: 3px double var(--brass);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+
+/* ------------------------------------------------------------
    22 // RESPONSIVE / PANTALLA
    ------------------------------------------------------------ */
 
@@ -638,7 +688,10 @@ body > h1:first-of-type {
 
     body {
         box-shadow: none;
-        width: 100% !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important; /* Los márgenes de cada página vienen de @page */
     }
 
     a {

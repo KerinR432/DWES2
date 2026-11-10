@@ -29,6 +29,7 @@ DWES2/
 ├── .github/
 │   └── agents/
 ├── PROYECTOS/
+│   ├── D3-UD2/
 │   ├── HolaMundoConPlantilla/
 │   ├── PracticandoFormulario/
 │   ├── UD1-UD2/
@@ -49,6 +50,9 @@ DWES2/
 
 ### HolaMundoConPlantilla
 Proyecto inicial para practicar la estructura básica de una aplicación Spring Boot y la integración de vistas HTML con Thymeleaf.
+
+### D3-UD2
+Formulario dividido en cuatro pasos (nombre, aficiones, lugar y sexo) que conserva los datos entre peticiones mediante campos ocultos y los muestra en una vista final. Incluye documentación, capturas y pruebas de integración con MockMvc.
 
 ### PracticandoFormulario
 Ejemplo de formulario web con Spring MVC, donde se envían datos desde una vista a un controlador.
