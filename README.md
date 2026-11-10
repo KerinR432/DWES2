@@ -59,7 +59,7 @@ Ordenadas aproximadamente por dificultad y por el momento del curso en que se hi
 | [`PracticandoFormulario`](PROYECTOS/PracticandoFormulario) | Formularios GET/POST básicos con Spring MVC. |
 | [`ValidacionFormulario`](PROYECTOS/ValidacionFormulario) | Validación de campos con anotaciones de **Spring Validation** y mensajes de error. |
 | [`fuerzaDelImperio`](PROYECTOS/fuerzaDelImperio) | Formulario + lógica de presentación en MVC (con temática Star Wars 🌌). |
-| [`UD1-UD2`](PROYECTOS/UD1-UD2) | Práctica integradora de las unidades didácticas 1 y 2. |
+| [`UD1-UD2`](PROYECTOS/D1-UD2) | Práctica integradora de las unidades didácticas 1 y 2. |
 | [`D3-UD2`](PROYECTOS/D3-UD2) | **Formularios encadenados** en varios pasos: los datos se conservan entre pantallas. |
 | [`D4-UD2`](PROYECTOS/D4-UD2) | **Internacionalización (i18n)** con `messages.properties` y manejo de codificación. |
 | [`demo`](PROYECTOS/demo) | Proyecto base de demostración y configuración inicial. |
@@ -82,11 +82,11 @@ En [`TEORIA/`](TEORIA/) está el aprendizaje del curso día a día.
 | [Día 6](TEORIA/bitacpra-dia-seis.md) | Backend en Java: hilos, servlets y Spring Boot |
 | [Día 7](TEORIA/bitacora-dia-siete.md) | Spring Boot puro: primeros endpoints y formularios |
 | [Día 8](TEORIA/bitacora-dia-ocho.md) | Familiarización con Spring Boot |
-| [Día 9](TEORIA/bitacora-dia-nueve.md) | Repaso D1-UD2 y ejercicios de la UD2 |
-| [Día 10](TEORIA/bitacora-dia-diez.md) | Plantillas Thymeleaf |
-| [Día 11](TEORIA/bitacora-dia-once.md) | `@ModelAttribute`, Lombok y dudas de la práctica |
-| [Día 12](TEORIA/bitacora-dia-doce.md) | `redirect`, `@ModelAttribute` vs `@RequestParam` |
-| [Día 13–14](TEORIA/bitacora-dia-trece.md) | Continuación de la UD2 |
+| [Día 9](TEORIA/bitacora-dia-nueve.md) | Repaso D1-UD2, JAR, puerto 80 y teoría MVC |
+| [Día 10](TEORIA/bitacora-dia-diez.md) | Plantillas Thymeleaf, `Model` y contador thread-safe |
+| [Día 11](TEORIA/bitacora-dia-once.md) | Lombok (`@Data`) y `@ModelAttribute` en formularios |
+| [Día 12](TEORIA/bitacora-dia-doce.md) | `redirect`, PRG y `@ModelAttribute` vs `@RequestParam` |
+| [Día 13](TEORIA/bitacora-dia-trece.md) | Cookies, sesiones y carrito de la compra |
 
 ### Otros recursos
 

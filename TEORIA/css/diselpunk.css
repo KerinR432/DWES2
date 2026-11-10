@@ -1,108 +1,140 @@
-/* ============================================================
-   DIESELPUNK // MARKDOWN → PDF
-   Theme for VS Code Markdown PDF (CORREGIDO)
-   ============================================================ */
+/* ==================================================================
+   DIESELPUNK // MARKDOWN -> PDF
+   Taller de propaganda, chapa remachada y manual de instrucciones.
+   Serio en la forma, con el suficiente humor como para no parecer
+   un informe militar de 1943.
 
-/* ------------------------------------------------------------
-   01 // FUENTES
-   ------------------------------------------------------------ */
+   Pensada para:
+   - A4, impresión Chromium (Puppeteer / Markdown PDF)
+   - Apuntes y prácticas largas
+   - Tablas, código, diagramas ASCII e imágenes
+   - Saltos de página predecibles
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700;800&display=swap');
+   Clases opcionales:
+   .cover  .toc  .toc-title  .endmark
+   .note  .warning  .danger  .spec  .machine  .dont-panic
+   .eyebrow  .subtitle  .author  .serial  .meta
+   .metadata  .data-line  .label  .page  .emoji  .keep
+
+   Regla de oro: si funciona, no lo toques.
+   ================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&display=swap");
 
 
-/* ------------------------------------------------------------
-   02 // VARIABLES
-   ------------------------------------------------------------ */
+/* ==================================================================
+   01. TOKENS DE DISEÑO
+   ================================================================== */
 
 :root {
-    /* Papel */
-    --paper: #e9e1d0;
-    --paper-light: #f1eadb;
-    --paper-dark: #d7cdb9;
+    /* Papel de archivo */
+    --paper: #efe7d4;
+    --paper-light: #f8f1e1;
+    --paper-dark: #ddd2b8;
 
     /* Tinta */
-    --ink: #25221d;
-    --ink-light: #514b42;
-    --ink-faded: #756e63;
+    --ink: #241f18;
+    --ink-soft: #46403a;
+    --ink-faded: #6b6355;
 
-    /* Metal */
-    --steel: #565854;
-    --steel-dark: #343532;
-    --steel-light: #777973;
+    /* Acero */
+    --steel: #4a5553;
+    --steel-dark: #2b3433;
+    --steel-light: #7d8783;
 
     /* Óxido */
-    --rust: #8b3f24;
-    --rust-dark: #632b1a;
-    --rust-light: #b05a36;
+    --rust: #a34226;
+    --rust-dark: #7a2e19;
+    --rust-light: #c1603f;
+    --rust-wash: rgba(163, 66, 38, 0.10);
 
     /* Latón */
-    --brass: #a27b32;
-    --brass-dark: #76591f;
-    --brass-light: #c4a35a;
-
-    /* Verde máquina */
-    --machine-green: #53604b;
-    --machine-green-dark: #374133;
+    --brass: #a67c33;
+    --brass-dark: #7b5a1e;
+    --brass-light: #d3ac62;
+    --brass-wash: rgba(166, 124, 51, 0.13);
 
     /* Petróleo */
-    --oil: #29332f;
-    --oil-light: #46544c;
+    --oil: #232b28;
+    --machine-green: #4b5a46;
 
     /* Código */
-    --code-bg: #1e201e;
-    --code-text: #d8d2c3;
+    --code-bg: #1c211f;
+    --code-ink: #e8dfcc;
+    --code-muted: #a8b3a6;
 
-    /* Sombras */
-    --shadow: rgba(37, 34, 29, 0.18);
+    /* Líneas y sombras */
+    --line: rgba(36, 31, 24, 0.18);
+    --line-strong: rgba(36, 31, 24, 0.38);
+    --shadow: 4px 4px 0 rgba(36, 31, 24, 0.14);
+
+    /* Tipografía */
+    --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+    --font-display: "Oswald", "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", "Cascadia Mono", Consolas, "Courier New", monospace;
+    --font-emoji: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
 }
 
 
-/* ------------------------------------------------------------
-   03 // PAGINACIÓN & CONFIGURACIÓN GLOBAL PDF
-   ------------------------------------------------------------ */
+/* ==================================================================
+   02. PÁGINA IMPRESA
+   ----------------------------------------------------------------
+   En Markdown PDF los márgenes reales los pone Puppeteer
+   (markdown-pdf.margin.*). Aquí se declaran los mismos valores para
+   que la vista previa y el PDF coincidan.
+   El body NO lleva padding: así no se duplican márgenes.
+   ================================================================== */
 
 @page {
     size: A4;
-    /* El margen se aplica a todas las páginas, no solo a la primera. */
-    margin: 18mm 20mm 20mm;
+    margin: 16mm 15mm 18mm 15mm;
 }
 
-html {
+
+/* ==================================================================
+   03. BASE
+   ================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
     background-color: var(--paper) !important;
+    color: var(--ink);
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
 }
 
 body {
-    font-family: "IBM Plex Sans", Arial, sans-serif;
-    color: var(--ink);
-    background-color: var(--paper) !important;
-
-    font-size: 11pt;
-    line-height: 1.65;
-
-    /* Ocupa el ancho completo de la hoja A4 */
-    max-width: 100% !important;
-    width: 100% !important;
-
-    margin: 0 auto !important;
-    padding: 0 !important; /* El margen de impresión se define en @page */
-    box-sizing: border-box;
-
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    width: auto !important;
+    max-width: none !important;
+    font-family: var(--font-body), var(--font-emoji);
+    font-size: 10.5pt;
+    line-height: 1.62;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 
-/* ------------------------------------------------------------
-   04 // TEXTO
-   ------------------------------------------------------------ */
+/* ==================================================================
+   04. TEXTO
+   ================================================================== */
 
 p {
-    margin: 0 0 1em 0;
+    margin: 0 0 0.95em;
+    orphans: 3;
+    widows: 3;
 }
 
 strong {
+    color: var(--ink);
     font-weight: 700;
 }
 
@@ -110,102 +142,16 @@ em {
     color: var(--rust-dark);
 }
 
-
-/* ------------------------------------------------------------
-   05 // TÍTULOS
-   ------------------------------------------------------------ */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Roboto Slab", Georgia, serif;
-    color: var(--ink);
-    font-weight: 700;
-    page-break-after: avoid;
-    break-after: avoid;
-    position: relative;
+del {
+    color: var(--ink-faded);
 }
-
-
-/* ---------- H1 ---------- */
-
-h1 {
-    font-size: 30pt;
-    text-transform: uppercase;
-    letter-spacing: 0.055em;
-    margin-top: 35px;
-    margin-bottom: 28px;
-    padding-top: 10px;
-    padding-bottom: 14px;
-    border-top: 2px solid var(--brass);
-    border-bottom: 5px solid var(--ink);
-    line-height: 1.15;
-}
-
-/* Marca lateral de engranaje */
-h1::before {
-    content: "⚙";
-    color: var(--rust);
-    margin-right: 12px;
-    font-size: 0.75em;
-    vertical-align: middle;
-}
-
-
-/* ---------- H2 ---------- */
-
-h2 {
-    font-size: 20pt;
-    margin-top: 42px;
-    margin-bottom: 18px;
-    padding: 7px 12px 9px;
-    border-left: 6px solid var(--rust);
-    border-bottom: 1px solid var(--brass);
-    background: linear-gradient(90deg, rgba(41, 51, 47, 0.11), transparent 82%);
-    text-transform: uppercase;
-    letter-spacing: 0.035em;
-}
-
-
-/* ---------- H3 ---------- */
-
-h3 {
-    font-size: 14pt;
-    margin-top: 30px;
-    margin-bottom: 12px;
-    color: var(--rust-dark);
-    border-bottom: 1px solid rgba(162, 123, 50, 0.45);
-    padding-bottom: 5px;
-}
-
-
-/* ---------- H4 ---------- */
-
-h4 {
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 11pt;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--steel-dark);
-    margin-top: 25px;
-    border-left: 3px solid var(--brass);
-    padding-left: 9px;
-}
-
-
-/* ------------------------------------------------------------
-   06 // LINKS
-   ------------------------------------------------------------ */
 
 a {
     color: var(--rust-dark);
     font-weight: 600;
     text-decoration: underline;
     text-decoration-color: var(--brass);
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 1.5px;
     text-underline-offset: 3px;
 }
 
@@ -213,69 +159,227 @@ a:hover {
     color: var(--rust);
 }
 
+abbr[title] {
+    border-bottom: 1px dotted var(--ink-faded);
+    cursor: help;
+}
 
-/* ------------------------------------------------------------
-   07 // SEPARADORES
-   ------------------------------------------------------------ */
-
-hr {
-    border: 0;
-    height: 5px;
-    margin: 35px 0;
-    background: repeating-linear-gradient(
-        90deg,
-        var(--ink) 0,
-        var(--ink) 22px,
-        transparent 22px,
-        transparent 30px
-    );
+sub,
+sup {
+    font-size: 0.72em;
+    line-height: 0;
 }
 
 
-/* ------------------------------------------------------------
-   08 // BLOCKQUOTES
-   ------------------------------------------------------------ */
+/* ==================================================================
+   05. TÍTULOS
+   ----------------------------------------------------------------
+   H1 = placa remachada de sección.
+   H2 = señal de taller.
+   H3 = entrada del manual.
+   H4 = etiqueta de archivador.
+   ================================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    color: var(--ink);
+    font-family: var(--font-display), var(--font-emoji);
+    font-weight: 600;
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* --- H1: placa de sección --------------------------------------- */
+
+h1 {
+    margin: 0 0 22px;
+    padding: 13px 18px 15px 20px;
+
+    border: 0;
+    border-left: 10px solid var(--rust);
+    border-bottom: 3px solid var(--brass);
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.03) 0 5px,
+            transparent 5px 11px
+        ),
+        linear-gradient(100deg, var(--ink) 0%, #322c23 100%);
+
+    box-shadow: var(--shadow);
+    color: var(--paper-light);
+
+    font-size: 23pt;
+    line-height: 1.12;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+}
+
+/* --- H2: señal de taller ---------------------------------------- */
+
+h2 {
+    margin: 34px 0 16px;
+    padding: 7px 12px 8px 14px;
+
+    border: 0;
+    border-left: 5px solid var(--rust);
+    border-bottom: 1px solid var(--line-strong);
+
+    background: linear-gradient(90deg, var(--brass-wash), transparent 88%);
+
+    color: var(--ink);
+    font-size: 16.5pt;
+    line-height: 1.2;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+}
+
+/* --- H3: entrada del manual ------------------------------------- */
+
+h3 {
+    margin: 26px 0 10px;
+    padding: 0 0 5px;
+
+    border-bottom: 1px dashed rgba(166, 124, 51, 0.65);
+
+    color: var(--rust-dark);
+    font-family: var(--font-body), var(--font-emoji);
+    font-size: 12.5pt;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    text-transform: none;
+}
+
+/* --- H4: etiqueta de archivador --------------------------------- */
+
+h4 {
+    margin: 22px 0 8px;
+    padding-left: 9px;
+
+    border-left: 3px solid var(--brass);
+
+    color: var(--steel-dark);
+    font-family: var(--font-mono);
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+h5 {
+    margin: 18px 0 6px;
+    color: var(--ink-soft);
+    font-size: 10.5pt;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+h6 {
+    margin: 16px 0 5px;
+    color: var(--ink-faded);
+    font-family: var(--font-mono);
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+
+/* ==================================================================
+   06. SEPARADORES
+   ================================================================== */
+
+hr {
+    height: 4px;
+    margin: 30px 0;
+    border: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--ink) 0 18px,
+        transparent 18px 26px
+    );
+    opacity: 0.55;
+}
+
+
+/* ==================================================================
+   07. Citas y anotaciones al margen
+   ================================================================== */
 
 blockquote {
-    margin: 25px 0;
-    padding: 18px 24px;
-    background: linear-gradient(
-        90deg,
-        rgba(139, 63, 36, 0.10),
-        rgba(139, 63, 36, 0.025)
-    );
+    margin: 20px 0;
+    padding: 14px 18px 13px;
+
+    border: 1px solid var(--line);
     border-left: 6px solid var(--rust);
-    color: var(--ink-light);
-    font-family: "Roboto Slab", Georgia, serif;
-    position: relative;
+
+    background:
+        linear-gradient(105deg, var(--brass-wash), rgba(166, 124, 51, 0.02) 70%),
+        var(--paper-light);
+
+    color: var(--ink-soft);
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
 blockquote::before {
-    content: "⚙  NOTA DE TALLER";
+    content: "// ANOTACIÓN AL MARGEN · NO CONSTA EN ACTA";
+
     display: block;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 8pt;
+    margin-bottom: 7px;
+
+    color: var(--rust-dark);
+    font-family: var(--font-mono);
+    font-size: 7pt;
     font-weight: 600;
     letter-spacing: 0.12em;
-    color: var(--rust-dark);
-    margin-bottom: 8px;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+blockquote > :last-child {
+    margin-bottom: 0;
+}
+
+blockquote blockquote {
+    margin: 12px 0 0;
+    border-left-color: var(--brass);
+    background: rgba(166, 124, 51, 0.06);
+}
+
+blockquote blockquote::before {
+    content: "// NOTA DENTRO DE LA NOTA";
+    color: var(--brass-dark);
 }
 
 
-/* ------------------------------------------------------------
-   09 // LISTAS
-   ------------------------------------------------------------ */
+/* ==================================================================
+   08. LISTAS
+   ================================================================== */
 
 ul,
 ol {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin: 10px 0 18px;
+    padding-left: 1.45em;
 }
 
 li {
-    margin-bottom: 6px;
+    margin: 0.22em 0;
+    padding-left: 0.12em;
+    orphans: 2;
+    widows: 2;
 }
 
 li::marker {
@@ -283,78 +387,141 @@ li::marker {
     font-weight: 700;
 }
 
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+    margin-top: 0.3em;
+    margin-bottom: 0.35em;
+}
 
-/* ------------------------------------------------------------
-   10 // CÓDIGO INLINE
-   ------------------------------------------------------------ */
+/* Listas de tareas de Markdown */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
 
-:not(pre) > code {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.9em;
-    color: var(--rust-dark);
-    background: rgba(37, 34, 29, 0.08);
-    border: 1px solid rgba(37, 34, 29, 0.18);
-    border-radius: 3px;
-    padding: 2px 6px;
+    width: 12px;
+    height: 12px;
+    margin: 0 6px 0 0;
+
+    border: 2px solid var(--steel-dark);
+    border-radius: 0;
+    background: var(--paper-light);
+
+    vertical-align: -2px;
+}
+
+input[type="checkbox"]:checked {
+    border-color: var(--rust);
+    background: var(--rust);
+    box-shadow: inset 0 0 0 2px var(--paper-light);
 }
 
 
-/* ------------------------------------------------------------
-   11 // BLOQUES DE CÓDIGO & DIAGRAMAS ASCII (CORREGIDO)
-   ------------------------------------------------------------ */
+/* ==================================================================
+   09. CÓDIGO
+   ================================================================== */
+
+:not(pre) > code {
+    padding: 1px 5px;
+
+    border: 1px solid rgba(36, 31, 24, 0.16);
+    border-radius: 2px;
+
+    background: rgba(166, 124, 51, 0.10);
+    color: var(--rust-dark);
+
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    white-space: break-spaces;
+}
 
 pre {
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 15px 18px;
+
+    /* El borde izquierdo grueso es la marca de la casa. */
+    border: 1px solid #0f1412;
+    border-left: 6px solid var(--rust);
+
     background: var(--code-bg) !important;
-    color: var(--code-text);
-    border: 3px solid var(--steel-dark);
-    border-left: 7px solid var(--rust);
-    border-radius: 2px;
-    padding: 18px 22px;
-    margin: 24px 0;
+    color: var(--code-ink);
+    box-shadow: var(--shadow);
 
-    /* Mantiene intacto el arte y diagramas ASCII */
-    white-space: pre !important; 
+    /* Mantiene intacto el arte y los diagramas ASCII. */
+    white-space: pre;
     overflow-x: hidden;
+    tab-size: 4;
 
-    box-shadow: 5px 5px 0 rgba(37, 34, 29, 0.16);
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
 pre code {
-    font-family: "IBM Plex Mono", "Courier New", monospace !important;
-    font-size: 8.5pt;
-    line-height: 1.15; /* Interlineado estrecho para no deformar gráficos de caja */
-    letter-spacing: 0px;
-    color: var(--code-text);
-    background: transparent;
     display: block;
+
+    background: transparent !important;
+    color: var(--code-ink);
+
+    font-family: var(--font-mono);
+    font-size: 8.3pt;
+    line-height: 1.45;
+    letter-spacing: 0;
+    white-space: pre;
+}
+
+/* Bloques de código dentro de una ficha de máquina */
+.machine pre {
+    margin: 10px 0;
+    border-color: rgba(232, 223, 204, 0.18);
+    background: rgba(0, 0, 0, 0.28) !important;
+    box-shadow: none;
+}
+
+.machine pre code {
+    color: var(--code-ink);
 }
 
 
-/* ------------------------------------------------------------
-   12 // TABLAS
-   ------------------------------------------------------------ */
+/* ==================================================================
+   10. TABLAS
+   ----------------------------------------------------------------
+   Las tablas largas pueden repartirse entre páginas, pero las filas
+   no se cortan y la cabecera se repite.
+   ================================================================== */
 
 table {
     width: 100%;
+    margin: 20px 0;
     border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 9.5pt;
-    page-break-inside: avoid;
-    break-inside: avoid;
-    border: 2px solid var(--steel-dark);
-    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid var(--line-strong);
+
+    background: rgba(255, 255, 255, 0.25);
+
+    font-size: 9pt;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+
+    page-break-inside: auto;
+    break-inside: auto;
 }
 
 thead {
+    display: table-header-group;
     background: var(--steel-dark);
     color: var(--paper-light);
+
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-family: "IBM Plex Mono", monospace;
+}
+
+tfoot {
+    display: table-footer-group;
+    background: rgba(74, 85, 83, 0.08);
     font-size: 8.5pt;
-    display: table-header-group;
 }
 
 tr {
@@ -363,71 +530,110 @@ tr {
 }
 
 th {
-    padding: 11px 12px;
+    padding: 8px 9px;
+    border: 1px solid rgba(248, 241, 225, 0.18);
+    border-bottom: 3px solid var(--brass);
     text-align: left;
-    border: 1px solid var(--steel);
+    vertical-align: bottom;
+    font-weight: 600;
 }
 
 td {
-    padding: 10px 12px;
-    border: 1px solid rgba(86, 88, 84, 0.5);
+    padding: 7px 9px;
+    border: 1px solid rgba(36, 31, 24, 0.18);
+    text-align: left;
+    vertical-align: top;
 }
 
 tbody tr:nth-child(even) {
-    background: rgba(162, 123, 50, 0.07);
+    background: rgba(166, 124, 51, 0.07);
 }
 
-tbody tr:hover {
-    background: rgba(139, 63, 36, 0.10);
+/* Las tablas dentro de una ficha no necesitan doble marco */
+.spec table,
+.note table,
+.warning table {
+    margin: 8px 0 2px;
+    border-color: var(--line);
+    background: transparent;
+    box-shadow: none;
 }
 
 
-/* ------------------------------------------------------------
-   13 // IMÁGENES
-   ------------------------------------------------------------ */
+/* ==================================================================
+   11. IMÁGENES
+   ================================================================== */
 
 img {
-    max-width: 100%;
     display: block;
-    margin: 25px auto;
-    border: 4px solid var(--steel-dark);
-    box-shadow: 6px 6px 0 rgba(37, 34, 29, 0.18);
+    max-width: 100%;
+    max-height: 150mm;
+    height: auto;
+
+    margin: 20px auto;
+    padding: 3px;
+
+    border: 1px solid var(--line-strong);
+    background: var(--paper-light);
+    box-shadow: var(--shadow);
+
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+figure {
+    margin: 20px 0;
+    text-align: center;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+figure img {
+    margin-bottom: 8px;
+}
+
+figcaption {
+    margin-top: 6px;
+    color: var(--ink-faded);
+    font-family: var(--font-mono);
+    font-size: 7.5pt;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+a img {
+    border-color: var(--brass);
 }
 
 
-/* ------------------------------------------------------------
-   14 // ÉNFASIS
-   ------------------------------------------------------------ */
+/* ==================================================================
+   12. ÉNFASIS Y ATAJOS
+   ================================================================== */
 
 mark {
+    padding: 1px 4px;
     background: var(--brass-light);
     color: var(--ink);
-    padding: 2px 5px;
 }
 
+kbd {
+    display: inline-block;
+    padding: 1px 6px;
 
-/* ------------------------------------------------------------
-   15 // CHECKBOXES
-   ------------------------------------------------------------ */
+    border: 1px solid var(--line-strong);
+    border-bottom-width: 3px;
+    border-radius: 2px;
 
-input[type="checkbox"] {
-    appearance: none;
-    width: 13px;
-    height: 13px;
-    border: 2px solid var(--steel-dark);
-    vertical-align: -2px;
-    margin-right: 6px;
+    background: var(--paper-light);
+    color: var(--ink);
+
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    line-height: 1.35;
+    white-space: nowrap;
 }
-
-input[type="checkbox"]:checked {
-    background: var(--rust);
-    border-color: var(--rust);
-}
-
-
-/* ------------------------------------------------------------
-   16 // SELECCIÓN
-   ------------------------------------------------------------ */
 
 ::selection {
     background: var(--rust);
@@ -435,263 +641,637 @@ input[type="checkbox"]:checked {
 }
 
 
-/* ------------------------------------------------------------
-   17 // REGLAS DE SALTO DE PÁGINA
-   ------------------------------------------------------------ */
-
-h1, h2 {
-    page-break-before: auto;
-    break-before: auto;
-}
-
-h1 {
-    page-break-before: always;
-    break-before: page;
-}
-
-h1:first-of-type {
-    page-break-before: avoid;
-    break-before: avoid;
-}
-
-h2, h3 {
-    page-break-after: avoid;
-    break-after: avoid;
-}
-
-pre, table, blockquote {
-    page-break-inside: avoid;
-    break-inside: avoid;
-}
-
-
-/* ------------------------------------------------------------
-   18 // PRIMERA PÁGINA
-   ------------------------------------------------------------ */
-
-body > h1:first-of-type {
-    margin-top: 24mm;
-    font-size: 36pt;
-    padding: 18px 0 24px;
-    border-top: 10px solid var(--rust);
-    border-bottom: 5px solid var(--ink);
-}
-
-
-/* ------------------------------------------------------------
-   19 // SMALL CAPS / METADATOS
-   ------------------------------------------------------------ */
-
-.metadata,
-.meta,
-.subtitle {
-    font-family: "IBM Plex Mono", monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 8pt;
-    color: var(--steel);
-    border-left: 4px solid var(--brass);
-    padding-left: 12px;
-    margin: 15px 0;
-}
-
-
-/* ------------------------------------------------------------
-   20 // ELEMENTOS HTML PERSONALIZADOS
-   ------------------------------------------------------------ */
+/* ==================================================================
+   13. AVISOS DE TALLER
+   ----------------------------------------------------------------
+   Compatible con:
+     <div class="note">...</div>
+     ::: warning
+     ...
+     :::
+   ================================================================== */
 
 .note,
 .warning,
 .danger,
 .spec,
-.machine {
-    margin: 25px 0;
-    padding: 18px 20px;
+.machine,
+.dont-panic {
+    max-width: 100%;
+    margin: 18px 0;
+    padding: 13px 16px 14px;
+
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--brass);
+
+    background: var(--paper-light);
+    box-shadow: 3px 3px 0 var(--line);
+
     page-break-inside: avoid;
     break-inside: avoid;
-    border: 2px solid var(--steel-dark);
-    box-shadow: 4px 4px 0 rgba(37, 34, 29, 0.15);
 }
 
-.note {
-    background: rgba(162, 123, 50, 0.12);
-    border-left: 7px solid var(--brass);
-}
-
-.note::before {
-    content: "⚙ NOTE";
-}
-
-.warning {
-    background: rgba(176, 90, 54, 0.12);
-    border-left: 7px solid var(--rust);
-}
-
-.warning::before {
-    content: "⚠ AVISO";
-}
-
-.danger {
-    background: rgba(99, 43, 26, 0.13);
-    border-left: 7px solid var(--rust-dark);
-}
-
-.danger::before {
-    content: "☠ PELIGRO";
-}
-
-.spec {
-    background: rgba(86, 88, 84, 0.08);
-    border-left: 7px solid var(--steel);
-}
-
-.spec::before {
-    content: "⚒ FICHA TÉCNICA";
-}
-
-.machine {
-    background: linear-gradient(135deg, var(--oil) 0%, var(--machine-green) 70%, var(--machine-green-dark) 100%);
-    color: var(--paper-light);
-    border: 3px solid var(--oil-light);
-}
-
-.machine::before {
-    content: "⚙ ESTADO DE MÁQUINA";
+.note > :last-child,
+.warning > :last-child,
+.danger > :last-child,
+.spec > :last-child,
+.machine > :last-child,
+.dont-panic > :last-child {
+    margin-bottom: 0;
 }
 
 .note::before,
 .warning::before,
 .danger::before,
 .spec::before,
-.machine::before {
+.machine::before,
+.dont-panic::before {
     display: block;
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 8pt;
+    margin-bottom: 6px;
+
+    font-family: var(--font-mono);
+    font-size: 7pt;
     font-weight: 600;
     letter-spacing: 0.12em;
-    margin-bottom: 8px;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+/* --- Nota de taller --------------------------------------------- */
+
+.note {
+    border-left-color: var(--brass);
+    background: rgba(166, 124, 51, 0.10);
+}
+
+.note::before {
+    content: "NOTA DE TALLER // SI FUNCIONA, NO LO TOQUES";
+    color: var(--brass-dark);
+}
+
+/* --- Aviso de seguridad ----------------------------------------- */
+
+.warning {
+    border-left-color: var(--rust);
+    background: var(--rust-wash);
+}
+
+.warning::before {
+    content: "AVISO DE SEGURIDAD // CUIDADO CON LOS DEDOS";
+    color: var(--rust-dark);
+}
+
+/* --- Peligro ---------------------------------------------------- */
+
+.danger {
+    border-color: rgba(122, 46, 25, 0.35);
+    border-left-color: var(--rust-dark);
+    background: rgba(122, 46, 25, 0.12);
+}
+
+.danger::before {
+    content: "PELIGRO // ZONA DE CHATARRA";
+    color: var(--rust-dark);
+}
+
+/* --- Ficha técnica ---------------------------------------------- */
+
+.spec {
+    border-left-color: var(--steel);
+    background: transparent;
+}
+
+.spec::before {
+    content: "FICHA TÉCNICA // DATOS DE PLACA";
+    color: var(--steel-dark);
+}
+
+/* --- Parte de máquina ------------------------------------------- */
+
+.machine {
+    padding: 14px 17px 15px;
+
+    border: 1px solid var(--steel-dark);
+    border-left: 6px solid var(--brass);
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.025) 0 5px,
+            transparent 5px 11px
+        ),
+        var(--oil);
+
+    color: var(--code-ink);
+
+    font-family: var(--font-mono);
+    font-size: 8.8pt;
+    line-height: 1.55;
+
+    box-shadow: var(--shadow);
+}
+
+.machine::before {
+    content: "PARTE DE MÁQUINA // PRESIÓN: DISCUTIBLE";
+    color: var(--brass-light);
+}
+
+.machine strong {
+    color: var(--brass-light);
+}
+
+.machine em {
+    color: var(--paper-light);
+}
+
+.machine code {
+    border-color: rgba(232, 223, 204, 0.22);
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--code-ink);
+}
+
+.machine a {
+    color: var(--brass-light);
+    text-decoration-color: rgba(211, 172, 98, 0.55);
+}
+
+/* --- Tarjeta de emergencia -------------------------------------- */
+
+.dont-panic {
+    padding: 18px 20px;
+
+    border: 2px solid var(--rust);
+    border-left: 2px solid var(--rust);
+
+    background: #2a1510;
+    color: #f3d9c8;
+
+    text-align: center;
+    box-shadow: 5px 5px 0 rgba(36, 31, 24, 0.18);
+}
+
+.dont-panic::before {
+    content: "NO ENTRAR EN PÁNICO // HAY CAFÉ";
+
+    margin-bottom: 7px;
+
+    color: var(--brass-light);
+
+    font-family: var(--font-display);
+    font-size: 12.5pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+}
+
+.dont-panic strong {
+    color: var(--brass-light);
+}
+
+.dont-panic em {
+    color: #f3d9c8;
 }
 
 
-/* ------------------------------------------------------------
-   21 // PORTADA
-   ------------------------------------------------------------ */
+/* ==================================================================
+   14. PORTADA
+   ----------------------------------------------------------------
+   Estructura recomendada:
+
+   <div class="cover">
+   <p class="serial">CUADERNO DE PRÁCTICAS // DESARROLLO WEB</p>
+   <h1>Título del documento</h1>
+   <p class="subtitle">Subtítulo</p>
+   <p class="author">Kerin Aguilera</p>
+   <p class="serial">JAVA 21 · SPRING BOOT · OCTUBRE 2026</p>
+   </div>
+   ================================================================== */
 
 .cover {
     box-sizing: border-box;
-    min-height: 235mm;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: flex-start;
+
+    min-height: 250mm;
+    margin: 0;
+    padding: 18mm 16mm 14mm;
+
+    background:
+        linear-gradient(rgba(36, 31, 24, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(36, 31, 24, 0.045) 1px, transparent 1px),
+        var(--paper-light);
+    background-size: 10mm 10mm;
+
+    border: 2px solid var(--ink);
+    outline: 1px solid var(--brass);
+    outline-offset: -8px;
+
     text-align: center;
+
     page-break-after: always;
     break-after: page;
-    border: 8px solid var(--ink);
-    outline: 3px solid var(--rust);
-    outline-offset: -18px;
-    padding: 35px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.cover::before {
+    content: "ARCHIVO DE TALLER // USO INTERNO // DOCUMENTO NO CLASIFICADO";
+
+    align-self: stretch;
+
+    margin-bottom: 10mm;
+    padding-bottom: 5px;
+
+    border-bottom: 1px solid var(--line);
+
+    color: var(--rust-dark);
+    font-family: var(--font-mono);
+    font-size: 6.8pt;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.cover::after {
+    content: "IMPRESO EN PAPEL RECICLADO · TINTA DE CALIDAD DISCUTIBLE";
+
+    align-self: stretch;
+
+    margin-top: 8mm;
+    padding-top: 5px;
+
+    border-top: 1px solid var(--line);
+
+    color: var(--ink-faded);
+    font-family: var(--font-mono);
+    font-size: 6.8pt;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    text-align: right;
+    text-transform: uppercase;
 }
 
 .cover h1 {
+    margin: auto 0 0;
+    padding: 0;
+
     border: 0;
-    font-size: 42pt;
-    margin: 0;
-    text-align: center;
+    background: transparent;
+    box-shadow: none;
+
+    color: var(--ink);
+
+    font-size: 36pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.02;
+    text-transform: uppercase;
+    text-wrap: balance;
 }
 
-.cover h1::before {
-    content: "";
+.cover h1::before,
+.cover h1::after {
+    content: none;
 }
 
-.cover .serial {
-    font-family: "IBM Plex Mono", monospace;
-    color: var(--rust);
+.cover > p {
+    max-width: 140mm;
+    margin: 5mm 0 0;
+
+    color: var(--ink-soft);
+
+    font-size: 10.5pt;
+    line-height: 1.5;
+}
+
+.cover h1 + p {
+    color: var(--rust-dark);
+    font-size: 13.5pt;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.cover .eyebrow {
+    margin: 0 0 8mm;
+
+    color: var(--ink-faded);
+
+    font-family: var(--font-mono);
+    font-size: 7.5pt;
+    font-weight: 600;
     letter-spacing: 0.18em;
-    font-size: 9pt;
-    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+.cover .subtitle,
+.cover .sub-title {
+    margin: 7mm 0 0;
+
+    color: var(--rust-dark);
+
+    font-family: var(--font-display);
+    font-size: 14pt;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    text-transform: none;
+}
+
+.cover .subtitle strong,
+.cover .sub-title strong {
+    color: inherit;
+    font-weight: 600;
+}
+
+.cover .author {
+    margin: 10mm 0 0;
+    color: var(--ink);
+    font-size: 11pt;
+    font-weight: 600;
+}
+
+.cover .serial,
+.cover .meta {
+    margin: 0;
+
+    color: var(--ink-faded);
+
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+/* Sello superior de la portada */
+.cover > .serial:first-child {
+    margin: 0 0 8mm;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+}
+
+/* Sello inferior de la portada */
+.cover > .serial:last-child,
+.cover > .meta:last-child {
+    margin: 10mm 0 0;
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+    text-align: right;
 }
 
 
-/* ------------------------------------------------------------
-   21b // ÍNDICE Y MARCA FINAL
-   ------------------------------------------------------------ */
+/* ==================================================================
+   15. ÍNDICE Y MARCA FINAL
+   ================================================================== */
 
 .toc {
-    margin: 20px 0 32px;
-    padding: 18px 22px;
-    border: 2px solid var(--steel-dark);
-    border-left: 7px solid var(--rust);
-    background: rgba(255, 255, 255, 0.20);
-    box-shadow: 4px 4px 0 rgba(37, 34, 29, 0.12);
+    margin: 0 0 26px;
+    padding: 14px 18px 10px;
+
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--brass);
+    border-left: 5px solid var(--rust);
+
+    background: var(--paper-light);
+    box-shadow: 3px 3px 0 var(--line);
+
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
 .toc-title {
-    margin: 0 0 12px;
-    padding-bottom: 7px;
-    border-bottom: 1px solid var(--brass);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 9pt;
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+
+    border-bottom: 1px solid var(--line);
+
+    color: var(--rust-dark);
+    font-family: var(--font-mono);
+    font-size: 8pt;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
+}
+
+.toc ol,
+.toc ul {
+    margin: 0.2em 0 0.35em;
+    padding-left: 1.4em;
+}
+
+.toc li {
+    margin: 0.18em 0;
+}
+
+.toc a {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.toc a:hover {
     color: var(--rust-dark);
 }
 
-.toc ol {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .endmark {
-    margin-top: 40px;
-    padding-top: 14px;
+    margin-top: 34px;
+    padding-top: 10px;
+
     border-top: 3px double var(--brass);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 8pt;
+
+    color: var(--ink-faded);
+    font-family: var(--font-mono);
+    font-size: 7.5pt;
     font-weight: 600;
     letter-spacing: 0.18em;
+    line-height: 1.5;
     text-align: center;
     text-transform: uppercase;
-    color: var(--ink-faded);
+
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
 
-/* ------------------------------------------------------------
-   22 // RESPONSIVE / PANTALLA
-   ------------------------------------------------------------ */
+/* ==================================================================
+   16. UTILIDADES
+   ================================================================== */
+
+.metadata,
+.meta {
+    margin: 8px 0;
+
+    color: var(--ink-faded);
+    font-family: var(--font-mono);
+    font-size: 7.5pt;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.label,
+.stamp {
+    display: inline-block;
+    padding: 1px 6px;
+
+    border: 1px solid var(--line-strong);
+    background: var(--paper-light);
+    color: var(--steel-dark);
+
+    font-family: var(--font-mono);
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.data-line {
+    height: 1px;
+    margin: 14px 0;
+    border: 0;
+    background: var(--line-strong);
+}
+
+/* Salto de página manual: <div class="page"></div> */
+.page {
+    page-break-after: always;
+    break-after: page;
+}
+
+.emoji {
+    height: 1.25em;
+    margin: 0 0.05em;
+    vertical-align: -0.2em;
+}
+
+.keep,
+.no-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+
+/* ==================================================================
+   17. ESTRATEGIA DE PAGINACIÓN
+   ================================================================== */
+
+/* Cada H1 empieza en una página nueva, salvo el primero del documento
+   y el de la portada (que ya controla su propio salto). */
+h1 {
+    page-break-before: page;
+    break-before: page;
+}
+
+body > h1:first-child,
+.cover h1,
+.cover + h1 {
+    page-break-before: avoid;
+    break-before: avoid;
+}
+
+/* Evitar que un título se quede solo al final de una página. */
+h1 + p,
+h1 + blockquote,
+h1 + ul,
+h1 + ol,
+h1 + table,
+h1 + pre,
+h1 + .note,
+h1 + .warning,
+h1 + .danger,
+h1 + .spec,
+h1 + .machine,
+h1 + .dont-panic,
+h2 + p,
+h2 + blockquote,
+h2 + ul,
+h2 + ol,
+h2 + table,
+h2 + pre,
+h2 + .note,
+h2 + .warning,
+h2 + .danger,
+h2 + .spec,
+h2 + .machine,
+h2 + .dont-panic,
+h3 + p,
+h3 + blockquote,
+h3 + ul,
+h3 + ol,
+h3 + table,
+h3 + pre {
+    page-break-before: avoid;
+    break-before: avoid;
+}
+
+/* Las tablas largas sí pueden repartirse; las filas no. */
+table {
+    page-break-inside: auto;
+    break-inside: auto;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tr,
+img,
+figure,
+pre,
+blockquote,
+.note,
+.warning,
+.danger,
+.spec,
+.machine,
+.dont-panic {
+    max-width: 100%;
+}
+
+
+/* ==================================================================
+   18. VISTA EN PANTALLA (no afecta al PDF)
+   ================================================================== */
 
 @media screen {
+    html {
+        background: #d9cfb9;
+    }
+
     body {
-        max-width: 900px !important;
-        margin: 40px auto !important;
-        padding: 60px !important;
-        box-shadow: 0 0 35px rgba(0,0,0,0.20);
+        width: auto;
+        max-width: 880px !important;
+        margin: 38px auto !important;
+        padding: 58px 62px !important;
+
+        background: var(--paper) !important;
+        box-shadow: 0 10px 40px rgba(36, 31, 24, 0.22);
     }
 }
 
 
-/* ------------------------------------------------------------
-   23 // IMPRESIÓN / EXPORTACIÓN PDF
-   ------------------------------------------------------------ */
+/* ==================================================================
+   19. IMPRESIÓN / EXPORTACIÓN PDF
+   ================================================================== */
 
 @media print {
-    html, body {
+    html,
+    body {
         background-color: var(--paper) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 
     body {
-        box-shadow: none;
         width: auto !important;
         max-width: none !important;
         margin: 0 !important;
-        padding: 0 !important; /* Los márgenes de cada página vienen de @page */
+        padding: 0 !important;
+        box-shadow: none;
     }
 
     a {
@@ -699,12 +1279,17 @@ body > h1:first-of-type {
         text-decoration: none;
     }
 
+    /* En papel no tiene sentido imprimir la URL entre paréntesis. */
     a[href]::after {
         content: "";
     }
+
+    pre {
+        overflow: hidden;
+    }
 }
 
-/* ------------------------------------------------------------
-   END OF FILE
-   DIESELPUNK ENGINEERING SYSTEM
-   ------------------------------------------------------------ */
+/* ==================================================================
+   FIN DEL ARCHIVO
+   DIESELPUNK WORKSHOP SYSTEM · REV. 2
+   ================================================================== */
