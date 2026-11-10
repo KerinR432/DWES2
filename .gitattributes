@@ -1,0 +1,17 @@
+# ==========================================================
+# Finales de línea unificados para Linux y Windows
+# ==========================================================
+# Sin esto, cada ordenador aplica su propia configuración
+# (core.autocrlf) y el mismo archivo puede llegar distinto
+# a cada sistema. Con esto, el repo es idéntico en todos.
+
+# Scripts de shell: SIEMPRE LF (CRLF rompe bash en Linux)
+*.sh     text eol=lf
+
+# Scripts de Windows: SIEMPRE CRLF (convención de .bat/.cmd)
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+
+# Wrappers de Gradle: respetan su sistema por proyecto
+gradlew     text eol=lf
+gradlew.bat text eol=crlf
