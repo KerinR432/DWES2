@@ -5,6 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffa98c90-af37-403c-9336-92294217da55" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/agents/MEJORA CSS.agent.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/DWS.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/java/ruvik/d3ud2/TusDatos.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/java/ruvik/d3ud2/controller/ControladorFormulariosEncadenado.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario1.html" afterDir="false" />
@@ -37,7 +42,52 @@
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/java/ruvik/fuerzadelimperio/FormularioImperial.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/formulario.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/tucartilla.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/git.sh" beforeDir="false" afterPath="$PROJECT_DIR$/git.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/.vscode/extensions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/bitacora-dia-diez.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/bitacora-dia-doce.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/bitacora-dia-nueve.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/bitacora-dia-once.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/bitacora-dia-trece.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/bitacpra-dia-seis.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/css/diselpunk.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/css/fantasia-crepuscular.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/css/guia-galactica.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/css/solarpunk.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D1 -UD2.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D3-UD2.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D3-UD2.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D4-UD2.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D4-UD2.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D1-UD2.2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D2-UD1.1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D3-UD2.1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D3-UD2.2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D3-UD2.3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D3-UD2.4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D3-UD2.5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D3-UD2.6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/D4-UD2.9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/UD2-UD2.3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/UD4-UD2.5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/capturaAle2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/capturaAle3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/capturaAle4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/capturaAle5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/capturaAle6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/img - documents/capturaAle7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/practicaDemo.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/imagenes/contador-visitas.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TEORIA/test.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TEORIA/bitacora-dia-cuatro.md" beforeDir="false" afterPath="$PROJECT_DIR$/TEORIA/bitacora-dia-cuatro.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +112,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="codigo" />
+                    <option name="lastUsedInstant" value="1794298739" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="TEORIA" />
                     <option name="lastUsedInstant" value="1794297128" />
@@ -100,7 +154,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "TEORIA",
+    "git-widget-placeholder": "#21 on codigo",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/alumno/Escritorio/CARPETA DE CLASES/DWS",
     "node.js.detected.package.eslint": "true",
