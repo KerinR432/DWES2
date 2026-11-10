@@ -8,13 +8,16 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.48/6858f13541bab505384f07053c5a7b539bbfd3e3/lombok-1.18.48.jar" />
         </processorPath>
-        <module name="D4-UD2.test" />
-        <module name="D4-UD2.main" />
+        <module name="Carrito-compra-gemini.main" />
+        <module name="Carrito-compra-gemini.test" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Carrito-compra-gemini" options="-parameters" />
+      <module name="Carrito-compra-gemini.main" options="-parameters" />
+      <module name="Carrito-compra-gemini.test" options="-parameters" />
       <module name="D3-UD2" options="-parameters" />
       <module name="D3-UD2.main" options="-parameters" />
       <module name="D3-UD2.test" options="-parameters" />

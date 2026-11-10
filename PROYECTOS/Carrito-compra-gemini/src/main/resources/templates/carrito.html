@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tu Carrito de Compras</title>
+</head>
+<body>
+<h1>Carrito de Compras</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${carrito}">
+        <td th:text="${entry.key.nombre}">Nombre</td>
+        <td th:text="${entry.key.precio} + ' €'">Precio</td>
+        <td th:text="${entry.value}">Cantidad</td>
+        <td th:text="${entry.key.precio * entry.value} + ' €'">Subtotal</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Total: <span th:text="${total}">0.0</span> €</h2>
+
+<a th:href="@{/tienda/productos}">Seguir comprando</a> |
+<a th:href="@{/tienda/carrito/vaciar}">Vaciar carrito</a>
+</body>
+</html>
