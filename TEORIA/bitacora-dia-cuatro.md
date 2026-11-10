@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # 👨‍💻 PRESENTACIONES DE COMPAÑEROS
 
 En esta sesión hemos visto diferentes tecnologías y lenguajes utilizados para el **desarrollo web**, especialmente en el lado del servidor.
@@ -15,7 +19,7 @@ Ruby es un **lenguaje de programación interpretado**, muy utilizado históricam
 Ruby on Rails utiliza el patrón arquitectónico **MVC (Model-View-Controller)**, que permite separar una aplicación en diferentes responsabilidades:
 
 ```text
-MVC
+MVC   
 │
 ├── Model
 │   └── Datos y lógica relacionada con ellos

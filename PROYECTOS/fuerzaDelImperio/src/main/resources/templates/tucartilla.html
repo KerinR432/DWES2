@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administratum - Orden de Despliegue</title>
+    <style>
+        /* Mismos estilos base del tema imperial */
+        body {
+            background-color: #0a0a0a;
+            background-image: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+            color: #d4c4a8;
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #121212;
+            border: 3px solid #8b6508;
+            box-shadow: 0 0 30px rgba(138, 3, 3, 0.1), inset 0 0 20px rgba(207, 181, 59, 0.05);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+        }
+            </style>
+
+        <p th:text="|Te Llamas: ${imperial.nombre}|"></p>
+        <p th:text="|Tu edad es: ${imperial.edad}|"></p>
+        <p th:each=" afición : ${imperial.aficiones}" th:text="|aficiones son: ${afición}|"></p>
+        <p th:text="|Perteneces la gloria: ${imperial.ramaMilitar}|"></p>
+        <p th:text="|Tu Rango es: ${imperial.rango}|"></p>
+
+        <div th:if="${esMayor}">
+            <p>Eres un tio que entiende que esto va a ser un paseo. Aunque servir al emperador es glorioso. Claramente, esto va a traer destraste y seguramente mueras en menos de unos minutos,
+            pero genial, tu vida aunque no sea recordarda seguro serás recordado por algo o por alguien, ¡ÁNIMO!
+            </p>
+        </div>
+
+        <div th:if="${esAltoRango}">
+            <p>
+                Comisario, Capitan del capítulo, Astarte.
+                Hay muchos planetas bajo ataque, actualmente estamos luchando varios frentes. Tu regmiento debe ir aún sitio
+            </p>
+
+            <h1>Planetas</h1>
+            <h2>Terra</h2>
+            <h2>Arcadia</h2>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Rama Asignada:</span>
+            <span class="data-value" th:text="${imperial.ramaMilitar}"></span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">Nivel de Autoridad:</span>
+            <span class="data-value" th:text="|Nivel ${imperial.rango}|"></span>
+        </div>
+        <div class="data-row" style="border: none;">
+            <span class="data-label">Especialidades Registradas:</span>
+            <div style="margin-top: 10px; padding-left: 15px; color: #cfb53b;">
+                <div th:each="aficion : ${imperial.aficiones}" th:text="|- ${aficion}|"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONDICIÓN: MAYOR DE EDAD -->
+    <div class="message-box" th:if="${esMayor}">
+        <h3 class="box-title">/// Evaluación Táctica de Supervivencia</h3>
+        <p>
+            Como ciudadano experimentado, entiendes que esto no será un paseo. Servir al Emperador es el mayor de los honores, pero requerirá el mayor de los sacrificios.
+            Es estadísticamente probable que perezcas en los primeros minutos de combate tras el despliegue. ¡Pero regocíjate! Tu nombre, aunque breve en la historia, será el cimiento de nuestra victoria. ¡ÁNIMO, LA GLORIA ES ETERNA!
+        </p>
+    </div>
+
+    <!-- CONDICIÓN: ALTO RANGO -->
+    <div class="command-box" th:if="${esAltoRango}">
+        <h3 class="box-title">/// Directiva de Alto Mando</h3>
+        <p>
+            <strong>Atención: Comisario / Capitán de Capítulo / Astartes.</strong><br>
+            Múltiples frentes bajo jurisdicción imperial están cediendo ante el asalto xeno y hereje. Su regimiento requiere liderazgo inmediato. Prepare el asalto orbital hacia los siguientes sectores:
+        </p>
+
+        <ul class="planet-list">
+            <li><h2>Mundo Trono: TERRA (Prioridad Secundus)</h2></li>
+            <li><h2>Mundo Colmena: ARCADIA (Prioridad Extremis)</h2></li>
+        </ul>
+    </div>
+
+    <div class="seal">
+        <span title="Sello de Pureza del Administratum">✪</span>
+    </div>
+</div>
+</body>
+</html>
