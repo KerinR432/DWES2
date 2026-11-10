@@ -26,8 +26,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR" || exit 1
 
 RAMAS=("TEORIA" "codigo" "main")
-RAMA_PRINCIPAL="main"
 REMOTO="origin"
+
+SELECTED_BRANCH=""
 
 # ==========================================================
 # COLORES
@@ -73,27 +74,22 @@ pausa() {
     read -r -p "Pulsa ENTER para continuar..." _
 }
 
-ok() {
-    echo -e "${VERDE}🟢 $1${RESET}"
-}
-
-aviso() {
-    echo -e "${AMARILLO}🟡 $1${RESET}"
-}
-
-error() {
-    echo -e "${ROJO}🔴 $1${RESET}"
-}
-
-info() {
-    echo -e "${AZUL}🔵 $1${RESET}"
-}
+ok()     { echo -e "${VERDE}🟢 $1${RESET}"; }
+aviso()  { echo -e "${AMARILLO}🟡 $1${RESET}"; }
+error()  { echo -e "${ROJO}🔴 $1${RESET}"; }
+info()   { echo -e "${AZUL}🔵 $1${RESET}"; }
 
 # ==========================================================
 # COMPROBACIONES INICIALES
 # ==========================================================
 
 comprobar_entorno() {
+
+    # Sin terminal interactiva los 'read' fallan en bucle.
+    if [ ! -t 0 ]; then
+        error "Este script necesita una terminal interactiva."
+        return 1
+    fi
 
     if ! command -v git >/dev/null 2>&1; then
         error "Git no está instalado o no está disponible en PATH."
@@ -132,46 +128,6 @@ rama_actual() {
     git branch --show-current 2>/dev/null || true
 }
 
-hay_merge_pendiente() {
-    [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]
-}
-
-hay_rebase_pendiente() {
-
-    local git_dir
-
-    git_dir="$(git rev-parse --git-dir 2>/dev/null)" || return 1
-
-    [ -d "$git_dir/rebase-merge" ] ||
-    [ -d "$git_dir/rebase-apply" ]
-}
-
-hay_cherry_pick_pendiente() {
-
-    local git_dir
-
-    git_dir="$(git rev-parse --git-dir 2>/dev/null)" || return 1
-
-    [ -f "$git_dir/CHERRY_PICK_HEAD" ]
-}
-
-hay_revert_pendiente() {
-
-    local git_dir
-
-    git_dir="$(git rev-parse --git-dir 2>/dev/null)" || return 1
-
-    [ -f "$git_dir/REVERT_HEAD" ]
-}
-
-hay_operacion_pendiente() {
-
-    hay_merge_pendiente ||
-    hay_rebase_pendiente ||
-    hay_cherry_pick_pendiente ||
-    hay_revert_pendiente
-}
-
 hay_cambios() {
     [ -n "$(git status --porcelain 2>/dev/null)" ]
 }
@@ -184,38 +140,62 @@ remoto_existe() {
     git show-ref --verify --quiet "refs/remotes/$REMOTO/$1"
 }
 
-contar_adelante() {
+# Devuelve el número de commits de diferencia con el remoto.
+# Uso: contar_diferencia <rama> <adelante|atras>
+
+contar_diferencia() {
 
     local rama="$1"
+    local direccion="$2"
 
-    if ! rama_existe "$rama"; then
+    if ! rama_existe "$rama" || ! remoto_existe "$rama"; then
         echo 0
         return
     fi
 
-    if ! remoto_existe "$rama"; then
-        echo 0
-        return
-    fi
+    case "$direccion" in
 
-    git rev-list --count "$REMOTO/$rama..$rama" 2>/dev/null || echo 0
+        adelante)
+            git rev-list --count "$REMOTO/$rama..$rama" 2>/dev/null || echo 0
+            ;;
+
+        atras)
+            git rev-list --count "$rama..$REMOTO/$rama" 2>/dev/null || echo 0
+            ;;
+
+    esac
 }
 
-contar_atras() {
+# Devuelve el nombre de la operación Git pendiente
+# (merge, rebase, cherry-pick, revert) o nada si no hay.
 
-    local rama="$1"
+operacion_pendiente() {
 
-    if ! rama_existe "$rama"; then
-        echo 0
-        return
+    local git_dir
+
+    git_dir="$(git rev-parse --git-dir 2>/dev/null)" || return 1
+
+    if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
+        echo "merge"
+        return 0
     fi
 
-    if ! remoto_existe "$rama"; then
-        echo 0
-        return
+    if [ -d "$git_dir/rebase-merge" ] || [ -d "$git_dir/rebase-apply" ]; then
+        echo "rebase"
+        return 0
     fi
 
-    git rev-list --count "$rama..$REMOTO/$rama" 2>/dev/null || echo 0
+    if [ -f "$git_dir/CHERRY_PICK_HEAD" ]; then
+        echo "cherry-pick"
+        return 0
+    fi
+
+    if [ -f "$git_dir/REVERT_HEAD" ]; then
+        echo "revert"
+        return 0
+    fi
+
+    return 1
 }
 
 # ==========================================================
@@ -265,6 +245,7 @@ cambiar_rama() {
 mostrar_cabecera() {
 
     local rama
+    local pendiente
 
     rama="$(rama_actual)"
 
@@ -279,14 +260,11 @@ mostrar_cabecera() {
         echo -e "${AMARILLO}⚠️ HEAD separado${RESET}"
     fi
 
-    if hay_merge_pendiente; then
-        echo
-        error "Hay un MERGE pendiente."
-    fi
+    pendiente="$(operacion_pendiente || true)"
 
-    if hay_rebase_pendiente; then
+    if [ -n "$pendiente" ]; then
         echo
-        error "Hay un REBASE pendiente."
+        error "Hay una operación pendiente: $pendiente."
     fi
 
     echo
@@ -296,41 +274,40 @@ mostrar_cabecera() {
 # SELECCIONAR RAMA
 # ==========================================================
 
+# Muestra el menú de ramas y deja la elección en SELECTED_BRANCH.
+# La etiqueta permite reutilizarla (rama destino, origen, etc.).
+
 seleccionar_rama() {
 
-    echo
-    echo -e "${BLANCO}Selecciona una rama:${RESET}"
-    echo
-    echo "  1) TEORIA"
-    echo "  2) codigo"
-    echo "  3) main"
-    echo
-
+    local etiqueta="${1:-Selecciona una rama}"
     local opcion
     local rama
+    local indice
+
+    echo
+    echo -e "${BLANCO}${etiqueta}${RESET}"
+    echo
+
+    indice=1
+    for rama in "${RAMAS[@]}"
+    do
+        echo "  $indice) $rama"
+        indice=$((indice + 1))
+    done
+
+    echo
 
     read -r -p "Opción: " opcion
 
-    case "$opcion" in
-
-        1)
-            rama="TEORIA"
-            ;;
-
-        2)
-            rama="codigo"
-            ;;
-
-        3)
-            rama="main"
-            ;;
-
-        *)
-            error "Opción no válida."
-            return 1
-            ;;
-
-    esac
+    if [[ "$opcion" =~ ^[0-9]+$ ]] &&
+       [ "$opcion" -ge 1 ] &&
+       [ "$opcion" -le "${#RAMAS[@]}" ]
+    then
+        rama="${RAMAS[$((opcion - 1))]}"
+    else
+        error "Opción no válida."
+        return 1
+    fi
 
     if ! rama_existe "$rama"; then
         error "La rama local '$rama' no existe."
@@ -348,11 +325,16 @@ seleccionar_rama() {
 
 hacer_pull() {
 
+    local rama
+    local pendiente
+
     titulo
     mostrar_cabecera
 
-    if hay_operacion_pendiente; then
-        error "Hay una operación Git pendiente."
+    pendiente="$(operacion_pendiente || true)"
+
+    if [ -n "$pendiente" ]; then
+        error "Hay una operación Git pendiente: $pendiente."
         echo
         git status
         echo
@@ -371,12 +353,12 @@ hacer_pull() {
         return
     fi
 
-    seleccionar_rama || {
+    seleccionar_rama "Selecciona una rama:" || {
         pausa
         return
     }
 
-    local rama="$SELECTED_BRANCH"
+    rama="$SELECTED_BRANCH"
 
     echo
     info "Cambiando a $rama..."
@@ -387,22 +369,22 @@ hacer_pull() {
     fi
 
     echo
-    info "Actualizando información del remoto..."
-
-    if ! git fetch "$REMOTO"; then
-        error "No se ha podido actualizar la información del remoto."
-        pausa
-        return
-    fi
-
-    echo
     info "Haciendo pull de $REMOTO/$rama..."
 
-    if ! git pull "$REMOTO" "$rama"; then
+    # --ff-only: si las ramas han divergido, el pull se detiene
+    # en lugar de crear un merge automático.
+
+    if ! git pull --ff-only "$REMOTO" "$rama"; then
         echo
         error "El pull no se ha podido completar."
         echo
-        echo "Si Git muestra conflictos, revísalos antes de continuar."
+        echo "Causas habituales:"
+        echo
+        echo "  - Las ramas local y remota han divergido."
+        echo "    Sincroniza primero con git pull $REMOTO $rama"
+        echo "    o revisa la opción 7 (Merge)."
+        echo
+        echo "  - No hay conexión con el remoto."
         pausa
         return
     fi
@@ -419,11 +401,19 @@ hacer_pull() {
 
 hacer_push() {
 
+    local rama
+    local pendiente
+    local confirmar
+    local mensaje
+    local atras
+
     titulo
     mostrar_cabecera
 
-    if hay_operacion_pendiente; then
-        error "Tienes una operación Git pendiente."
+    pendiente="$(operacion_pendiente || true)"
+
+    if [ -n "$pendiente" ]; then
+        error "Tienes una operación Git pendiente: $pendiente."
         echo
         git status
         echo
@@ -432,12 +422,12 @@ hacer_push() {
         return
     fi
 
-    seleccionar_rama || {
+    seleccionar_rama "Selecciona una rama:" || {
         pausa
         return
     }
 
-    local rama="$SELECTED_BRANCH"
+    rama="$SELECTED_BRANCH"
 
     echo
     echo -e "${BLANCO}📤 COMMIT + PUSH${RESET}"
@@ -466,8 +456,6 @@ hacer_push() {
     echo "Esto incluirá archivos nuevos, modificados y eliminados."
     echo
 
-    local confirmar
-
     read -r -p "¿Quieres continuar? (s/n): " confirmar
 
     if [[ "$confirmar" != "s" && "$confirmar" != "S" ]]; then
@@ -492,8 +480,6 @@ hacer_push() {
     git status --short
 
     echo
-    local mensaje
-
     read -r -p "📝 Mensaje del commit: " mensaje
 
     if [ -z "$mensaje" ]; then
@@ -514,6 +500,40 @@ hacer_push() {
 
     echo
     ok "Commit creado correctamente."
+
+    # ------------------------------------------------------
+    # Comprobar el remoto ANTES del push para no chocar
+    # contra un rechazo por no-fast-forward.
+    # ------------------------------------------------------
+
+    echo
+    info "Comprobando el remoto..."
+
+    if ! git fetch "$REMOTO"; then
+        error "No se ha podido contactar con el remoto."
+        echo
+        echo "El commit está guardado localmente."
+        echo "Puedes volver a intentar el push más tarde."
+        pausa
+        return
+    fi
+
+    atras="$(contar_diferencia "$rama" "atras")"
+
+    if [ "$atras" -gt 0 ]; then
+
+        error "El remoto tiene $atras commit(s) que no tienes en local."
+        echo
+        echo "Si haces push ahora, Git lo rechazaría."
+        echo
+        echo "Sincroniza primero la rama:"
+        echo
+        echo "  git pull $REMOTO $rama"
+        echo
+        echo "Después repite esta opción (no repetirá el commit)."
+        pausa
+        return
+    fi
 
     echo
     info "Subiendo a $REMOTO/$rama..."
@@ -539,70 +559,27 @@ hacer_push() {
 }
 
 # ==========================================================
-# ESTADO DE LAS RAMAS
+# TABLA DE ESTADO DE LAS RAMAS
 # ==========================================================
 
-obtener_estado_rama() {
+# Tabla de todas las ramas del proyecto.
+# Antes estaba duplicada en "Ver estado" y en el dashboard.
 
-    local rama="$1"
-    local adelante
-    local atras
+mostrar_tabla_ramas() {
 
-    if ! rama_existe "$rama"; then
-        echo "NO_EXISTE"
-        return
-    fi
-
-    if ! remoto_existe "$rama"; then
-        echo "SIN_REMOTO"
-        return
-    fi
-
-    adelante="$(contar_adelante "$rama")"
-    atras="$(contar_atras "$rama")"
-
-    if [ "$adelante" -gt 0 ] && [ "$atras" -gt 0 ]; then
-        echo "DIVERGIDA"
-
-    elif [ "$adelante" -gt 0 ]; then
-        echo "PUSH"
-
-    elif [ "$atras" -gt 0 ]; then
-        echo "PULL"
-
-    else
-        echo "OK"
-    fi
-}
-
-ver_estado() {
-
-    titulo
-    mostrar_cabecera
-
-    echo -e "${BLANCO}🔎 ESTADO DEL PROYECTO${RESET}"
-    linea
-
-    if ! git fetch "$REMOTO"; then
-        echo
-        aviso "No se ha podido actualizar el remoto."
-        echo "El estado puede no estar completamente actualizado."
-    fi
-
-    echo
-    printf " %-12s %-23s %-9s %-9s\n" \
-        "RAMA" "ESTADO" "LOCAL +" "REMOTO -"
-
-    linea
-
+    local actual
     local rama
     local adelante
     local atras
     local cambios
     local estado
-    local actual
 
     actual="$(rama_actual)"
+
+    printf " %-12s %-23b %-9s %-9s\n" \
+        "RAMA" "ESTADO" "LOCAL +" "REMOTO -"
+
+    linea
 
     for rama in "${RAMAS[@]}"
     do
@@ -623,12 +600,11 @@ ver_estado() {
             continue
         fi
 
-        adelante="$(contar_adelante "$rama")"
-        atras="$(contar_atras "$rama")"
-
+        adelante="$(contar_diferencia "$rama" "adelante")"
+        atras="$(contar_diferencia "$rama" "atras")"
         cambios=""
 
-        if [ "$actual" = "$rama" ]; then
+        if [ "$rama" = "$actual" ]; then
             cambios="$(git status --porcelain 2>/dev/null)"
         fi
 
@@ -661,6 +637,54 @@ ver_estado() {
             "$atras"
 
     done
+}
+
+# ==========================================================
+# ÚLTIMO COMMIT
+# ==========================================================
+
+# Muestra el último commit de la rama actual.
+# Antes estaba duplicado en estadísticas y dashboard.
+
+mostrar_ultimo_commit() {
+
+    local prefijo="${1:-   }"
+
+    if ! git log -1 >/dev/null 2>&1; then
+        echo
+        aviso "No hay información de commit disponible."
+        return 1
+    fi
+
+    echo
+    echo "${prefijo}👤 Autor:   $(git log -1 --format='%an')"
+    echo "${prefijo}📅 Fecha:   $(git log -1 --format='%ad' --date='format:%d/%m/%Y %H:%M')"
+    echo "${prefijo}📝 Mensaje: $(git log -1 --format='%s')"
+    echo "${prefijo}🔑 Commit:  $(git log -1 --format='%h')"
+
+    return 0
+}
+
+# ==========================================================
+# ESTADO DE LAS RAMAS
+# ==========================================================
+
+ver_estado() {
+
+    titulo
+    mostrar_cabecera
+
+    echo -e "${BLANCO}🔎 ESTADO DEL PROYECTO${RESET}"
+    linea
+
+    if ! git fetch "$REMOTO"; then
+        echo
+        aviso "No se ha podido actualizar el remoto."
+        echo "El estado puede no estar completamente actualizado."
+    fi
+
+    echo
+    mostrar_tabla_ramas
 
     echo
 
@@ -690,24 +714,34 @@ ver_estado() {
 
 ver_historial() {
 
+    local rama
+    local -a formato
+
     titulo
 
-    seleccionar_rama || {
+    seleccionar_rama "Selecciona una rama:" || {
         pausa
         return
     }
 
-    local rama="$SELECTED_BRANCH"
+    rama="$SELECTED_BRANCH"
 
     echo
     echo -e "${BLANCO}📜 HISTORIAL — $rama${RESET}"
     linea
     echo
 
-    git log "$rama" \
-        --graph \
-        --pretty=format:"%C(yellow)%h%Creset | %C(cyan)%ad%Creset | %C(green)%an%Creset | %s" \
+    formato=(
+        --graph
+        --pretty=format:"%C(yellow)%h%Creset | %C(cyan)%ad%Creset | %C(green)%an%Creset | %s"
         --date="format:%d/%m/%Y %H:%M"
+    )
+
+    if command -v less >/dev/null 2>&1; then
+        git log "$rama" "${formato[@]}" | less -R
+    else
+        git log "$rama" "${formato[@]}"
+    fi
 
     echo
     echo
@@ -807,67 +841,6 @@ ver_blame() {
 }
 
 # ==========================================================
-# SELECCIONAR RAMA PARA MERGE
-# ==========================================================
-
-seleccionar_rama_merge() {
-
-    local tipo="$1"
-    local opcion
-    local seleccion
-
-    echo
-
-    if [ "$tipo" = "destino" ]; then
-        echo -e "${BLANCO}RAMA DESTINO:${RESET}"
-    else
-        echo -e "${BLANCO}RAMA ORIGEN:${RESET}"
-    fi
-
-    echo
-    echo "  1) TEORIA"
-    echo "  2) codigo"
-    echo "  3) main"
-    echo
-
-    read -r -p "Opción: " opcion
-
-    case "$opcion" in
-
-        1)
-            seleccion="TEORIA"
-            ;;
-
-        2)
-            seleccion="codigo"
-            ;;
-
-        3)
-            seleccion="main"
-            ;;
-
-        *)
-            error "Opción no válida."
-            return 1
-            ;;
-
-    esac
-
-    if ! rama_existe "$seleccion"; then
-        error "La rama '$seleccion' no existe."
-        return 1
-    fi
-
-    if [ "$tipo" = "destino" ]; then
-        MERGE_DESTINO="$seleccion"
-    else
-        MERGE_ORIGEN="$seleccion"
-    fi
-
-    return 0
-}
-
-# ==========================================================
 # MERGE
 # ==========================================================
 
@@ -880,9 +853,12 @@ hacer_merge() {
     local commits
     local confirmar
     local atras_destino
+    local pendiente
 
-    if hay_operacion_pendiente; then
-        error "Ya existe una operación Git pendiente."
+    pendiente="$(operacion_pendiente || true)"
+
+    if [ -n "$pendiente" ]; then
+        error "Ya existe una operación Git pendiente: $pendiente."
         echo
         git status
         pausa
@@ -902,21 +878,21 @@ hacer_merge() {
     echo -e "${BLANCO}🔀 MERGE SEGURO${RESET}"
     linea
 
-    seleccionar_rama_merge "destino" || {
+    seleccionar_rama "RAMA DESTINO:" || {
         pausa
         return
     }
 
-    destino="$MERGE_DESTINO"
+    destino="$SELECTED_BRANCH"
 
     echo
 
-    seleccionar_rama_merge "origen" || {
+    seleccionar_rama "RAMA ORIGEN:" || {
         pausa
         return
     }
 
-    origen="$MERGE_ORIGEN"
+    origen="$SELECTED_BRANCH"
 
     if [ "$destino" = "$origen" ]; then
         error "No puedes fusionar una rama consigo misma."
@@ -971,7 +947,7 @@ hacer_merge() {
     echo
     info "Comprobando si $destino tiene cambios nuevos en remoto..."
 
-    atras_destino="$(contar_atras "$destino")"
+    atras_destino="$(contar_diferencia "$destino" "atras")"
 
     if [ "$atras_destino" -gt 0 ]; then
 
@@ -1043,7 +1019,7 @@ continuar_merge() {
 
     titulo
 
-    if ! hay_merge_pendiente; then
+    if [ "$(operacion_pendiente || true)" != "merge" ]; then
         ok "No hay ningún merge pendiente."
         pausa
         return
@@ -1083,7 +1059,7 @@ cancelar_merge() {
 
     titulo
 
-    if ! hay_merge_pendiente; then
+    if [ "$(operacion_pendiente || true)" != "merge" ]; then
         ok "No hay ningún merge pendiente."
         pausa
         return
@@ -1180,20 +1156,10 @@ ver_estadisticas() {
     linea
     echo
 
-    local total_commits
-    local autores
-    local archivos
-    local ramas_locales
-
-    total_commits="$(git rev-list --all --count 2>/dev/null || echo 0)"
-    autores="$(git log --all --format='%an' 2>/dev/null | sort -u | wc -l | tr -d ' ')"
-    archivos="$(git ls-files | wc -l | tr -d ' ')"
-    ramas_locales="$(git branch --format='%(refname:short)' | wc -l | tr -d ' ')"
-
-    echo "📝 Commits totales:  $total_commits"
-    echo "👥 Autores:          $autores"
-    echo "📁 Archivos:         $archivos"
-    echo "🌿 Ramas locales:    $ramas_locales"
+    echo "📝 Commits totales:  $(git rev-list --all --count 2>/dev/null || echo 0)"
+    echo "👥 Autores:          $(git log --all --format='%an' 2>/dev/null | sort -u | wc -l | tr -d ' ')"
+    echo "📁 Archivos:         $(git ls-files | wc -l | tr -d ' ')"
+    echo "🌿 Ramas locales:    $(git branch --format='%(refname:short)' | wc -l | tr -d ' ')"
 
     echo
     echo -e "${BLANCO}👥 AUTORES${RESET}"
@@ -1205,11 +1171,8 @@ ver_estadisticas() {
     echo
     echo -e "${BLANCO}📌 ÚLTIMO COMMIT${RESET}"
     linea
-    echo
 
-    git log -1 \
-        --pretty=format:"👤 Autor:   %an%n📅 Fecha:   %ad%n📝 Mensaje: %s%n🔑 Commit:  %h" \
-        --date="format:%d/%m/%Y %H:%M"
+    mostrar_ultimo_commit "   "
 
     echo
     pausa
@@ -1229,6 +1192,7 @@ comprobar_archivos() {
 
     local encontrados=0
     local archivo
+    local carpeta
 
     # ------------------------------------------------------
     # Archivos de entorno
@@ -1243,37 +1207,30 @@ comprobar_archivos() {
     done
 
     # ------------------------------------------------------
-    # Archivos LOG
+    # Archivos temporales y de registro
     # ------------------------------------------------------
 
     if find . \
         -type f \
-        -name "*.log" \
+        \( -name "*.log" -o -name "*.bak" -o -name ".DS_Store" \) \
         -not -path "./.git/*" \
         -print -quit 2>/dev/null | grep -q .
     then
-        echo -e "${AMARILLO}⚠️ Se han encontrado archivos .log${RESET}"
+        echo -e "${AMARILLO}⚠️ Se han encontrado archivos .log, .bak o .DS_Store${RESET}"
         encontrados=1
     fi
 
     # ------------------------------------------------------
-    # Carpetas habituales
+    # Carpetas habituales que no deberían subirse
     # ------------------------------------------------------
 
-    if [ -d "node_modules" ]; then
-        aviso "Existe la carpeta node_modules/"
-        encontrados=1
-    fi
-
-    if [ -d ".vscode" ]; then
-        aviso "Existe la carpeta .vscode/"
-        encontrados=1
-    fi
-
-    if [ -d ".idea" ]; then
-        aviso "Existe la carpeta .idea/"
-        encontrados=1
-    fi
+    for carpeta in "node_modules" "vendor" "dist" ".vscode" ".idea"
+    do
+        if [ -d "$carpeta" ]; then
+            aviso "Existe la carpeta $carpeta/"
+            encontrados=1
+        fi
+    done
 
     echo
 
@@ -1312,15 +1269,10 @@ dashboard() {
     limpiar_pantalla
 
     local actual
+    local pendiente
     local rama
     local adelante
     local atras
-    local cambios
-    local estado_texto
-    local autor
-    local fecha
-    local mensaje
-    local hash
     local total_commits
     local autores
     local avisos
@@ -1372,7 +1324,13 @@ dashboard() {
         echo -e "   ${ROJO}⚠️ HEAD separado${RESET}"
     fi
 
-    if hay_merge_pendiente; then
+    # ------------------------------------------------------
+    # OPERACIÓN PENDIENTE
+    # ------------------------------------------------------
+
+    pendiente="$(operacion_pendiente || true)"
+
+    if [ "$pendiente" = "merge" ]; then
 
         echo
         echo -e "${ROJO}╔══════════════════════════════════════════════════════╗${RESET}"
@@ -1383,30 +1341,30 @@ dashboard() {
         echo "   Tienes un merge que necesita atención."
         echo "   🔧 Opción 8 → Continuar merge"
         echo "   🛑 Opción 9 → Cancelar merge"
+
+    elif [ -n "$pendiente" ]; then
+        echo
+        error "Hay una operación pendiente: $pendiente."
     fi
 
     # ------------------------------------------------------
-    # CONEXIÓN
+    # CONEXIÓN + ACTUALIZAR REMOTO
+    # (una sola llamada de red en lugar de dos)
     # ------------------------------------------------------
 
     echo
     echo -e "${BLANCO}🌐 CONEXIÓN${RESET}"
     linea
+    echo
 
-    if git ls-remote "$REMOTO" HEAD >/dev/null 2>&1; then
+    info "Actualizando estado remoto..."
+
+    if git fetch "$REMOTO" >/dev/null 2>&1; then
         echo -e "   ${VERDE}🟢 Origin conectado${RESET}"
     else
         echo -e "   ${ROJO}🔴 No se puede conectar con origin${RESET}"
+        echo "   El estado remoto puede estar desactualizado."
     fi
-
-    # ------------------------------------------------------
-    # ACTUALIZAR REMOTO
-    # ------------------------------------------------------
-
-    echo
-    info "Actualizando estado remoto..."
-
-    git fetch "$REMOTO" >/dev/null 2>&1 || true
 
     # ------------------------------------------------------
     # ESTADO DE LAS RAMAS
@@ -1417,68 +1375,7 @@ dashboard() {
     linea
     echo
 
-    printf " %-12s %-23s %-9s %-9s\n" \
-        "RAMA" "ESTADO" "LOCAL +" "REMOTO -"
-
-    echo
-
-    for rama in "${RAMAS[@]}"
-    do
-
-        if ! rama_existe "$rama"; then
-
-            printf " %-12s ${ROJO}%-23s${RESET}\n" \
-                "$rama" "❌ No existe"
-
-            continue
-        fi
-
-        if ! remoto_existe "$rama"; then
-
-            printf " %-12s ${AMARILLO}%-23s${RESET}\n" \
-                "$rama" "⚠️ Sin remoto"
-
-            continue
-        fi
-
-        adelante="$(contar_adelante "$rama")"
-        atras="$(contar_atras "$rama")"
-
-        cambios=""
-
-        if [ "$rama" = "$actual" ]; then
-            cambios="$(git status --porcelain 2>/dev/null)"
-        fi
-
-        if [ "$adelante" -gt 0 ] && [ "$atras" -gt 0 ]; then
-
-            estado_texto="${ROJO}🔴 Divergida${RESET}"
-
-        elif [ -n "$cambios" ]; then
-
-            estado_texto="${AMARILLO}🟡 Cambios locales${RESET}"
-
-        elif [ "$adelante" -gt 0 ]; then
-
-            estado_texto="${AZUL}🔵 Push pendiente${RESET}"
-
-        elif [ "$atras" -gt 0 ]; then
-
-            estado_texto="${ROJO}🔴 Pull pendiente${RESET}"
-
-        else
-
-            estado_texto="${VERDE}🟢 Actualizada${RESET}"
-
-        fi
-
-        printf " %-12s %-23b +%-8s -%-8s\n" \
-            "$rama" \
-            "$estado_texto" \
-            "$adelante" \
-            "$atras"
-
-    done
+    mostrar_tabla_ramas
 
     # ------------------------------------------------------
     # ÚLTIMO COMMIT
@@ -1488,25 +1385,7 @@ dashboard() {
     echo -e "${BLANCO}📝 ÚLTIMO COMMIT — RAMA ACTUAL${RESET}"
     linea
 
-    if [ -n "$actual" ] && git log -1 >/dev/null 2>&1; then
-
-        autor="$(git log -1 --format='%an')"
-        fecha="$(git log -1 --format='%ad' --date='format:%d/%m/%Y %H:%M')"
-        mensaje="$(git log -1 --format='%s')"
-        hash="$(git log -1 --format='%h')"
-
-        echo
-        echo "   👤 Autor:   $autor"
-        echo "   📅 Fecha:   $fecha"
-        echo "   📝 Mensaje: $mensaje"
-        echo "   🔑 Commit:  $hash"
-
-    else
-
-        echo
-        aviso "No hay información de commit disponible."
-
-    fi
+    mostrar_ultimo_commit "   "
 
     # ------------------------------------------------------
     # RESUMEN
@@ -1522,7 +1401,7 @@ dashboard() {
     echo
     echo "   📝 Commits: $total_commits"
     echo "   👥 Autores: $autores"
-    echo "   🌿 Ramas configuradas: ${#RAMAS[@]}"
+    echo "   🌿 Ramas del proyecto: ${#RAMAS[@]}"
 
     # ------------------------------------------------------
     # AVISOS
@@ -1539,8 +1418,8 @@ dashboard() {
 
         if remoto_existe "$rama"; then
 
-            adelante="$(contar_adelante "$rama")"
-            atras="$(contar_atras "$rama")"
+            adelante="$(contar_diferencia "$rama" "adelante")"
+            atras="$(contar_diferencia "$rama" "atras")"
 
             if [ "$adelante" -gt 0 ]; then
                 echo -e "${AZUL}🔵 $rama: $adelante commit(s) pendiente(s) de PUSH.${RESET}"
@@ -1556,18 +1435,13 @@ dashboard() {
 
     done
 
+    if [ -n "$pendiente" ]; then
+        echo -e "${ROJO}🔴 Hay una operación pendiente: $pendiente.${RESET}"
+        avisos=1
+    fi
+
     if hay_cambios; then
         echo -e "${AMARILLO}🟡 Hay cambios locales sin commit.${RESET}"
-        avisos=1
-    fi
-
-    if hay_merge_pendiente; then
-        echo -e "${ROJO}🔴 Hay un merge pendiente.${RESET}"
-        avisos=1
-    fi
-
-    if hay_rebase_pendiente; then
-        echo -e "${ROJO}🔴 Hay un rebase pendiente.${RESET}"
         avisos=1
     fi
 
