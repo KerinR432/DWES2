@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LOS DATOS</title>
+</head>
+<body>
+
+
+<div>
+    <p th:text="${nombre}"></p>
+    <p>Resultado de aplicar <code>URLEncoder.encode(valorRecibido, StandardCharsets.UTF_8)</code> en Java:</p>
+
+    <div class="encoded-box">
+        <p><strong>Cadena codificada resultante:</strong></p>
+        <p><code th:text="${textoCodificado}">texto_codificado</code></p>
+    </div>
+
+    <p>Al pulsar el siguiente enlace reenviaremos esta cadena codificada directamente en la QueryString al mapping <code>/codificacion/procesar-get</code>:</p>
+    <a th:href="'/codificacion/procesar2?nombre=' + ${textoCodificado}" class="btn-link">
+        Probar enlace con QueryString codificada
+    </a>
+</div>
+</body>
+</html>
