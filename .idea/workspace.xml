@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="ffa98c90-af37-403c-9336-92294217da55" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/java/ruvik/d3ud2/TusDatos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/java/ruvik/d3ud2/controller/ControladorFormulariosEncadenado.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/java/ruvik/d4ud2/I18nConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/java/ruvik/d4ud2/controllador/I18Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/java/ruvik/d4ud2/controllador/controllador.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/templates/mostrarI18n.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/templates/resultado.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/HolaMundoConPlantilla/src/main/java/ruvik/holamundoconplantilla/ControllerPlantilla.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/HolaMundoConPlantilla/src/main/resources/templates/hola.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/PracticandoFormulario/src/main/java/ruvik/practicandoformulario/ControllerFormulario.java" afterDir="false" />
@@ -19,6 +37,7 @@
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/java/ruvik/fuerzadelimperio/FormularioImperial.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/formulario.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/tucartilla.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/git.sh" beforeDir="false" afterPath="$PROJECT_DIR$/git.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,23 +46,49 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "KerinR432"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KerinR432&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/KerinR432/DWES2.git",
-    "accountId": "df454b27-e570-4665-8ad2-cd558173daa7"
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="TEORIA" />
+                    <option name="lastUsedInstant" value="1794297128" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1794297113" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KerinR432/DWES2.git&quot;,
+    &quot;accountId&quot;: &quot;df454b27-e570-4665-8ad2-cd558173daa7&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5,
-  "fromUser": false
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3Kd1AOKyeKdl8KWKjZnH5yr6ufb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -57,10 +102,27 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "TEORIA",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/alumno/Escritorio/CARPETA DE CLASES/DWS/PROYECTOS",
+    "last_opened_file_path": "/home/alumno/Escritorio/CARPETA DE CLASES/DWS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="DWS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="DWS" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
