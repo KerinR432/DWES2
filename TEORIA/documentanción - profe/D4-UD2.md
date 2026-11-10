@@ -1,60 +1,54 @@
+<link rel="stylesheet" href="../css/d4-academico.css">
+
 <div class="cover">
-<p class="serial">CUADERNO DE PRÁCTICAS // DESARROLLO WEB</p>
+<p class="eyebrow">DESARROLLO WEB · CUADERNO DE PRÁCTICAS</p>
 
-# D4 · UD2<br>SPRING BOOT
+# D4 · UD2<br>Spring Boot
 
-<p class="subtitle"><strong>Codificación UD2</strong></p>
-<p>Kerin Aguilera</p>
-<p class="serial">JAVA 21 · SPRING BOOT · OCTUBRE 2026</p>
+<p class="subtitle">Parámetros HTTP e internacionalización</p>
+<p class="author">Kerin Aguilera</p>
+<p class="meta">Java 21 · Spring Boot · Octubre de 2026</p>
 </div>
 
+<div class="toc">
+<p class="toc-title">Índice</p>
+<ul>
+<li><a href="#objetivo">Objetivo y contenidos</a></li>
+<li><a href="#procesamiento-http">Procesamiento de datos en HTTP</a></li>
+<li><a href="#query-string">Codificación y Query String</a></li>
+<li><a href="#internacionalizacion">Internacionalización (i18n)</a></li>
+<li><a href="#conclusiones">Conclusiones</a></li>
+<li><a href="#recursos">Recursos</a></li>
+</ul>
+</div>
 
+<a id="objetivo"></a>
 
-# EJERCICIOS NUMERO 1º
+# Objetivo y contenidos
 
-## PROCESADO POR POST
-Estamos revisando podemos enviar cualquier tipo de dato por URL en este caso lo hemos echo primero por medio de POST y utilizando bruno para visualizar y ver que manda
+En esta práctica trabajo con dos aspectos de una aplicación Spring Boot: el envío de datos mediante peticiones HTTP y la selección del idioma de la aplicación.
 
-Nosotros intemos enviar el siguiente mensaje
-![muestra de codifacion](img%20-%20documents/D4-UD2.2.png)
+Primero comparo los métodos **POST** y **GET**, reviso un error de mapeo entre el formulario y el controlador, y observo cómo se codifican los parámetros de una URL. Después configuro la internacionalización y compruebo la respuesta en español e inglés.
 
-Y tenemos que buscar directamnete el content-Type lo siguiente:
-![Los datos del Content-Type](img%20-%20documents/D4-UD2.1.png)
+<a id="procesamiento-http"></a>
 
-Mientras tanto nuestro codigo en Java es el siguiente:
+# 1. Procesamiento de datos en HTTP
 
-```JAVA
-package ruvik.d4ud2.controllador;
+## Envío mediante POST
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+Para comprobar qué datos envía un formulario, utilizo Bruno y reviso la petición recibida. En una petición POST, los datos del formulario se envían en el cuerpo de la petición, no como parte de la dirección URL.
 
-@Controller
-@RequestMapping("/codificacion")
-public class controllador {
+En la primera captura se muestra el envío de un valor:
 
-    @GetMapping
-    public String mostrarFormulario(){
-        return "formulario";
-    }
+![Petición POST con el valor enviado desde el formulario](img%20-%20documents/D4-UD2.2.png)
 
-    @PostMapping("/procesar")
-    public String procesar(@RequestParam String nombre, Model modelo) {
-        modelo.addAttribute("nombre", nombre);
-        return "resultado";
-    }
+También compruebo la cabecera `Content-Type`, que indica el tipo de contenido enviado:
 
-}
-```
-### 🚨 DECTETADO: error en la zona
+![Cabecera Content-Type de la petición](img%20-%20documents/D4-UD2.1.png)
 
-El siguiente error es que cuando se quiere enviar una petección get peta. Pero encontrar el fallo concreto. 
-
-Mi codigo Java es el siguente:
+Este es el controlador utilizado para recibir el parámetro `nombre` y añadirlo al modelo:
 
 ```java
-
 package ruvik.d4ud2.controllador;
 
 import org.springframework.stereotype.Controller;
@@ -66,7 +60,7 @@ import org.springframework.web.bind.annotation.*;
 public class controllador {
 
     @GetMapping
-    public String mostrarFormulario(){
+    public String mostrarFormulario() {
         return "formulario";
     }
 
@@ -75,66 +69,93 @@ public class controllador {
         modelo.addAttribute("nombre", nombre);
         return "resultado";
     }
+}
+```
 
-    @GetMapping("/procesar2")
-    public String procesadoGet(@RequestParam String nombre, Model modelo) {
-        modelo.addAttribute("nombre", nombre);
-        return "resultado";
-    }
+## Un error al enviar una petición GET
 
+Al probar el formulario con el método GET, recibí un error. El controlador tenía estas rutas:
+
+```java
+@PostMapping("/procesar")
+public String procesar(@RequestParam String nombre, Model modelo) {
+    modelo.addAttribute("nombre", nombre);
+    return "resultado";
 }
 
+@GetMapping("/procesar2")
+public String procesadoGet(@RequestParam String nombre, Model modelo) {
+    modelo.addAttribute("nombre", nombre);
+    return "resultado";
+}
 ```
 
-el fallo esta en el formulario y es que lo redirigo el precesado incorrecto:
+Sin embargo, el formulario enviaba la petición GET a `/codificacion/procesar`:
 
 ```html
-    <form method="GET" action="/codificacion/procesar" enctype="multipart/form-data">
-    
+<form method="GET" action="/codificacion/procesar">
 ```
-**asi se vevía el fallo pero ya esta solucionado:** ![errores de enviar un dato en post a get](img%20-%20documents/D4-UD2.3.png)
 
-## PROCESADO POR GET
+La ruta `/codificacion/procesar` solo acepta POST; la ruta GET está definida en `/codificacion/procesar2`. Por eso, Spring responde con el error **405 Method Not Allowed**. Para corregirlo, el `action` del formulario debe coincidir con la ruta GET:
 
-El get es practiamente lo mismo, solo que cambia una cosa es el envio por URL y la URL se visualiza tambien el resultado que no tiene nada que ver con lo enviado y visualizado:
-![La url con caracteres que no se entiende](img%20-%20documents/D4-UD2.4.png)
-### 🚨 DECTETADO: error en la zona
-Eh intenteado escribirlo solo por la URL y me sal el siguiente fallo:
+```html
+<form method="GET" action="/codificacion/procesar2">
+    <label for="nombre">Nombre:</label>
+    <input id="nombre" type="text" name="nombre" required>
+    <button type="submit">Enviar</button>
+</form>
+```
 
-![error al intentar cambiar datos directo de la URL](img%20-%20documents/D4-UD2.6.png)
+La captura muestra el error antes de aplicar la corrección:
 
+![Error 405 al enviar una petición GET a una ruta configurada para POST](img%20-%20documents/D4-UD2.3.png)
 
-## QUERY-STRING
+## Envío mediante GET
 
-para ser sinceros utilice la IA en este caso para que me explique. Primero no sabia que pedía y segundo pues tampooco sabia como usarlo, pedi que me mostrara como era lo que se pedía y que me explicara paso a paso las funciones que tiene y como usarlo.
+Con GET, los parámetros se añaden a la URL como una cadena de consulta (*query string*). Por eso pueden verse en la barra de direcciones. En la captura se aprecia la URL generada al enviar el formulario:
 
-Asi que todo lo plasmado aqui fue ese trabajo en conjunto. 
+![Parámetro enviado como parte de la URL](img%20-%20documents/D4-UD2.4.png)
 
-Aqui esta el resultado, lo que he implentado fue la IA explicando paso a paso el "porque"
+También probé a escribir directamente una dirección con caracteres especiales. La petición no se procesó correctamente porque esos caracteres deben codificarse para formar una URL válida:
 
-![datos mostrados del encode](img%20-%20documents/D4-UD2.7.png)
+![Error al introducir caracteres especiales sin codificar en la URL](img%20-%20documents/D4-UD2.6.png)
 
-# EJERCICIOS NUMERO 2º
+GET resulta práctico para búsquedas y filtros que se puedan compartir mediante un enlace. Como sus parámetros quedan visibles en la URL, no se debe utilizar para enviar contraseñas ni otros datos sensibles.
 
-Documentado me para hacer este ejercicio salio los 3 pilares de i18n
+<a id="query-string"></a>
 
-salia 
+# 2. Codificación y Query String
+
+Una *query string* es la parte de la URL que aparece después de `?` y contiene los parámetros de la petición. Cada parámetro se escribe como `nombre=valor`; si hay más de uno, se separan con `&`. Por ejemplo:
 
 ```text
-
-HTTP recopila el **lang**
-
-LocaleChangeInterceptor escucha este parametro lang
-
-LocalResolver guarda el idioma activado
-
-MessageSource busca la clave en message.propities
-
+/codificacion/procesar2?nombre=Ana+Mar%C3%ADa
 ```
 
-tenemos los archivos creados
+Los espacios, las tildes y otros caracteres reservados deben representarse con una codificación válida para URL. En Java, `URLEncoder.encode(valor, StandardCharsets.UTF_8)` permite codificar un valor antes de incluirlo en una query string. Al recibir la petición, Spring obtiene el valor asociado al parámetro.
 
-el mensaje por defecto
+Para entender este ejercicio, utilicé una herramienta de inteligencia artificial como apoyo: le pedí que explicara el enunciado y el funcionamiento de la codificación paso a paso. Después apliqué esa explicación para comprender el resultado y completar la práctica.
+
+La captura muestra el valor codificado y el enlace que lo envía en la query string:
+
+![Valor codificado con URLEncoder y enlace que lo envía en la query string](img%20-%20documents/D4-UD2.7.png)
+
+<a id="internacionalizacion"></a>
+
+# 3. Internacionalización (i18n)
+
+La internacionalización permite mostrar los textos de la aplicación en distintos idiomas. En esta práctica, el idioma se determina a partir de la petición y los textos se guardan en archivos de mensajes.
+
+El recorrido básico es:
+
+1. La petición proporciona una preferencia de idioma, por ejemplo, mediante la cabecera `Accept-Language` o el parámetro `lang`.
+2. Un `LocaleResolver` determina y, según su implementación, mantiene la configuración regional activa.
+3. `MessageSource` busca cada clave en el archivo de mensajes correspondiente.
+
+## Archivos de mensajes
+
+El archivo de mensajes por defecto, `messages.properties`, contiene los textos en español:
+
 ```properties
 app.titulo=Prueba de Internacionalización
 app.saludo=¡Hola! Esta aplicación cambia de idioma dinámicamente.
@@ -144,7 +165,8 @@ app.btn.es=Español
 app.btn.en=Inglés
 ```
 
-el mensaje en ingles:
+La variante inglesa, `messages_en.properties`, proporciona los mismos textos en inglés:
+
 ```properties
 app.titulo=Internationalization Test
 app.saludo=Hello! This application changes language dynamically.
@@ -154,102 +176,102 @@ app.btn.es=Spanish
 app.btn.en=English
 ```
 
+Spring busca las claves de estos archivos de recursos cuando la vista solicita los mensajes.
 
-va ir buscando en esto archivos el valor e ira buscando en todo lo que messages.propities que existe.
+## Alternativa A: cambiar el idioma con `?lang=`
 
-Ahora viene una movida grande, el hecho de configurar i18n
-
-```java
-
-    @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.of("es"));
-        return slr;
-    }
-```
-
-literal esta varibale se encagar de **¿Que idioma deberia preguntarle al usuario?**
-
-```JAVA
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName("lang");
-        return lci;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-    }
-```
-
-Este es el que esta en la puerta esperando a que entre peticiones, esta esperando algo enconcreto antes de que el controller actue o responda algo.
-
-por ejemplo puede estar esperando **?lang=en**  
-al ver que es en este manda un mensaje a LocaleResolver para que actualice el idioma
-
-
-es curioso que aqui existe tambien varios titpos de Resolver para sessiones que es el SessionLocaleResolver.
-Para cookies que es el CookieLocaleResolver.
-El normal o por defecto el AcceptHeaderLocaleResolver.
-
-
-esta es le versión con el acceptHeaderLocaleResolver
+Con `SessionLocaleResolver`, la aplicación puede conservar el idioma en la sesión. `LocaleChangeInterceptor` detecta el parámetro `lang` —por ejemplo, `?lang=en`— y actualiza la configuración regional:
 
 ```java
-package ruvik.d4ud2.config;
+import java.util.Locale;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+@Configuration
+public class I18nConfig implements WebMvcConfigurer {
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver resolver = new SessionLocaleResolver();
+        resolver.setDefaultLocale(Locale.forLanguageTag("es"));
+        return resolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        interceptor.setParamName("lang");
+        return interceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
+}
+```
+
+El interceptor actúa antes de que el controlador procese la petición: si encuentra el parámetro `lang`, solicita al resolver que actualice el idioma de la sesión.
+
+## Alternativa B: usar la cabecera `Accept-Language`
+
+También se puede seleccionar el idioma a partir de la cabecera HTTP `Accept-Language`. Para esta opción configuré `AcceptHeaderLocaleResolver` y limité los idiomas admitidos a español e inglés:
+
+```java
 import java.util.Arrays;
 import java.util.Locale;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+
 @Configuration
 public class I18nConfig implements WebMvcConfigurer {
+
     @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver resolver = new AcceptHeaderLocaleResolver();
-
-        resolver.setDefaultLocale(Locale.of("es"));
-
+        resolver.setDefaultLocale(Locale.forLanguageTag("es"));
         resolver.setSupportedLocales(Arrays.asList(
-                Locale.of("es"),
-                Locale.of("en")
+                Locale.forLanguageTag("es"),
+                Locale.forLanguageTag("en")
         ));
-
         return resolver;
     }
 }
 ```
 
-Y asi funcionaria con bruno
+Estas son **dos alternativas de configuración**: la primera cambia el idioma mediante el parámetro `lang` y una sesión; la segunda lo obtiene de `Accept-Language`. En las capturas comprobé la segunda opción desde Bruno, cambiando el valor de la cabecera:
 
-![en ingles](img%20-%20documents/D4-UD2.8.png)
+![Respuesta de la aplicación en inglés con Accept-Language: en](img%20-%20documents/D4-UD2.8.png)
 
+![Respuesta de la aplicación en español con Accept-Language: es](img%20-%20documents/D4-UD2.9.png)
 
-y asi seria en español
+<a id="conclusiones"></a>
 
-![en español](img%20-%20documents/D4-UD2.9.png)
+# Conclusiones
 
+La práctica me permitió distinguir dónde viajan los datos en una petición GET y en una POST, y comprobar que el método y la ruta del formulario deben coincidir con el mapeo del controlador. También aprendí que los valores de una URL deben codificarse correctamente y que Spring puede resolver el idioma de una petición mediante una sesión o mediante la cabecera `Accept-Language`.
 
-me he detido a explicar mas esto, porque entre no lo entendia ni sabia como hacerlo, el pedi ayuda a la IA y que me explicar deteninamente porque de cada cosa
+La parte de internacionalización requirió más investigación: utilicé la IA como apoyo para entender los conceptos y después los relacioné con la configuración y las pruebas realizadas en Bruno.
 
+<a id="recursos"></a>
 
-## Recursos
+# Recursos
+
 - [Repositorio del proyecto en GitHub](https://github.com/KerinR432/DWES2)
 - Stack Overflow
 - Gemini
-- mi documentación anterior
+- Documentación de las prácticas anteriores
 
 <div class="endmark">
-FIN DE LA TRANSMISIÓN // D4 · UD2
+D4 · UD2 | SPRING BOOT
 </div>

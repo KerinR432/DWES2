@@ -1,129 +1,161 @@
-# DWES2
+# DWES2 · Desarrollo Web en Entorno Servidor
 
-Repositorio de prácticas y ejercicios del módulo de Desarrollo Web en Entorno Servidor (DWES2).
+Repositorio de prácticas del módulo **Desarrollo Web en Entorno Servidor (DWES2)**: aplicaciones con **Java 21** y **Spring Boot**, apuntes de clase y bitácoras de aprendizaje.
 
-Este proyecto reúne varios ejercicios desarrollados con Java, Spring Boot, Thymeleaf, validaciones y MVC para aprender el funcionamiento de aplicaciones web dinámicas.
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-green)
+![Gradle](https://img.shields.io/badge/Build-Gradle-blue)
+![Thymeleaf](https://img.shields.io/badge/Vistas-Thymeleaf-005F0F)
 
-## Descripción general
+> 👨‍🏫 **Profesor**: cada práctica de `PROYECTOS/` indica los conceptos que trabaja y sus rutas principales. La progresión completa del curso está en [`TEORIA/`](TEORIA/) (bitácoras por días).
+>
+> 🧑‍🎓 **Compañeros**: si solo quieres ver y ejecutar una práctica, ve al apartado [Cómo ejecutar un proyecto](#cómo-ejecutar-un-proyecto).
 
-El repositorio está organizado en dos grandes bloques:
+---
 
-- `PROYECTOS/`: aplicaciones y ejemplos prácticos realizados durante el curso.
-- `TEORIA/`: apuntes, bitácoras y documentación de clase.
-- `.github/agents/`: instrucciones y plantillas de apoyo para automatización o ayuda de estudio.
+## Índice
 
-## Tecnologías utilizadas
+- [Mapa del repositorio](#mapa-del-repositorio)
+- [Prácticas (PROYECTOS)](#prácticas-proyectos)
+- [Teoría y bitácoras](#teoría-y-bitácoras)
+- [Cómo ejecutar un proyecto](#cómo-ejecutar-un-proyecto)
+- [Rutas de cada práctica](#rutas-de-cada-práctica)
 
-- Java 21
-- Spring Boot 4.1.1
-- Gradle
-- Thymeleaf
-- Spring Validation
-- HTML, CSS, JavaScript
-- MVC (Model-View-Controller)
+---
 
-## Estructura del repositorio
+## Mapa del repositorio
 
 ```text
 DWES2/
-├── .github/
-│   └── agents/
-├── PROYECTOS/
-│   ├── D3-UD2/
-│   ├── HolaMundoConPlantilla/
-│   ├── PracticandoFormulario/
-│   ├── UD1-UD2/
-│   ├── ValidacionFormulario/
-│   ├── contadorVisita/
-│   ├── demo/
-│   ├── demoFormulario/
-│   ├── fuerzaDelImperio/
-│   └── ...
-├── TEORIA/
-│   └── Bitacora-dia-uno.md
-├── README.md
-├── .gitignore
-└── .gitattributes
+├── PROYECTOS/                    # Prácticas con Spring Boot (una carpeta por práctica)
+│   ├── HolaMundoConPlantilla/     #   Primera web con plantilla Thymeleaf
+│   ├── contadorVisita/            #   Sesiones y contador de visitas
+│   ├── demoFormulario/            #   Formularios con objeto (ModelAttribute)
+│   ├── PracticandoFormulario/     #   Formularios básicos GET/POST
+│   ├── ValidacionFormulario/      #   Validación con Spring Validation
+│   ├── fuerzaDelImperio/          #   Formularios + lógica de presentación
+│   ├── UD1-UD2/                   #   Práctica integradora UD1–UD2
+│   ├── D3-UD2/                    #   Formularios encadenados en varios pasos
+│   ├── D4-UD2/                    #   Internacionalización (i18n) y codificación
+│   └── demo/                      #   Proyecto base de demostración
+├── TEORIA/                        # Bitácoras de clase + documentación
+│   ├── Bitacora-dia-*.md          #   Apuntes sesión a sesión
+│   ├── css/                       #   Hojas de estilo de las bitácoras
+│   └── documentanción - profe/    #   Documentación aportada en clase
+└── README.md
 ```
 
-## Proyectos incluidos
+---
 
-### HolaMundoConPlantilla
-Proyecto inicial para practicar la estructura básica de una aplicación Spring Boot y la integración de vistas HTML con Thymeleaf.
+## Prácticas (PROYECTOS)
 
-### D3-UD2
-Formulario dividido en cuatro pasos (nombre, aficiones, lugar y sexo) que conserva los datos entre peticiones mediante campos ocultos y los muestra en una vista final. Incluye documentación, capturas y pruebas de integración con MockMvc.
+Ordenadas aproximadamente por dificultad y por el momento del curso en que se hicieron:
 
-### PracticandoFormulario
-Ejemplo de formulario web con Spring MVC, donde se envían datos desde una vista a un controlador.
+| Práctica | Conceptos que trabaja |
+|---|---|
+| [`HolaMundoConPlantilla`](PROYECTOS/HolaMundoConPlantilla) | Primer proyecto Spring Boot. Controlador `@GetMapping`, vista HTML con **Thymeleaf**. |
+| [`contadorVisita`](PROYECTOS/contadorVisita) | Sesión HTTP y estado compartido en el servidor con un contador de accesos. |
+| [`demoFormulario`](PROYECTOS/demoFormulario) | Envío de formulario con **objeto** (`@ModelAttribute`) y respuesta en otra vista. |
+| [`PracticandoFormulario`](PROYECTOS/PracticandoFormulario) | Formularios GET/POST básicos con Spring MVC. |
+| [`ValidacionFormulario`](PROYECTOS/ValidacionFormulario) | Validación de campos con anotaciones de **Spring Validation** y mensajes de error. |
+| [`fuerzaDelImperio`](PROYECTOS/fuerzaDelImperio) | Formulario + lógica de presentación en MVC (con temática Star Wars 🌌). |
+| [`UD1-UD2`](PROYECTOS/UD1-UD2) | Práctica integradora de las unidades didácticas 1 y 2. |
+| [`D3-UD2`](PROYECTOS/D3-UD2) | **Formularios encadenados** en varios pasos: los datos se conservan entre pantallas. |
+| [`D4-UD2`](PROYECTOS/D4-UD2) | **Internacionalización (i18n)** con `messages.properties` y manejo de codificación. |
+| [`demo`](PROYECTOS/demo) | Proyecto base de demostración y configuración inicial. |
 
-### ValidacionFormulario
-Aplicación que valida campos de un formulario mediante anotaciones de Spring Validation y muestra errores en pantalla.
+---
 
-### contadorVisita
-Pequeño ejercicio para practicar el contador de accesos con una variable compartida y respuesta HTTP en texto.
+## Teoría y bitácoras
 
-### demo
-Proyecto base de demostración para aprender la configuración inicial de Spring Boot.
+En [`TEORIA/`](TEORIA/) está el aprendizaje del curso día a día.
 
-### demoFormulario
-Ejemplo del uso de formularios con objetos y respuesta en una vista distinta.
+### Bitácoras por sesión
 
-### fuerzaDelImperio
-Proyecto más orientado a prácticas con formularios y lógica de presentación de datos en MVC.
+| Día | Tema |
+|---|---|
+| [Día 1](TEORIA/Bitacora-dia-uno.md) | Servidores de desarrollo web |
+| [Día 2](TEORIA/Bitacora-dia-dos.md) | El protocolo HTTP |
+| [Día 3](TEORIA/Bitacora-dia-tres.md) | Anatomía de una URL |
+| [Día 4](TEORIA/bitacora-dia-cuatro.md) | Presentaciones de compañeros |
+| [Día 5](TEORIA/bitacora-dia-cinco.md) | Conceptos de las presentaciones (CLI y más) |
+| [Día 6](TEORIA/bitacpra-dia-seis.md) | Backend en Java: hilos, servlets y Spring Boot |
+| [Día 7](TEORIA/bitacora-dia-siete.md) | Spring Boot puro: primeros endpoints y formularios |
+| [Día 8](TEORIA/bitacora-dia-ocho.md) | Familiarización con Spring Boot |
+| [Día 9](TEORIA/bitacora-dia-nueve.md) | Repaso D1-UD2 y ejercicios de la UD2 |
+| [Día 10](TEORIA/bitacora-dia-diez.md) | Plantillas Thymeleaf |
+| [Día 11](TEORIA/bitacora-dia-once.md) | `@ModelAttribute`, Lombok y dudas de la práctica |
+| [Día 12](TEORIA/bitacora-dia-doce.md) | `redirect`, `@ModelAttribute` vs `@RequestParam` |
+| [Día 13–14](TEORIA/bitacora-dia-trece.md) | Continuación de la UD2 |
 
-### UD1-UD2
-Proyecto de aprendizaje más amplio donde se trabajan conceptos de la unidad didáctica 1 y 2 del curso.
+### Otros recursos
 
-## Requisitos previos
+- 📄 [Documentación del profe](TEORIA/documentanción%20-%20profe) — apuntes aportados en clase (UD1-UD2, D1, D3, D4 en `.md` y `.pdf`).
+- 🎨 [`TEORIA/css/`](TEORIA/css) — hojas de estilo usadas en las bitácoras (`diselpunk.css`, `solarpunk.css`, `fantasia-crepuscular.css`, `guia-galactica.css`).
 
-Para ejecutar cualquiera de los proyectos del repositorio necesitas:
-
-- Java 21 o superior
-- Gradle (se incluye wrapper en cada proyecto)
-- IDE recomendado: IntelliJ IDEA o VS Code con extensiones Java
+---
 
 ## Cómo ejecutar un proyecto
 
-Cada proyecto tiene su propio `build.gradle` y `gradlew`.
+**Requisitos:** Java 21+ y conexión a internet (Gradle descarga las dependencias la primera vez). No hace falta instalar Gradle: cada práctica incluye su *wrapper*.
 
-Ejemplo:
+1. Clona el repositorio:
 
-```bash
-cd PROYECTOS/ValidacionFormulario
-./gradlew bootRun
-```
+   ```bash
+   git clone https://github.com/KerinR432/DWES2.git
+   cd DWES2
+   ```
 
-También puedes usar:
+2. Entra en la práctica que quieras probar y arráncala:
 
-```bash
-./gradlew test
-```
+   ```bash
+   cd PROYECTOS/ValidacionFormulario   # o la que quieras
+   ./gradlew bootRun
+   ```
 
-para ejecutar las pruebas del proyecto.
+   En Windows: `gradlew.bat bootRun`
 
-## Cómo arrancar la aplicación en el navegador
+3. Abre el navegador en la ruta indicada (puerto por defecto `8080`):
 
-Tras iniciar el proyecto con `bootRun`, normalmente se accede en:
+   ```text
+   http://localhost:8080/
+   ```
 
-```text
-http://localhost:8080/
-```
+4. Para ejecutar los tests del proyecto:
 
-Dependiendo del proyecto, algunas rutas pueden variar o incluir formularios o páginas específicas.
+   ```bash
+   ./gradlew test
+   ```
+
+> 💡 Solo se puede ejecutar **una práctica a la vez** si ambas usan el puerto 8080. Detén una (`Ctrl + C`) antes de arrancar otra, o cambia el puerto con `--args='--server.port=8081'`.
+
+---
+
+## Rutas de cada práctica
+
+Puerto por defecto: **http://localhost:8080**
+
+| Práctica | Ruta principal | Qué verás |
+|---|---|---|
+| `HolaMundoConPlantilla` | `/saludo` | Saludo renderizado con Thymeleaf |
+| `contadorVisita` | `/` | Contador que aumenta en cada visita |
+| `demoFormulario` | `/saludos` | Formulario y resultado con objeto |
+| `PracticandoFormulario` | `/` | Formulario GET/POST |
+| `ValidacionFormulario` | `/` | Formulario con validaciones y errores |
+| `fuerzaDelImperio` | `/` | Cartilla imperial (formulario temático) |
+| `D3-UD2` | `/formulario1` | Cadena de formularios en varios pasos |
+| `D4-UD2` | `/i18n` | Página internacionalizada |
+
+---
 
 ## Objetivo del repositorio
 
-Este repositorio sirve como portfolio de prácticas del curso de DWES2, mostrando la progresión desde conceptos básicos de Java/Spring hasta formularios, validaciones y aplicaciones web más funcionales.
-
-## Estado del proyecto
-
-Se trata de un repositorio de aprendizaje y prácticas académicas en evolución.
+Servir como **portfolio de aprendizaje** del módulo: muestra la progresión desde conceptos básicos de HTTP y Java hasta formularios validados, sesiones, plantillas e internacionalización con Spring Boot.
 
 ## Autor
 
-KerinR432
+**KerinR432** · [github.com/KerinR432](https://github.com/KerinR432)
 
 ## Licencia
 
-Actualmente no se ha especificado ninguna licencia en el repositorio.
+Sin licencia especificada por el momento (uso académico).

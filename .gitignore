@@ -1,0 +1,33 @@
+# =============================================================
+# .gitignore — DWS / DWES2
+# =============================================================
+
+# --- Entorno y credenciales (NUNCA subir al repo) ---
+.env
+.env.*
+!.env.example
+
+# --- Dependencias ---
+node_modules/
+vendor/
+
+# --- IDEs y editores ---
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Sistema ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Build y caché ---
+dist/
+build/
+.cache/
+
+# --- Logs y temporales ---
+*.log
+*.bak
+*.tmp
