@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head><title>MiniQuizz etapa 2</title></head>
+<body>
+<form method="post" th:object="${quizz}" th:action="@{/}">
+	<p>
+		<p th:text="${errores}" />
+	<label for="signo">Signo:</label>
+	<select name="signo">
+		<option th:each="signo,indice : ${signos}" th:value="${indice.index}" th:text="${signo}" />
+		<!--
+		<option value=0></option>
+		<option value=1>Aries</option>
+		<option value=2>Tauro</option>
+		<option value=3>Géminis</option>
+		<option value=4>Cáncer</option>
+		<option value=5>Leo</option>
+		<option value=6>Virgo</option>
+		<option value=7>Libra</option>
+		<option value=8>Escorpio</option>
+		<option value=9>Sagitario</option>
+		<option value=10>Capricornio</option>
+		<option value=11>Acuario</option>
+		<option value=12>Piscis</option>
+		-->
+	</select>
+	</p>
+	<input type="hidden" name="numEtapa" th:value="${numEtapa}" />
+
+   <input type="submit" name="enviar" value="Siguiente" />
+   </span>
+   </form> 
+</body>
+</html>
