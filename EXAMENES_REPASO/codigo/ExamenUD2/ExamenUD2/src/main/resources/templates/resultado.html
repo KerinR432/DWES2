@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado</title>
+</head>
+<body>
+    <li th:each="resultado : ${Jugador}" >
+        <ol th:text="${resultado.nombre}"></ol>
+        <ol th:text="${resultado.intentos}"></ol>
+    </li>
+</body>
+</html>

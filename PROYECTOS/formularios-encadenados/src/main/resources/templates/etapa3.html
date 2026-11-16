@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head><title>MiniQuizz etapa 3</title></head>
+<body>
+<form method="post" th:object="${quizz}" th:action="@{/}">
+	<p>
+		<p th:text="${errores}" />
+	
+	<label>Aficciones:</label>
+	<ol>
+	<li th:each="aficcion : ${aficciones}">
+	<input type="checkbox" th:name="aficciones" th:value="${aficcion}" th:text="${aficcion}" />
+	</li>
+	<!--
+	<li><input type="checkbox" name="aficciones" value="Deportes">Deportes</li>
+	<li><input type="checkbox" name="aficciones" value="Juerga">Juerga</li>
+	<li><input type="checkbox" name="aficciones" value="Lectura">Lectura</li>
+	<li><input type="checkbox" name="aficciones" value="Relaciones sociales">Relaciones sociales</li>
+	-->
+	</ol>
+	</p>
+	<input type="hidden" name="numEtapa" th:value="${numEtapa}" />
+   <input type="submit" name="enviar" value="Siguiente" />
+
+   </span>
+   </form> 
+</body>
+</html>

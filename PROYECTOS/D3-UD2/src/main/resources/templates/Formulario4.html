@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>FORMULARIO CUATRO</title>
+    <meta charset="UTF-8">
+    <title>Formulario 4 · Sexo</title>
 </head>
 <body>
+<h1>Paso 4 · Sexo</h1>
 
 <form method="post" th:action="@{/procesar}" th:object="${datos}">
-  <label>SEXO:</label>
-  <input type="radio" th:field="*{sexo}" value="M"> M
-  <input type="radio" th:field="*{sexo}" value="F"> F
+    <fieldset>
+        <legend>Selecciona una opción:</legend>
 
-  <button type="submit" name="contador" th:value="${contador + 1}">Enviar</button>
-  <button type="submit" name="contador" th:value="${contador - 1}" >Volver atras</button>
+        <label><input type="radio" th:field="*{sexo}" value="M" required> Masculino (M)</label>
+        <label><input type="radio" th:field="*{sexo}" value="F"> Femenino (F)</label>
+    </fieldset>
 
+    <button type="submit" name="contador" th:value="${contador + 1}">Finalizar</button>
+    <button type="submit" name="contador" th:value="${contador - 1}">Volver atrás</button>
 
-  <input type="hidden" th:field="*{nombre}" />
-  <input type="hidden" th:field="*{Aficciones}" />
-  <input type="hidden" th:field="*{lugar}" />
-
-  <input type="hidden" name="contador" th:value="${contador}" />
-
-
+    <input type="hidden" th:field="*{nombre}">
+    <input type="hidden" th:each="aficcion : ${datos.aficciones}"
+           name="aficciones" th:value="${aficcion}">
+    <input type="hidden" th:field="*{lugar}">
 </form>
-
 </body>
 </html>

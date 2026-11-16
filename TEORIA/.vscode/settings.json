@@ -3,18 +3,25 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "markdown-pdf.highlightStyle": "cybertopia-cherry.css",
     "markdown-pdf.stylesRelativePathFile": false,
     "markdown-pdf.styles": [
-        "./css/diselpunk.css"
+        "./css/guia-galactica.css",
+        "./TEORIA/css/guia-galactica.css"
     ],
     "workbench.settings.applyToAllProfiles": [
         "markdown-pdf.styles"
     ],
     "markdown-pdf.highlight": false,
+    "markdown-pdf.highlightStyle": "cybertopia-cherry.css",
+    "markdown-pdf.format": "A4",
+    "markdown-pdf.margin.top": "16mm",
+    "markdown-pdf.margin.bottom": "18mm",
+    "markdown-pdf.margin.left": "15mm",
+    "markdown-pdf.margin.right": "15mm",
+    "markdown-pdf.displayHeaderFooter": true,
+    "markdown-pdf.headerTemplate": "<div style=\"width:100%; margin:0 15mm; padding-bottom:2.5mm; border-bottom:0.5pt solid #c8d2ce; color:#5b6f73; font-family:Consolas,'Courier New',monospace; font-size:8px; letter-spacing:0.08em; text-transform:uppercase; display:flex; justify-content:space-between; align-items:baseline;\"><span class='title'></span><span>archivo galáctico · %%ISO-DATE%%</span></div>",
+    "markdown-pdf.footerTemplate": "<div style=\"width:100%; margin:0 15mm; padding-top:2.5mm; border-top:0.5pt solid #c8d2ce; color:#5b6f73; font-family:Consolas,'Courier New',monospace; font-size:8px; letter-spacing:0.08em; text-transform:uppercase; display:flex; justify-content:space-between; align-items:baseline;\"><span>guía de campo · desarrollo web</span><span>pág. <span class='pageNumber'></span> / <span class='totalPages'></span></span></div>",
     "markdown.extension.toc.omittedFromToc": {
-        
-
 
     }
 }

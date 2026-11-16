@@ -23,7 +23,7 @@
 
 @page {
     size: A4;
-    margin: 0;
+    margin: 18mm 20mm 20mm;
 }
 
 html,
@@ -39,7 +39,7 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 18mm 20mm !important;
+    padding: 0 !important; /* El margen de impresión se define en @page */
     font-family: "Literata", Georgia, serif;
     font-size: 10.5pt;
     line-height: 1.68;
@@ -335,7 +335,7 @@ mark {
 .cover {
     box-sizing: border-box;
     display: flex;
-    min-height: 240mm;
+    min-height: 235mm;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -364,6 +364,49 @@ mark {
     font-size: 9pt;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+}
+
+.toc {
+    margin: 20px 0 32px;
+    padding: 18px 22px;
+    border: 2px solid var(--forest);
+    border-left: 7px solid var(--bronze);
+    background: rgba(247, 246, 236, 0.55);
+    box-shadow: 4px 4px 0 rgba(38, 49, 41, 0.12);
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.toc-title {
+    margin: 0 0 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--bronze);
+    color: var(--forest);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.toc ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.endmark {
+    margin-top: 40px;
+    padding-top: 14px;
+    border-top: 3px double var(--bronze);
+    color: var(--ink-soft);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-align: center;
+    text-transform: uppercase;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 h1,
@@ -401,6 +444,10 @@ h1:first-of-type {
 
     body {
         box-shadow: none;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     a {

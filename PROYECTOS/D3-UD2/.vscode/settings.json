@@ -1,0 +1,9 @@
+{
+    "markdown-pdf.stylesRelativePathFile": true,
+    "markdown-pdf.styles": [
+        "../../TEORIA/css/diselpunk.css"
+    ],
+    "markdown-pdf.highlightStyle": "cybertopia-cherry.css",
+    "markdown-pdf.highlight": false,
+    "markdown-pdf.sanitize": "none"
+}

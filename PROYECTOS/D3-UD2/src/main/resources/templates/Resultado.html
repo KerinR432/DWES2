@@ -1,30 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MOSTRAR DATOS</title>
+    <title>Resultado · Resumen</title>
 </head>
 <body>
-    <h1 th:text="| Te llamas: ${datos.nombre} |"></h1>
+<h1>Resumen de tus datos</h1>
 
-    <ol th:each="aficcion: ${datos.Aficciones}">
-        <ul  th:text="|aficiones son: ${aficcion}|" ></ul>
-    </ol>
+<p th:text="|Te llamas: ${datos.nombre}|"></p>
 
-<p th:text="| Tu lugar de nacimiento: ${datos.lugar} |"></p>
+<p>Tus aficiones:</p>
+<ul>
+    <li th:each="aficcion : ${datos.aficciones}" th:text="${aficcion}"></li>
+</ul>
 
-    <h1 th:text="| Genero: ${datos.sexo} |"></h1>
+<p th:text="|Tu lugar de nacimiento: ${datos.lugar}|"></p>
+<p th:text="|Género: ${datos.sexo}|"></p>
 
-    <form method="post" th:action="@{/procesar}" th:object="${datos}">
-        <button type="submit" name="contador" th:value="${contador - 1}">Atras</button>
-        <button type="submit" name="contador" value="0">VOLVER AL INICIO</button>
+<form method="post" th:action="@{/procesar}" th:object="${datos}">
+    <button type="submit" name="contador" th:value="${contador - 1}">Volver atrás</button>
+    <button type="submit" name="contador" value="0">Volver al inicio</button>
 
-        <input type="hidden" th:field="*{nombre}" />
-        <input type="hidden" th:field="*{Aficciones}" />
-        <input type="hidden" th:field="*{lugar}" />
-        <input type="hidden" th:field="*{sexo}" />
-        <input type="hidden" th:field="${contador}" />
-
-    </form>
+    <input type="hidden" th:field="*{nombre}">
+    <input type="hidden" th:each="aficcion : ${datos.aficciones}"
+           name="aficciones" th:value="${aficcion}">
+    <input type="hidden" th:field="*{lugar}">
+    <input type="hidden" th:field="*{sexo}">
+</form>
 </body>
 </html>
