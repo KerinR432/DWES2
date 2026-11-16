@@ -1,15 +1,18 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Quizz {
     private String nombre;
-    private String aficciones;
+    private List<String> aficciones = new ArrayList<>();
     private Integer signo;
     private Integer numEtapa;
 
     public Quizz() {
     }
 
-    public Quizz(String nombre, String aficciones, Integer signo, Integer numEtapa) {
+    public Quizz(String nombre, List<String> aficciones, Integer signo, Integer numEtapa) {
         this.nombre = nombre;
         this.aficciones = aficciones;
         this.signo = signo;
@@ -24,11 +27,11 @@ public class Quizz {
         this.nombre = nombre;
     }
 
-    public String getAficciones() {
+    public List<String> getAficciones() {
         return aficciones;
     }
 
-    public void setAficciones(String aficciones) {
+    public void setAficciones(List<String> aficciones) {
         this.aficciones = aficciones;
     }
 

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ffa98c90-af37-403c-9336-92294217da55" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/Carrito-compra-gemini/src/main/java/ruvik/carritocompragemini/Producto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/Carrito-compra-gemini/src/main/java/ruvik/carritocompragemini/TiendaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/Carrito-compra-gemini/src/main/resources/templates/carrito.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/java/ruvik/d3ud2/TusDatos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/java/ruvik/d3ud2/controller/ControladorFormulariosEncadenado.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario1.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario3.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Formulario4.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D3-UD2/src/main/resources/templates/Resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/java/ruvik/d4ud2/I18nConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/java/ruvik/d4ud2/controllador/I18Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/java/ruvik/d4ud2/controllador/controllador.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/templates/mostrarI18n.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/D4-UD2/src/main/resources/templates/resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/HolaMundoConPlantilla/src/main/java/ruvik/holamundoconplantilla/ControllerPlantilla.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/HolaMundoConPlantilla/src/main/resources/templates/hola.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/PracticandoFormulario/src/main/java/ruvik/practicandoformulario/ControllerFormulario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/PracticandoFormulario/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/java/ruvik/validacionformulario/ControladorWeb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/java/ruvik/validacionformulario/FormularioPersona.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/ValidacionFormulario/src/main/resources/templates/resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/contadorVisita/src/main/java/ruvik/contadorvisita/ControllerContadorVisitas.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/java/ruvik/demoformulario/ControllerDemoFormulario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/java/ruvik/demoformulario/Saludo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/resources/templates/resultado.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/demoFormulario/src/main/resources/templates/saludos.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/java/ruvik/fuerzadelimperio/ControllerDelImperio.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/java/ruvik/fuerzadelimperio/FormularioImperial.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/formulario.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/tucartilla.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TEORIA/documentanción - profe/D1-UD3.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D1-UD3.pdf" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KerinR432&quot;
+  }
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="codigo" />
+                    <option name="lastUsedInstant" value="1794298739" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="TEORIA" />
+                    <option name="lastUsedInstant" value="1794297128" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1794297113" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KerinR432/DWES2.git&quot;,
+    &quot;accountId&quot;: &quot;df454b27-e570-4665-8ad2-cd558173daa7&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3Kd1AOKyeKdl8KWKjZnH5yr6ufb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#21 on codigo&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alumno/Escritorio/CARPETA DE CLASES/DWS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-ac68fc9d2b05-intellij.indexing.shared.core-IU-263.7307.200" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ffa98c90-af37-403c-9336-92294217da55" name="Changes" comment="" />
+      <created>1791872486717</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1791872486717</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

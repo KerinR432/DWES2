@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SALUDOS</title>
+</head>
+<body>
+    <h1>Formulario</h1>
+    <form action="#" th:action="@{/saludos}" th:object="${saludo}" method="post">
+        <p>Id: <input type="text" th:field="*{id}" /> </p>
+        <p>Mensaje: <input type="text" th:field="*{contenido}" /> </p>
+        <p><input type="submit" value="submit" />  <input type="reset" value="reset" /> </p>
+    </form>
+</body>
+</html>
