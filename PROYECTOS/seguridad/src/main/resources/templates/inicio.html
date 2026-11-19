@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INICIO</title>
+</head>
+<body>
+    <h1>BIENVENIDO <span th:text="${usuario.nombre}"></span>, estás en Inicio</h1>
+    <nav>
+        <a th:href="@{/pagina1}">Ir a Página 1</a>
+        <a th:href="@{/pagina2}">Ir a Página 2</a>
+        <a th:href="@{/logout}">Cerrar sesión</a>
+
+    </nav>
+</body>
+</html>
