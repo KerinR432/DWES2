@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head><title>MiniQuizz etapa 1</title></head>
 <body>
-<form method="post" th:object="${quizz}" th:action="@{/}">
+<form method="post" th:object="${quizz}" th:action="@{/version3/quizz}">
 	<p>
 	<p th:text="${errores}" />
 	<label for="nombre">Nombre:</label>

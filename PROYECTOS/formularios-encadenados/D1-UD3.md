@@ -207,6 +207,22 @@ public class Quizz {
 }
 ```
 
+## Versiones del controlador incluidas
+
+El mismo quizz se implementa de tres formas para comparar. Todas comparten las plantillas `etapa1.html` … `etapa4.html`:
+
+| Versión | Controlador | Ruta base | Mecanismo de estado |
+|---|---|---|---|
+| 1 | `FormsController` | `/` | `HttpSession` manual (`session.setAttribute`/`getAttribute`) |
+| 2 | `FormsController2` | `/version2` | `@SessionAttributes("quizz")` |
+| 3 | `FormsController3` | `/version3` | Bean `QuizzSesion` con `@Component` + `@SessionScope` |
+
+- Versión 1: control total, pero boilerplate y casts (`@SuppressWarnings("unchecked")`).
+- Versión 2: Spring gestiona el objeto del `Model` en la sesión; código más corto.
+- Versión 3: inyección limpia del bean por sesión; ideal para componentes reutilizables.
+
+Para probar cada versión se accede a su ruta base (`http://localhost:8080/`, `/version2/quizz`, `/version3/quizz`).
+
 ## Plantillas (sin campos ocultos)
 
 Los formularios ya no incluyen `<input type="hidden" name="numEtapa" ...>`. El estado se recupera de sesión.
@@ -278,8 +294,11 @@ El proyecto incluye pruebas básicas de contexto (`FormulariosEncadenadosApplica
 ## Recursos
 
 - Apuntes del profesor: `TEORIA/documentanción - profe/D1-UD3.md`
+- PDF del profesor (parte de la información y usos): `PDFPROFESOR`
 - [Documentación de Spring Boot](https://spring.io/projects/spring-boot)
 - [Documentación de Thymeleaf](https://www.thymeleaf.org/documentation.html)
+- [Documentación de Spring MVC (@SessionAttributes)](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/sessionattributes.html)
+- Asistente de código OpenCode (modelo Beam) — ayuda para estructurar, documentar y mejorar los archivos de esta práctica (D1-UD3.md) y para revisar los tres métodos (HttpSession, @SessionAttributes y bean con @SessionScope)
 
 <div class="endmark">
 FIN DE LA TRANSMISIÓN // D1 · UD3 (SUFICIENTE)

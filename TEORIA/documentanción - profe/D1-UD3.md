@@ -47,6 +47,21 @@
 <li><a href="#comparativa">Cookies vs sesión</a></li>
 <li><a href="#curiosidades">Curiosidades y casos menos usados</a></li>
 <li><a href="#suppresswarnings">La anotación @SuppressWarnings</a></li>
+<li><a href="#sessionattributes">Método 2: @SessionAttributes</a>
+  <ul>
+    <li><a href="#sa-que-es">@SessionAttributes: qué es y cómo funciona</a></li>
+    <li><a href="#sa-controlador">Controlador con @SessionAttributes (FormsController2)</a></li>
+    <li><a href="#sa-errores">Errores típicos y cómo los resolví</a></li>
+  </ul>
+</li>
+<li><a href="#beanscope">Método 3: Bean con scope de sesión (@SessionScope)</a>
+  <ul>
+    <li><a href="#bean-que-es">Qué es un bean con scope de sesión</a></li>
+    <li><a href="#bean-controlador">Controlador con bean de sesión (FormsController3)</a></li>
+    <li><a href="#bean-errores">Errores típicos y cómo los resolví</a></li>
+  </ul>
+</li>
+<li><a href="#comparativa3">Comparativa de los tres métodos</a></li>
 <li><a href="#resumen">Resumen de conceptos</a></li>
 <li><a href="#repaso">Preguntas de repaso</a></li>
 <li><a href="#conclusion">Conclusión</a></li>
@@ -741,15 +756,391 @@ List<String> messages = (List<String>) session.getAttribute("MY_SESSION_MESSAGES
 | `spring.session.jdbc.initialize-schema=always` | Crea la tabla de sesiones |
 | `spring.session.timeout=900` | Timeout de sesión en segundos |
 
+### Método 2: @SessionAttributes
+
+| Elemento | Qué hace |
+|---|---|
+| `@SessionAttributes("quizz")` | Declara (a nivel de clase) que el atributo `quizz` del Model vive en sesión |
+| `@GetMapping` con `modelo.addAttribute("quizz", nuevo)` | Siembra el objeto en la sesión al empezar el flujo |
+| `@PostMapping` con parámetro `Quizz quizz` | Spring inyecta el objeto ya guardado en sesión |
+| `actual.setNumEtapa(actual.getNumEtapa() + 1)` | Avanza la etapa dentro del mismo objeto de sesión |
+
+### Método 3: Bean con @SessionScope
+
+| Elemento | Qué hace |
+|---|---|
+| `@Component` | Marca la clase como bean gestionado por Spring |
+| `@SessionScope` | Una instancia por sesión de usuario |
+| Inyección por constructor | El controlador recibe el bean de la sesión actual |
+| Resetear campos en el GET | Reinicia el flujo sin romper la referencia gestionada por Spring |
+
 Ideas clave que me llevo de la práctica:
 
 - HTTP sigue siendo sin estado. La sesión solo mueve la memoria del formulario al servidor.
 - La cookie `JSESSIONID` la gestiona el contenedor (Tomcat) automáticamente; tú solo usas `setAttribute` / `getAttribute`.
 - Los datos pequeños y no sensibles van en cookie propia; los datos de usuario y formularios por pasos van en sesión.
 - Los campos `hidden` ya no son necesarios: la sesión arrastra el estado.
-- Para empezar de cero: `session.invalidate()`.
-- El cast `(Tipo) session.getAttribute(...)` genera warning → `@SuppressWarnings("unchecked")`.
+- Para empezar de cero: `session.invalidate()` (Método 1) o crear/resetear el objeto (Métodos 2 y 3).
+- El cast `(Tipo) session.getAttribute(...)` genera warning → `@SuppressWarnings("unchecked")` (solo en el Método 1).
+- `@SessionAttributes` elimina el boilerplate del Método 1 cuando trabajo con `Model` y Thymeleaf.
+- Un bean `@SessionScope` es la opción más limpia cuando el estado es un componente reutilizable inyectado.
 
+<a id="sessionattributes"></a>
+
+## Método 2: @SessionAttributes
+
+Después de la versión manual con `HttpSession`, el segundo método que aprendí es usar la anotación `@SessionAttributes`. La diferencia es abismal: ya no tengo que guardar y recuperar el objeto a mano con `session.setAttribute` / `session.getAttribute`; Spring lo hace por mí. El código se acorta mucho y es mucho más legible y útil de lo que pensaba.
+
+La idea es que el controlador declara, a nivel de clase, qué atributos del `Model` deben vivir en la sesión. Cada vez que ese atributo se añade al `Model`, Spring lo guarda automáticamente en la sesión, y en las peticiones siguientes lo recupera y lo inyecta como parámetro del método.
+
+<a id="sa-que-es"></a>
+
+### @SessionAttributes: qué es y cómo funciona
+
+- Se pone a nivel de clase del controlador: `@SessionAttributes("quizz")`.
+- El nombre coincide con el nombre del atributo que se añade al `Model` (`modelo.addAttribute("quizz", ...)`).
+- Spring mantiene ese objeto en la sesión HTTP del usuario y lo reinyecta en los métodos que lo declaren como parámetro (`Quizz quizz`).
+- Cuando el objeto se modifica en el controlador, los cambios se persisten en la sesión automáticamente (porque es el mismo objeto referenciado).
+- Para reiniciar el flujo (empezar de cero) basta con añadir un objeto nuevo al `Model` con el mismo nombre, o invalidar la sesión.
+
+Ventajas frente al método 1:
+
+- No hay casts `(Quizz) session.getAttribute(...)`.
+- No hay `@SuppressWarnings("unchecked")`.
+- No hay que comprobar `null` y crear el objeto a mano en cada método.
+- El código del controlador queda mucho más corto y expresivo.
+
+<a id="sa-controlador"></a>
+
+### Controlador con @SessionAttributes (FormsController2)
+
+El proyecto `formularios-encadenados` tiene una segunda versión del controlador mapeada en `/version2`, que usa `@SessionAttributes("quizz")`:
+
+```java
+package goya.daw2.pruebas_plantillas;
+
+import java.util.ArrayList;
+
+import entity.Quizz;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@SessionAttributes("quizz")
+@RequestMapping("/version2")
+public class FormsController2 {
+
+    static final String[] SIGNOS = { "", "Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", "Libra", "Escorpio",
+            "Sagitario", "Capricornio", "Acuario", "Piscis" };
+    static final String[] AFICCIONES = { "Deportes", "Juerga", "Lectura", "Relaciones sociales" };
+
+    @PostMapping("/quizz")
+    String procesaEtapaX(Model modelo, Quizz quizz) {
+
+        Quizz actual = quizz;
+
+        if (actual.getNumEtapa() == null) {
+            actual.setNumEtapa(1);
+        }
+
+        if (quizz.getNombre() != null) {
+            actual.setNombre(quizz.getNombre());
+        }
+        if (quizz.getSigno() != null) {
+            actual.setSigno(quizz.getSigno());
+        }
+        if (quizz.getAficciones() != null && !quizz.getAficciones().isEmpty()) {
+            actual.setAficciones(quizz.getAficciones());
+        }
+
+        modelo.addAttribute("signos", SIGNOS);
+        modelo.addAttribute("aficciones", AFICCIONES);
+        modelo.addAttribute("quizz", actual);
+
+        String errores = "";
+
+        if (actual.getNumEtapa() == 1 && (actual.getNombre() == null || actual.getNombre().isBlank())) {
+            errores = "Debes poner un nombre no vacío";
+        } else if (actual.getNumEtapa() == 1 && (actual.getNombre().length() < 3 || actual.getNombre().length() > 10)) {
+            errores = "La longitud del nombre debe estar entre 3 y 10";
+        }
+
+        if (actual.getNumEtapa() == 2 && (actual.getSigno() == null || actual.getSigno() == 0)) {
+            errores = "Debes seleccionar un signo";
+        }
+
+        if (actual.getNumEtapa() == 3 && (actual.getAficciones() == null || actual.getAficciones().isEmpty())) {
+            errores = "Debes elegir al menos una aficción, no seas soso/a";
+        }
+
+        if (!errores.isBlank()) {
+            modelo.addAttribute("errores", errores);
+            return "etapa" + actual.getNumEtapa();
+        }
+
+        actual.setNumEtapa(actual.getNumEtapa() + 1);
+        modelo.addAttribute("numEtapa", actual.getNumEtapa());
+
+        if (actual.getNumEtapa() == 4) {
+            ArrayList<String> respuestas = new ArrayList<String>();
+            respuestas.add(actual.getNombre());
+            respuestas.add(SIGNOS[actual.getSigno()]);
+            respuestas.add(String.join(", ", actual.getAficciones()));
+            modelo.addAttribute("respuestas", respuestas);
+        }
+
+        return "etapa" + actual.getNumEtapa();
+    }
+
+    @GetMapping("/quizz")
+    String getEtapa0(Quizz quizz, Model modelo) {
+        Quizz nuevo = new Quizz();
+        nuevo.setNumEtapa(1);
+        modelo.addAttribute("quizz", nuevo);
+        modelo.addAttribute("signos", SIGNOS);
+        modelo.addAttribute("aficciones", AFICCIONES);
+        return "etapa1";
+    }
+}
+```
+
+Fíjate en los detalles importantes:
+
+- En el `@GetMapping` se crea un objeto `Quizz` nuevo y se añade al `Model` con el nombre `"quizz"`. Eso es lo que "siembra" la sesión al empezar el flujo.
+- En el `@PostMapping` el parámetro `Quizz quizz` ya viene rellenado con lo que había en la sesión (Spring lo inyecta). Por eso ya no hace falta `getQuizz(session)`.
+- El `numEtapa` ahora vive dentro del propio objeto `Quizz` (campo `numEtapa`), en vez de guardarse aparte en la sesión como hacía la versión 1. Así un solo atributo de sesión basta.
+
+![Resultado final](img%20-%20documents/UD1_UD3.05.png)
+
+El resultado sigue siendo el mismo, pero es mucho más compacto y legible.
+
+<a id="sa-errores"></a>
+
+### Errores típicos y cómo los resolví
+
+Me encontré varios errores al migrar a `@SessionAttributes`:
+
+1. **El GET pedía un `Quizz` que no existía todavía.** Al principio intenté recibir `Quizz quizz` en el `@GetMapping` esperando que la sesión lo diera, pero al empezar el flujo la sesión está vacía y llegaba `null`. La solución es **crear el objeto a mano en el GET** (`new Quizz()`), ponerle `numEtapa = 1` y añadirlo al `Model`, para que sea ese el que se guarde en la sesión.
+
+2. **Las etapas empezaban en 0 y llegaba `null`.** Si no inicializaba `numEtapa` en el GET, el primer POST veía `numEtapa == null` y los mensajes de error no se mostraban bien. Puse `nuevo.setNumEtapa(1)` en el GET.
+
+3. **La sesión recordaba datos de ejecuciones anteriores.** Como la sesión sobrevive entre peticiones, al recargar la página el objeto viejo seguía ahí. Para empezar de cero hay que crear un objeto nuevo en el GET (como hace el código) o invalidar la sesión.
+
+4. **Confundir `@SessionAttributes` (nivel de clase) con `@SessionAttribute` (nivel de parámetro).** La primera declara qué atributos del Model se guardan en sesión; la segunda inyecta un atributo ya existente en la sesión como parámetro del método. En este proyecto uso la de clase.
+
+<a id="beanscope"></a>
+
+## Método 3: Bean con scope de sesión (@SessionScope)
+
+<a id="bean-que-es"></a>
+
+El tercer método es el que más me gustó: usar un bean de Spring con scope de sesión. Es como usar literalmente un objeto compartido en el formulario; recuerda mucho a las entidades cuando se guarda en base de datos o se hace DTOs y mapping. Es muy útil. He tenido algún problema e inconveniente, pero está muy bien.
+
+La idea: en vez de guardar un atributo en la sesión a mano o declararlo con `@SessionAttributes`, declaro un bean de Spring (`@Component`) con scope de sesión (`@SessionScope`). Spring crea una instancia por usuario/sesión e inyecta esa misma instancia en el controlador. El controlador simplemente llama a los getters/setters del bean.
+
+Se utiliza en un POJO con las anotaciones `@Component` y `@SessionScope`:
+
+```java
+package goya.daw2.pruebas_plantillas;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+@SessionScope
+public class QuizzSesion {
+    private String nombre;
+    private List<String> aficciones = new ArrayList<>();
+    private Integer signo;
+    private Integer numEtapa;
+
+    public QuizzSesion() { }
+
+    public QuizzSesion(String nombre, List<String> aficciones, Integer signo, Integer numEtapa) {
+        this.nombre = nombre;
+        this.aficciones = aficciones;
+        this.signo = signo;
+        this.numEtapa = numEtapa;
+    }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public List<String> getAficciones() { return aficciones; }
+    public void setAficciones(List<String> aficciones) { this.aficciones = aficciones; }
+
+    public Integer getSigno() { return signo; }
+    public void setSigno(Integer signo) { this.signo = signo; }
+
+    public Integer getNumEtapa() { return numEtapa; }
+    public void setNumEtapa(Integer numEtapa) { this.numEtapa = numEtapa; }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("QuizzSesion{");
+        sb.append("nombre='").append(nombre).append('\'');
+        sb.append(", aficciones='").append(aficciones).append('\'');
+        sb.append(", signo='").append(signo).append('\'');
+        sb.append(", numEtapa=").append(numEtapa);
+        sb.append('}');
+        return sb.toString();
+    }
+}
+```
+
+<a id="bean-controlador"></a>
+
+### Controlador con bean de sesión (FormsController3)
+
+El controlador recibe el bean por inyección de dependencias (constructor) y lo usa directamente. Está mapeado en `/version3`:
+
+```java
+package goya.daw2.pruebas_plantillas;
+
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/version3")
+public class FormsController3 {
+
+    static final String[] SIGNOS = { "", "Aries", "Tauro", "Géminis", "Cáncer", "Leo", "Virgo", "Libra", "Escorpio",
+            "Sagitario", "Capricornio", "Acuario", "Piscis" };
+    static final String[] AFICCIONES = { "Deportes", "Juerga", "Lectura", "Relaciones sociales" };
+
+    private final QuizzSesion quizzSesion;
+
+    public FormsController3(QuizzSesion quizzSesion) {
+        this.quizzSesion = quizzSesion;
+    }
+
+    @PostMapping("/quizz")
+    String procesaEtapaX(Model modelo, Quizz sesion) {
+
+        QuizzSesion actual = quizzSesion;
+
+        if (quizzSesion.getNumEtapa() == null) {
+            quizzSesion.setNumEtapa(1);
+        }
+
+        if (sesion.getNombre() != null) {
+            actual.setNombre(sesion.getNombre());
+        }
+        if (sesion.getSigno() != null) {
+            actual.setSigno(sesion.getSigno());
+        }
+        if (sesion.getAficciones() != null && !sesion.getAficciones().isEmpty()) {
+            actual.setAficciones(sesion.getAficciones());
+        }
+
+        modelo.addAttribute("signos", SIGNOS);
+        modelo.addAttribute("aficciones", AFICCIONES);
+        modelo.addAttribute("quizz", actual);
+
+        String errores = "";
+
+        if (actual.getNumEtapa() == 1 && (actual.getNombre() == null || actual.getNombre().isBlank())) {
+            errores = "Debes poner un nombre no vacío";
+        } else if (actual.getNumEtapa() == 1 && (actual.getNombre().length() < 3 || actual.getNombre().length() > 10)) {
+            errores = "La longitud del nombre debe estar entre 3 y 10";
+        }
+
+        if (actual.getNumEtapa() == 2 && (actual.getSigno() == null || actual.getSigno() == 0)) {
+            errores = "Debes seleccionar un signo";
+        }
+
+        if (actual.getNumEtapa() == 3 && (actual.getAficciones() == null || actual.getAficciones().isEmpty())) {
+            errores = "Debes elegir al menos una aficción, no seas soso/a";
+        }
+
+        if (!errores.isBlank()) {
+            modelo.addAttribute("errores", errores);
+            return "etapa" + actual.getNumEtapa();
+        }
+
+        actual.setNumEtapa(actual.getNumEtapa() + 1);
+
+        if (actual.getNumEtapa() == 4) {
+            ArrayList<String> respuestas = new ArrayList<String>();
+            respuestas.add(actual.getNombre());
+            respuestas.add(SIGNOS[actual.getSigno()]);
+            respuestas.add(String.join(", ", actual.getAficciones()));
+            modelo.addAttribute("respuestas", respuestas);
+        }
+
+        return "etapa" + actual.getNumEtapa();
+    }
+
+    @GetMapping("/quizz")
+    String getEtapa0(Model modelo) {
+        quizzSesion.setNumEtapa(1);
+        quizzSesion.setNombre(null);
+        quizzSesion.setSigno(null);
+        quizzSesion.getAficciones().clear();
+        modelo.addAttribute("quizz", quizzSesion);
+        modelo.addAttribute("signos", SIGNOS);
+        modelo.addAttribute("aficciones", AFICCIONES);
+        return "etapa1";
+    }
+}
+```
+
+Puntos clave:
+
+- El bean se inyecta por constructor (`public FormsController3(QuizzSesion quizzSesion)`). Spring entrega la instancia asociada a la sesión actual.
+- En el `@GetMapping` no se crea un objeto nuevo: se **reinicia** el bean existente (poniendo `null`/`1`/limpiando la lista), porque el bean ya existe para esa sesión.
+- El POST recibe también un `Quizz sesion` (el del formulario) y copia a `quizzSesion` solo los campos no nulos, igual que en las otras versiones.
+
+![Resultado final](img%20-%20documents/UD1_UD3.06.png)
+
+El get cambia: es como recibir un objeto o un POJO.
+
+![Resultado final](img%20-%20documents/UD1_UD3.07.png)
+
+El post es lo mismo que con `@SessionAttributes`.
+
+![Resultado final](img%20-%20documents/UD1_UD3.08.png)
+
+<a id="bean-errores"></a>
+
+### Errores típicos y cómo los resolví
+
+- **El bean no se detectaba si estaba en otra carpeta.** Parece ser que este componente debe estar a la misma altura (mismo paquete) que el controlador; si lo pones en un paquete de entidades no lo detecta. Lo moví al paquete `goya.daw2.pruebas_plantillas` junto al controlador.
+- **Confundir `@SessionScope` con `@RequestScope` o `@ApplicationScope`.** Solo `@SessionScope` mantiene el estado entre peticiones del mismo usuario. Con `@RequestScope` se recrea en cada petición y se pierde todo.
+- **Reiniciar mal el bean.** Al empezar el flujo hay que poner a `null`/vacío los campos, no crear un `new QuizzSesion()` (eso rompería la referencia que Spring gestiona).
+- **La inyección por constructor vs por campo.** Usé inyección por constructor, que es la forma recomendada y la que permite marcar el campo como `final`.
+
+<a id="comparativa3"></a>
+
+## Comparativa de los tres métodos
+
+| Aspecto | Método 1: HttpSession manual | Método 2: @SessionAttributes | Método 3: Bean @SessionScope |
+|---|---|---|---|
+| Cómo se guarda | `session.setAttribute("quizz", actual)` | Spring lo guarda al añadirlo al `Model` | Spring gestiona el bean por sesión |
+| Cómo se lee | `(Quizz) session.getAttribute("quizz")` + cast | Parámetro `Quizz quizz` inyectado | Campo inyectado `quizzSesion` |
+| Cast / warning | Sí (necesita `@SuppressWarnings`) | No | No |
+| Código en controlador | Más largo (getQuizz, getEtapa) | Medio | Corto y limpio |
+| Reiniciar flujo | `session.invalidate()` o nuevo objeto | Nuevo objeto en el GET | Resetear campos del bean |
+| Dónde vive el estado | Servidor (HashMap de sesión) | Servidor (sesión) | Servidor (bean por sesión) |
+| Acoplamiento | Bajo (API servlet) | Medio (anotación Spring MVC) | Alto (bean Spring) |
+| Cuándo usarlo | Aprendizaje, control total | Formularios por pasos con Model | Servicios/componentes reutilizables |
+
+Regla práctica que me llevo:
+
+- Si quiero **control total** y entender cómo funciona por dentro → Método 1.
+- Si tengo un **formulario por pasos con Thymeleaf y Model** → Método 2 (`@SessionAttributes`).
+- Si el estado es un **componente reutilizable** o quiero inyección limpia → Método 3 (bean con `@SessionScope`).
+
+El resultado final en los tres casos es el mismo (el quizz por etapas funciona igual), pero el código se va haciendo más compacto y legible.
 <a id="repaso"></a>
 
 ## Preguntas de repaso
@@ -768,6 +1159,12 @@ Ideas clave que me llevo de la práctica:
 12. ¿Qué hace `@SuppressWarnings("unchecked")` y por qué aparece al leer de sesión? *(SuppressWarnings)*
 13. ¿En qué se diferencian cookies y sesión en seguridad y tamaño? *(Comparativa)*
 14. ¿Qué ocurre si el navegador no acepta cookies? ¿Y si el usuario cierra la pestaña? *(Curiosidades)*
+15. ¿Qué hace la anotación `@SessionAttributes` y a qué nivel se pone? *(Método 2)*
+16. ¿Cómo se "siembra" la sesión al empezar el flujo con `@SessionAttributes`? *(Método 2)*
+17. ¿Dónde debe estar el bean con `@SessionScope` para que Spring lo detecte? *(Método 3)*
+18. ¿Cómo se reinicia un bean de sesión al empezar un nuevo flujo? *(Método 3)*
+19. ¿En qué se diferencian `@SessionAttributes` y un bean `@SessionScope` en acoplamiento? *(Comparativa)*
+20. ¿Cuándo usarías cada uno de los tres métodos? *(Comparativa)*
 
 <a id="conclusion"></a>
 
@@ -777,7 +1174,13 @@ Esta práctica me hizo tocar con las manos lo que hasta entonces había leído: 
 
 También me quedo con la idea de que la sesión no es magia: por debajo usa una cookie (`JSESSIONID`), y si el navegador no la acepta hay que recurrir a la reescritura de URL. Y con que `@SuppressWarnings("unchecked")` no es un adorno: es la forma de decirle al compilador que el cast de `Object` a un tipo concreto es intencionado.
 
-Con D1 (respuestas directas), D2 (plantillas y objetos), D3 (estado entre pasos) y esta (sesiones y cookies), el recorrido de la unidad queda completo: ya sé recibir datos, pintarlos, encadenarlos y, ahora, recordarlos.
+Además, en el mismo proyecto `formularios-encadenados` implementé el mismo quizz de tres formas distintas, para comparar:
+
+1. **Método 1 (`HttpSession` manual):** control total, pero mucho boilerplate y casts.
+2. **Método 2 (`@SessionAttributes`):** Spring gestiona el objeto del `Model` en la sesión; código más corto y sin casts.
+3. **Método 3 (bean con `@SessionScope`):** inyección limpia, ideal cuando el estado es un componente reutilizable.
+
+Los tres dan el mismo resultado, pero el código se va haciendo más compacto y legible. El recorrido de la unidad queda completo: ya sé recibir datos (D1), pintarlos con plantillas y objetos (D2), encadenarlos por pasos (D3) y, ahora, recordarlos en el servidor (D1-UD3).
 
 <a id="recursos"></a>
 
@@ -786,9 +1189,12 @@ Con D1 (respuestas directas), D2 (plantillas y objetos), D3 (estado entre pasos)
 - [Repositorio del proyecto en GitHub](https://github.com/KerinR432/DWES2)
 - Apuntes del profesor: `Cookies y Session.pdf`
 - Apuntes del profesor: `Sesiones.pdf`
+- PDF del profesor (parte de la información y usos): `PDFPROFESOR`
 - [Documentación de Spring Session](https://spring.io/projects/spring-session)
 - [Documentación de Thymeleaf](https://www.thymeleaf.org/documentation.html)
+- [Documentación de Spring MVC (@SessionAttributes)](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/sessionattributes.html)
 - Stack Overflow y Gemini, como apoyo para el fallo del objeto que se sobrescribía en la sesión
+- Asistente de código OpenCode (modelo Beam) — ayuda para estructurar, documentar y mejorar este archivo (D1-UD3.md), así como para revisar y explicar los tres métodos (HttpSession, @SessionAttributes y bean con @SessionScope)
 
 <div class="endmark">
 FIN DE LA TRANSMISIÓN // D1 · UD3
