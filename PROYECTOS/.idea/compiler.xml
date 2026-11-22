@@ -7,6 +7,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Carrito-compra-gemini" options="-parameters" />
+      <module name="Carrito-compra-gemini.main" options="-parameters" />
+      <module name="Carrito-compra-gemini.test" options="-parameters" />
       <module name="D3-UD2" options="-parameters" />
       <module name="D3-UD2.main" options="-parameters" />
       <module name="D3-UD2.test" options="-parameters" />
@@ -19,12 +22,18 @@
       <module name="PracticandoFormulario" options="-parameters" />
       <module name="PracticandoFormulario.main" options="-parameters" />
       <module name="PracticandoFormulario.test" options="-parameters" />
+      <module name="Ruvik.D3-UD2.test" options="-parameters" />
+      <module name="Ruvik.PracticandoFormulario.main" options="-parameters" />
+      <module name="Ruvik.PracticandoFormulario.test" options="-parameters" />
       <module name="ValidacionFormulario" options="-parameters" />
       <module name="ValidacionFormulario.main" options="-parameters" />
       <module name="ValidacionFormulario.test" options="-parameters" />
       <module name="contadorVisita" options="-parameters" />
       <module name="contadorVisita.main" options="-parameters" />
       <module name="contadorVisita.test" options="-parameters" />
+      <module name="demo" options="-parameters" />
+      <module name="demo.main" options="-parameters" />
+      <module name="demo.test" options="-parameters" />
       <module name="demoFormulario" options="-parameters" />
       <module name="demoFormulario.main" options="-parameters" />
       <module name="demoFormulario.test" options="-parameters" />

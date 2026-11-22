@@ -42,7 +42,6 @@
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/formulario.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/PROYECTOS/fuerzaDelImperio/src/main/resources/templates/tucartilla.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEORIA/documentanción - profe/D1-UD3.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/TEORIA/documentanción - profe/D1-UD3.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +49,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/PROYECTOS" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -94,6 +93,65 @@
     &quot;accountId&quot;: &quot;df454b27-e570-4665-8ad2-cd558173daa7&quot;
   }
 }</component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0004280303332542" />
+      <entry key="MS500" value="1.2368368993139258" />
+      <entry key="S2" value="2.790252739580068" />
+      <entry key="S5" value="5.473240523746491" />
+      <entry key="S10" value="11.44433032096439" />
+      <entry key="S30" value="33.89955324323925" />
+      <entry key="S60" value="50.762413965067616" />
+      <entry key="M2" value="63.610638935103395" />
+      <entry key="M5" value="73.39547283503077" />
+      <entry key="M10" value="77.07946824552153" />
+      <entry key="M15" value="78.35921872514689" />
+      <entry key="M30" value="79.66585348183226" />
+      <entry key="H1" value="80.32944794997017" />
+      <entry key="H2" value="80.66384924615258" />
+      <entry key="H4" value="80.8317053086053" />
+      <entry key="D1" value="80.97192037060246" />
+      <entry key="W1" value="80.99598787638332" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="0.0" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="0.0" />
+      <entry key="M10" value="0.0" />
+      <entry key="M15" value="0.0" />
+      <entry key="M30" value="0.0" />
+      <entry key="H1" value="0.0" />
+      <entry key="H2" value="0.0" />
+      <entry key="H4" value="0.0" />
+      <entry key="D1" value="0.0" />
+      <entry key="W1" value="0.0" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9399193570133287" />
+      <entry key="MS500" value="1.2209146970402736" />
+      <entry key="S2" value="2.7810113461563932" />
+      <entry key="S5" value="5.466109931022418" />
+      <entry key="S10" value="11.436922638123145" />
+      <entry key="S30" value="33.891982849112566" />
+      <entry key="S60" value="50.75666109491218" />
+      <entry key="M2" value="63.60700789534099" />
+      <entry key="M5" value="73.39378993660891" />
+      <entry key="M10" value="77.07858336211092" />
+      <entry key="M15" value="78.35861874091407" />
+      <entry key="M30" value="79.66554835228405" />
+      <entry key="H1" value="80.32929408049331" />
+      <entry key="H2" value="80.66377198266109" />
+      <entry key="H4" value="80.8316665943469" />
+      <entry key="D1" value="80.97191390673834" />
+      <entry key="W1" value="80.99598695269246" />
+    </decayedShown>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5,
   &quot;fromUser&quot;: false
@@ -109,9 +167,9 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#21 on codigo&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/alumno/Escritorio/CARPETA DE CLASES/DWS&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alumno/Escritorio/CARPETA DE CLASES/DWS/PROYECTOS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
