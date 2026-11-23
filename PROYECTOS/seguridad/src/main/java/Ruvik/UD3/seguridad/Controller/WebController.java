@@ -1,8 +1,6 @@
 package Ruvik.UD3.seguridad.Controller;
 
 import Ruvik.UD3.seguridad.Entity.Usuario;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.boot.web.server.servlet.Session;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,23 +24,16 @@ public class WebController {
 
 
     @GetMapping("/")
-    public String rutaInicio(HttpSession session) {
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        System.out.println("Estoy dentro de inicio");
-        if (user==null){
-            System.out.println("No existe usuario");
-
+    public String rutaInicio(Model model) {
+        if (model.getAttribute("usuario") == null) {
             return "redirect:/login";
         }
         return "inicio";
     }
 
     @GetMapping("/pagina1")
-    public String pagina1(HttpSession session) {
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        System.out.println("Estoy dentro de pagina 1");
-        if (user==null){
-            System.out.println("No existe usuario");
+    public String pagina1(Model model) {
+        if (model.getAttribute("usuario") == null) {
             return "redirect:/login";
         }
         return "pagina1";
@@ -50,44 +41,39 @@ public class WebController {
 
 
     @GetMapping("/pagina2")
-    public String pagina2(HttpSession session) {
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        System.out.println("Estoy dentro de pagina 2");
-        if (user==null){
-            System.out.println("No existe usuario");
+    public String pagina2(Model model) {
+        if (model.getAttribute("usuario") == null) {
             return "redirect:/login";
         }
         return "pagina2";
     }
 
     @GetMapping("/login")
-    public String login(HttpSession sesion, Model modelo) {
-        System.out.println("Estoy dentro de login");
-        if(sesion.getAttribute("usuario") != null) {
-            System.out.println("existe nombre");
+    public String login(Model model) {
+        if (model.getAttribute("usuario") != null) {
             return "redirect:/";
         }
-        modelo.addAttribute("usuario", new Usuario());
+        model.addAttribute("usuarioForm", new Usuario());
         return "login";
     }
 
     @PostMapping("/login")
-    public String procesarLogin(@ModelAttribute Usuario usuarioForm,HttpSession sesion, Model modelo) {
-        System.out.println("el usuario es: " + usuarioForm.getNombre());
-        System.out.printf("El valido usuario es: " + usuariosValidos.get("admin"));
-        System.out.println("La contraseña usuario es: " + usuarioForm.getContraseña());
-        System.out.printf("La contraseña valida " + usuariosValidos.get("1234"));
-        if (usuariosValidos.containsKey(usuarioForm.getNombre()) && passwordEncoder.matches(usuarioForm.getContraseña(),usuariosValidos.get(usuarioForm.getNombre()))) {
-            sesion.setAttribute("usuario",usuarioForm);
+    public String procesarLogin(@ModelAttribute("usuarioForm") Usuario usuarioForm, Model model) {
+        String hash = usuariosValidos.get(usuarioForm.getNombre());
+        if (hash != null && passwordEncoder.matches(usuarioForm.getContraseña(), hash)) {
+            model.addAttribute("usuario", usuarioForm);
             return "redirect:/";
         }
-        modelo.addAttribute("error", "Usuario o contraseña son incorrectos");
+        model.addAttribute("error", "Usuario o contraseña son incorrectos");
+        Usuario form = new Usuario();
+        form.setNombre(usuarioForm.getNombre());
+        model.addAttribute("usuarioForm", form);
         return "login";
     }
+
     @GetMapping("/logout")
-    public String logout(HttpSession sesion, SessionStatus status, Model modelo) {
+    public String logout(SessionStatus status) {
         status.setComplete();
-        sesion.invalidate();
         return "redirect:/login";
     }
 
