@@ -3,19 +3,27 @@ package Ruvik.UD3.seguridad.Controller;
 import Ruvik.UD3.seguridad.Entity.Usuario;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.boot.web.server.servlet.Session;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @SessionAttributes("usuario")
 public class WebController {
-    Map<String,String> usuarioValidos = Map.of(
-            "admin","1234",
-            "ruvik","b432"
-    );
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final Map<String, String> usuariosValidos;
+    public WebController() {
+        usuariosValidos = new HashMap<>();
+        usuariosValidos.put("admin", passwordEncoder.encode("1234"));
+        usuariosValidos.put("ruvik", passwordEncoder.encode("b432"));
+    }
+
 
     @GetMapping("/")
     public String rutaInicio(HttpSession session) {
@@ -23,6 +31,7 @@ public class WebController {
         System.out.println("Estoy dentro de inicio");
         if (user==null){
             System.out.println("No existe usuario");
+
             return "redirect:/login";
         }
         return "inicio";
@@ -65,17 +74,19 @@ public class WebController {
     @PostMapping("/login")
     public String procesarLogin(@ModelAttribute Usuario usuarioForm,HttpSession sesion, Model modelo) {
         System.out.println("el usuario es: " + usuarioForm.getNombre());
-        System.out.printf("El valido usuario es: " + usuarioValidos.get("admin"));
+        System.out.printf("El valido usuario es: " + usuariosValidos.get("admin"));
         System.out.println("La contraseña usuario es: " + usuarioForm.getContraseña());
-        System.out.printf("La contraseña valida " + usuarioValidos.get("1234"));
-        if (usuarioForm.getContraseña().equals( usuarioValidos.get(usuarioForm.getNombre()))) {
+        System.out.printf("La contraseña valida " + usuariosValidos.get("1234"));
+        if (usuariosValidos.containsKey(usuarioForm.getNombre()) && passwordEncoder.matches(usuarioForm.getContraseña(),usuariosValidos.get(usuarioForm.getNombre()))) {
             sesion.setAttribute("usuario",usuarioForm);
             return "redirect:/";
         }
+        modelo.addAttribute("error", "Usuario o contraseña son incorrectos");
         return "login";
     }
     @GetMapping("/logout")
-    public String logout(HttpSession sesion, Model modelo) {
+    public String logout(HttpSession sesion, SessionStatus status, Model modelo) {
+        status.setComplete();
         sesion.invalidate();
         return "redirect:/login";
     }
